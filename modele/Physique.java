@@ -179,7 +179,7 @@ public class Physique {
 						if(b){
 							e.setPosition(e.getPosX(), e.getPosY()+1);
 							possibleY = true;
-							mouve.y += 2;
+							mouve.y -= 1;
 						}else
 							possibleY = false;
 					}else{
