@@ -2,14 +2,10 @@ package vue;
 
 import java.awt.Graphics;
 
-import javax.swing.JPanel;
-
 import modele.Mana;
 import modele.Score;
 
-public class Hud extends JPanel {
-	
-	private static final long serialVersionUID = 1L;
+public class Hud {
 	
 	/*
 	 * permet de dessiner la barre de mana et le score du joueur

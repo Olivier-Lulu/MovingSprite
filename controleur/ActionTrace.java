@@ -3,16 +3,17 @@ package controleur;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
-import vue.Niveau;
+import vue.FenetreNiveau;
+
 
 public class ActionTrace implements MouseListener {
 
 	private boolean traceAutorise = true; 
 	private int positionXCLickSouris = 0;
 	private int positionYCLickSouris = 0;
-	private Niveau niveau;
+	private FenetreNiveau niveau;
 	
-	public ActionTrace(Niveau niveau){
+	public ActionTrace(FenetreNiveau niveau){
 		super();
 		this.niveau = niveau;
 	}

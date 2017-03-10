@@ -3,10 +3,8 @@ package modele;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.io.IOException;
-import java.util.List;
 
 import controleur.Createur;
-import vue.Niveau;
 import vue.Sprite;
 import vue.SpriteBox;
 

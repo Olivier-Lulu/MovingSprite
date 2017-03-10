@@ -1,6 +1,5 @@
 package modele;
 
-import vue.Niveau;
 import vue.Sprite;
 
 public class EntiteTrace extends Entite{

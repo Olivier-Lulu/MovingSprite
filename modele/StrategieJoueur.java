@@ -1,9 +1,5 @@
 package modele;
 
-import java.util.List;
-
-import vue.Niveau;
-
 public class StrategieJoueur extends Strategie{
 	
 	public StrategieJoueur(){

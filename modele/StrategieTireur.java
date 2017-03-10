@@ -1,6 +1,5 @@
 package modele;
 
-import vue.Niveau;
 import vue.Sprite;
 
 public class StrategieTireur extends Strategie {

@@ -2,17 +2,20 @@ package vue;
 
 import javax.swing.JFrame;
 
+import modele.Niveau;
 import modele.Parametres;
 
 public class gamethread implements Runnable {
 	
+	FenetreNiveau fn;
 	Niveau n;
 	Menu m;
 	JFrame frame;
 	Parametres p;
 	
 	public gamethread(Niveau n,Menu m,JFrame frame, Parametres p){
-		this.n= n;
+		this.fn= new FenetreNiveau(n);
+		this.n = n;
 		this.m = m;
 		this.frame = frame;
 		this.p = p;
@@ -71,12 +74,12 @@ public class gamethread implements Runnable {
 			}
 		}	
 		this.frame.remove(m);
-		this.frame.setContentPane(n);
+		this.frame.setContentPane(fn);
 		this.frame.revalidate();
 		this.frame.repaint();
 		while(true){
 			long maintenant = System.currentTimeMillis();
-			n.repaint();
+			fn.repaint();
 			n.bouger();
 			images++;
 			if (maintenant -dernier > 1000){

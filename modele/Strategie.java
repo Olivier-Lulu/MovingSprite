@@ -1,10 +1,6 @@
 package modele;
 
 import java.awt.Point;
-import java.io.IOException;
-import java.util.List;
-
-import vue.Niveau;
 
 public class Strategie implements Eval{
 	

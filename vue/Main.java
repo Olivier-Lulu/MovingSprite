@@ -1,11 +1,11 @@
 package vue;
 import java.awt.Color;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 
 import javax.swing.JFrame;
 import javax.swing.WindowConstants;
 
+import modele.Niveau;
 import modele.Parametres;
 
 import controleur.Createur;
@@ -30,9 +30,7 @@ public class Main{
 		frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);		
 		frame.setVisible(true);
 		(new gamethread(n,m,frame,p)).start();
-		frame.revalidate();
-		System.out.println("pppp");
-		
+		frame.revalidate();		
 		(new SoundThread(n)).play();
 	}
 }

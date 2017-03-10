@@ -18,11 +18,11 @@ import javax.imageio.ImageIO;
 
 import modele.Entite;
 import modele.HitBox;
+import modele.Niveau;
 import modele.StrategieJoueur;
 import modele.Strategie;
 import modele.StrategiePatrouille;
 import modele.StrategieScorable;
-import vue.Niveau;
 import vue.SpriteBox;
 import vue.SpriteStocker;
 
