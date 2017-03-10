@@ -34,7 +34,7 @@ public class StrategieTireur extends Strategie {
 	private void tirer (Entite e, Niveau n){
 		n.boulettes.add(new Entite(e.getPosX(), e.getPosY(),
 					10, 10, n, true,
-					new Strategie(sens * 10, 0, false, false), new Sprite(n.stock.getSprite(6, 1))));
+					new Strategie(sens * 10, 0, false, false), new Sprite(n.stock.getSprite(6, 1)),0));
 	}
 	
 }

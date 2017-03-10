@@ -12,8 +12,8 @@ public class EntiteAnime extends Entite {
 	Sprite [] sprites = new Sprite [4];
 
 	public EntiteAnime(int posX, int posY, Niveau niveau, boolean solid,
-			Strategie strat, String sprite, SpriteStocker stock) throws IOException {
-		super(posX, posY, niveau, solid, strat, sprite);
+			Strategie strat, String sprite, SpriteStocker stock, int score) throws IOException {
+		super(posX, posY, niveau, solid, strat, sprite,score);
 		for (int i =0 ; i<=3;i++){
 			//sprites[i] = new Sprite(stock.getSprite(2, i+1));
 		}

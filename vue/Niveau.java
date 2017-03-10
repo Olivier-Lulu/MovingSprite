@@ -17,6 +17,7 @@ import controleur.ActionDeplacementReleasedQ;
 import controleur.ActionTrace;
 import modele.Entite;
 import modele.EntiteTrace;
+import modele.Mana;
 import modele.StrategieJoueur;
 import modele.StrategieTireur;
 import modele.StrategieTrace;
@@ -57,7 +58,7 @@ public class Niveau extends JPanel{
 
 		this.addMouseListener(new ActionTrace(this));
 		
-		mob.add(new Entite(200, 1000, 25, 25, this, true, new StrategieTireur(), new Sprite("/data/Sprites/goblin.png")));
+		mob.add(new Entite(200, 1000, 25, 25, this, true, new StrategieTireur(), new Sprite("/data/Sprites/goblin.png"),0));
 		
 	}
 
@@ -128,7 +129,7 @@ public class Niveau extends JPanel{
 		for (int i =0;i<trace.size();i++){
 			if (itTrace.next().doitDeceder()){
 				itTrace.previous();
-				Hud.manaHausse();
+				Mana.manaHausse();
 				itTrace.remove();
 			}
 		}
@@ -189,8 +190,8 @@ public class Niveau extends JPanel{
 			int decalageHorizontal = deltaX / (deltaY / EntiteTrace.tailleBlockTrace);
 						
 			for (int i = 0; i < deltaY; i += EntiteTrace.tailleBlockTrace){
-				if(Hud.aMana()){
-					Hud.manaBaisse();
+				if(Mana.aMana()){
+					Mana.manaBaisse();
 					trace.add(new EntiteTrace(curseurX, curseurY, 
 							this, new StrategieTrace(),
 							stock.get("4")));
@@ -219,8 +220,8 @@ public class Niveau extends JPanel{
 			int decalageVertical = deltaY / (deltaX / EntiteTrace.tailleBlockTrace);
 
 			for (int i = 0; i < deltaX; i += EntiteTrace.tailleBlockTrace){
-				if(Hud.aMana()){
-					Hud.manaBaisse();
+				if(Mana.aMana()){
+					Mana.manaBaisse();
 					trace.add(new EntiteTrace(curseurX, curseurY,
 							this, new StrategieTrace(), 
 							stock.get("4")));

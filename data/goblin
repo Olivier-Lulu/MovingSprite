@@ -1,3 +1,4 @@
 Entite:
 sprite: /Sprites/goblin.sprbx
 solid: true
+score: 10

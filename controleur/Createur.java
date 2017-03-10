@@ -21,6 +21,7 @@ import modele.HitBox;
 import modele.StrategieJoueur;
 import modele.Strategie;
 import modele.StrategiePatrouille;
+import modele.StrategieScorable;
 import vue.Niveau;
 import vue.SpriteBox;
 import vue.SpriteStocker;
@@ -43,10 +44,12 @@ public class Createur {
 	 * Entite:
 	 * sprite: <chemin d'acces au descriptif de la hitBox/animation>
 	 * solid: <true/false>
+	 * score: <point gagner en tuant l'entité>
 	 * 
 	 */
 	public static Entite creerEntiter(String path, Niveau niveau, int posX, int posY, Strategie strategie) throws IOException{
 		SpriteBox sprite = null;
+		int score = 0;
 	    boolean solid = true;
 	    Strategie strat = strategie;
     	BufferedReader fichier=new BufferedReader(new FileReader(new File(Createur.class.getResource(path).getFile())));
@@ -69,11 +72,29 @@ public class Createur {
     		if(ligne != null)
     			st = new StringTokenizer(ligne);
     		else
-    			throw new IllegalArgumentException("Entite:\nfichier terminer apres Entite:");
+    			throw new IllegalArgumentException("Entite:\nfichier terminer apres sprite:");
     		if(!st.nextToken().equals("solid:"))
     			throw new IllegalArgumentException("Entite:\nsolid: manquant");
     		if(st.hasMoreTokens())
     			solid = st.nextToken().equals("true");
+    		else
+    			throw new IllegalArgumentException("Entite:\nsolidité non renseigné");
+    		
+    		
+    		ligne = fichier.readLine();
+    		if(ligne != null)
+    			st = new StringTokenizer(ligne);
+    		else
+    			throw new IllegalArgumentException("Entite:\nfichier terminer apres solide:");
+    		if(!st.nextToken().equals("score:"))
+    			throw new IllegalArgumentException("Entite:\nscore: manquant");
+    		if(st.hasMoreTokens())
+    			try{
+    			score = Integer.parseInt(st.nextToken());
+    			}catch(NumberFormatException e){
+    				System.out.println("Entite:\nscore mal formaté");
+    				throw e;
+    			}
     		else
     			throw new IllegalArgumentException("Entite:\nsolidité non renseigné");
     	}catch(IllegalArgumentException e){
@@ -84,7 +105,7 @@ public class Createur {
     		e.printStackTrace();
     	}
     	fichier.close();
-    	return new Entite(sprite, niveau, solid, strat);
+    	return new Entite(sprite, niveau, solid, strat,score);
 	}
 
 	/*
@@ -308,7 +329,7 @@ public class Createur {
 						fichier.close();
 						throw e;
 					}
-					entite[i][j] = new Entite(i*25,j*25,25,25,null,l.get(code).x == 1,null,stock.get(""+l.get(code).y));//le fait d'utiliser un string pourra peut etre changer
+					entite[i][j] = new Entite(i*25,j*25,25,25,null,l.get(code).x == 1,null,stock.get(""+l.get(code).y),0);//le fait d'utiliser un string pourra peut etre changer
 				}
 			}
 			
@@ -344,7 +365,7 @@ public class Createur {
 				throw new IllegalArgumentException("Niveau:\n Joueur manquant");
 			try{
 				st = new StringTokenizer(ligne,",");
-				joueur = new Entite(Integer.parseInt(st.nextToken()),Integer.parseInt(st.nextToken()),null,true,new StrategieJoueur(),"/data/Sprites/goblin.sprbx");
+				joueur = new Entite(Integer.parseInt(st.nextToken()),Integer.parseInt(st.nextToken()),null,true,new StrategieJoueur(),"/data/Sprites/goblin.sprbx",0);
 			}catch(NoSuchElementException e){
 				System.out.println("Niveau:\n position du joueur manquante ou erroner");
 				fichier.close();
@@ -391,6 +412,9 @@ public class Createur {
 		switch(s){
 		case "patrouille":
 			strategie = creerStrategiePatrouille(st);
+			break;
+		case "scorable":
+			strategie = new StrategieScorable();
 			break;
 		}
 		return strategie;

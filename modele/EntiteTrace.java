@@ -10,7 +10,7 @@ public class EntiteTrace extends Entite{
 	
 	public EntiteTrace(int posX, int posY, Niveau niveau, 
 			Strategie strat, Sprite sprite) {
-		super(posX, posY, tailleBlockTrace, tailleBlockTrace, niveau, true, strat, sprite);
+		super(posX, posY, tailleBlockTrace, tailleBlockTrace, niveau, true, strat, sprite,0);
 		// TODO Auto-generated constructor stub
 	}
 

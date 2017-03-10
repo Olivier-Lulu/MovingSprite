@@ -17,26 +17,30 @@ public class Entite {
 	private Niveau niveau;
     private boolean solid;
     private Strategie strat;
+    private int score;
     
-    public Entite(SpriteBox sprite, Niveau niveau, boolean solid, Strategie strat){
+    public Entite(SpriteBox sprite, Niveau niveau, boolean solid, Strategie strat, int score){
     	this.sprite = sprite;
     	this.niveau = niveau;
         this.solid = solid;
         this. strat = strat;    	
+        this.score = score;
     }
 
-    public Entite(int posX, int posY,  Niveau niveau,boolean solid,Strategie strat, String path) throws IOException{
+    public Entite(int posX, int posY,  Niveau niveau,boolean solid,Strategie strat, String path,int score) throws IOException{
     	this.sprite = Createur.creerSpriteBox(path, posX, posY);
     	this.strat = strat;
 		this.niveau = niveau;
 		this.solid = solid;
+		this.score = score;
     }
     
-    public Entite(int posX, int posY, int width, int height, Niveau niveau, boolean solid, Strategie strat, Sprite sprite) {
+    public Entite(int posX, int posY, int width, int height, Niveau niveau, boolean solid, Strategie strat, Sprite sprite, int score) {
     	this.sprite = new SpriteBox(new Rectangle(posX,posY,width,height),sprite);
     	this.strat = strat;
 		this.niveau = niveau;
 		this.solid = solid;
+		this.score = score;
 	}
 
     public void setNiveau(Niveau niveau){
@@ -124,10 +128,8 @@ public class Entite {
 	 * premet de supprimer l'entité du niveau auquel elle est rattacher
 	 */
 	public void deces(Entite e){
-		if(e != null && e.getClass() == ScorableEntite.class)
-			e.deces(null);
-		else
-			niveau.supprimerEntite(this);
+		Score.augmenterScore(score);
+		niveau.supprimerEntite(this);
 	}
 	
 }
