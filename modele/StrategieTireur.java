@@ -16,7 +16,7 @@ public class StrategieTireur extends Strategie {
 	@Override
 	public int eval(Entite e, Niveau n){
 		//s'il va à gauche c'est pair
-		int etat = Physique.move(e, n.entite, n.mob, n.trace);
+		int etat = Physique.move(e, n.entite, n.mob, n.boucliers);
 		if (pas < 50){
 			pas++;
 		}else{

@@ -12,7 +12,7 @@ public class StrategieJoueur extends Strategie{
 	
 	@Override
 	public int eval(Entite e, Niveau n){
-		return Physique.move(e, n.entite, n.mob, n.trace);
+		return Physique.move(e, n.entite, n.mob, n.boucliers);
 	}
 
 	public void deplacementDroitDebut(){

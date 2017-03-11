@@ -15,6 +15,7 @@ import controleur.ActionDeplacementPressedZ;
 import controleur.ActionDeplacementReleasedD;
 import controleur.ActionDeplacementReleasedQ;
 import controleur.ActionTrace;
+import modele.Bouclier;
 import modele.Entite;
 import modele.EntiteTrace;
 import modele.StrategieJoueur;
@@ -30,7 +31,7 @@ public class Niveau extends JPanel{
 	public Entite[][] entite;
 	public LinkedList<Entite> mob;
 	public Entite joueur;
-	public LinkedList<EntiteTrace> trace = new LinkedList<EntiteTrace>();
+	public LinkedList<Bouclier> boucliers = new LinkedList<Bouclier>();
 	public LinkedList<Entite> boulettes = new LinkedList<Entite>();
 	
 	public Niveau(SpriteStocker stock, Entite[][] entite, LinkedList<Entite> mob, Entite joueur) {
@@ -86,13 +87,11 @@ public class Niveau extends JPanel{
 			300 -joueur.getHeight()-joueur.getPosY(),getWidth(),getHeight());
 		//joueur.drawDebug(g,(300 -joueur.getWidth())-joueur.getPosX(),300 -joueur.getHeight()-joueur.getPosY(),getWidth(),getHeight());
 		
-		//affichage du tracé du joueur
-		Iterator<EntiteTrace> itTrace = trace.iterator();
-		while(itTrace.hasNext()){
-			itTrace.next().rendu(g,
-					(300 -joueur.getWidth())-joueur.getPosX(),
-					300 -joueur.getHeight()-joueur.getPosY(),
-					getWidth(),
+		//affichage des boucliers tracés  joueur
+		for (Bouclier boubou : boucliers){
+			boubou.rendu(g, (300 -joueur.getWidth())-joueur.getPosX(),
+					300 -joueur.getHeight()-joueur.getPosY(), 
+					getWidth(), 
 					getHeight());
 		}
 		
@@ -124,13 +123,12 @@ public class Niveau extends JPanel{
 		joueur.eval();
 		
 		//évaluation du tracé
-		ListIterator<EntiteTrace> itTrace = trace.listIterator();
-		for (int i =0;i<trace.size();i++){
-			if (itTrace.next().doitDeceder()){
-				itTrace.previous();
-				Hud.manaHausse();
-				itTrace.remove();
-			}
+		ListIterator<Bouclier> itBouclier = boucliers.listIterator();
+		while (itBouclier.hasNext()){
+			Bouclier pointeur = itBouclier.next();
+			pointeur.disparitionNaturelle();
+			if (pointeur.doitDeceder())
+				boucliers.remove(pointeur);
 		}
 		
 		//évalutation des boulettes
@@ -163,6 +161,10 @@ public class Niveau extends JPanel{
 	 * créer le tracer protegeant des boulettes
 	 */
 	public void tracerLigne (int positionXCLickSouris ,int positionYCLickSouris ,int positionXLacheSouris ,int positionYLacheSouris ){
+		
+		//la liste qui va servir à enregistrer un tracé pour en faire un bouclier
+		LinkedList<EntiteTrace> trace = new LinkedList<EntiteTrace>();
+		
 		//determiner le plus grand des décalages de coordonnees
 		int deltaX;
 		if (positionXCLickSouris <= positionXLacheSouris){
@@ -183,64 +185,67 @@ public class Niveau extends JPanel{
 		
 		//si l'ecart d'ordonnee est plus grand, les blocks s'empilent
 		//verticalement
-		if (deltaX <= deltaY){
-			if (deltaY < EntiteTrace.tailleBlockTrace)
-				return;
-			int decalageHorizontal = deltaX / (deltaY / EntiteTrace.tailleBlockTrace);
-						
-			for (int i = 0; i < deltaY; i += EntiteTrace.tailleBlockTrace){
-				if(Hud.aMana()){
-					Hud.manaBaisse();
-					trace.add(new EntiteTrace(curseurX, curseurY, 
-							this, new StrategieTrace(),
-							stock.get("4")));
-				}
-				
-				//il faut toujours tracer du click vers le lache
-				if (positionXCLickSouris <= positionXLacheSouris){
-					curseurX += decalageHorizontal;
-				}else{
-					curseurX -= decalageHorizontal;
-				}
-				
-				if (positionYCLickSouris <= positionYLacheSouris){
-					curseurY += EntiteTrace.tailleBlockTrace;
-				}else{
-					curseurY -= EntiteTrace.tailleBlockTrace;
-				}
-			}
-		
-			
-		//si l'ecart d'abscisse est plus grand, les blocks s'empilent
-		//horizontalement
-		}else{
-			if (deltaX < EntiteTrace.tailleBlockTrace)
-				return;
-			int decalageVertical = deltaY / (deltaX / EntiteTrace.tailleBlockTrace);
+		if(Hud.aMana()){
+			if (deltaX <= deltaY){
+				if (deltaY < EntiteTrace.tailleBlockTrace)
+					return;
+				int decalageHorizontal = deltaX / (deltaY / EntiteTrace.tailleBlockTrace);
 
-			for (int i = 0; i < deltaX; i += EntiteTrace.tailleBlockTrace){
-				if(Hud.aMana()){
-					Hud.manaBaisse();
-					trace.add(new EntiteTrace(curseurX, curseurY,
-							this, new StrategieTrace(), 
-							stock.get("4")));
-				}
+				for (int i = 0; i < deltaY; i += EntiteTrace.tailleBlockTrace){
+					if(Hud.aMana()){
+						Hud.manaBaisse();
+						trace.add(new EntiteTrace(curseurX, curseurY, 
+								this, new StrategieTrace(),
+								stock.get("4")));
+					}
 
-				//il faut toujours tracer du click vers le lache
-				if (positionXCLickSouris <= positionXLacheSouris){
-					curseurX += EntiteTrace.tailleBlockTrace;
-				}else{
-					curseurX -= EntiteTrace.tailleBlockTrace;
-				}
+					//il faut toujours tracer du click vers le lache
+					if (positionXCLickSouris <= positionXLacheSouris){
+						curseurX += decalageHorizontal;
+					}else{
+						curseurX -= decalageHorizontal;
+					}
 
-				if (positionYCLickSouris <= positionYLacheSouris){
-					curseurY += decalageVertical;
-				}else{
-					curseurY -= decalageVertical;
+					if (positionYCLickSouris <= positionYLacheSouris){
+						curseurY += EntiteTrace.tailleBlockTrace;
+					}else{
+						curseurY -= EntiteTrace.tailleBlockTrace;
+					}
 				}
+				boucliers.add(new Bouclier(trace));
+
+				//si l'ecart d'abscisse est plus grand, les blocks s'empilent
+				//horizontalement
+			}else{
+
+				if (deltaX < EntiteTrace.tailleBlockTrace)
+					return;
+				int decalageVertical = deltaY / (deltaX / EntiteTrace.tailleBlockTrace);
+
+				for (int i = 0; i < deltaX; i += EntiteTrace.tailleBlockTrace){
+					if(Hud.aMana()){
+						Hud.manaBaisse();
+						trace.add(new EntiteTrace(curseurX, curseurY,
+								this, new StrategieTrace(), 
+								stock.get("4")));
+					}
+
+					//il faut toujours tracer du click vers le lache
+					if (positionXCLickSouris <= positionXLacheSouris){
+						curseurX += EntiteTrace.tailleBlockTrace;
+					}else{
+						curseurX -= EntiteTrace.tailleBlockTrace;
+					}
+
+					if (positionYCLickSouris <= positionYLacheSouris){
+						curseurY += decalageVertical;
+					}else{
+						curseurY -= decalageVertical;
+					}
+				}
+				boucliers.add(new Bouclier(trace));
 			}
 		}
-
 	}
 	
 }

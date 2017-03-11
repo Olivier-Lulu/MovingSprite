@@ -16,10 +16,10 @@ public class Physique {
 	 * \param lTrace liste des boucliers existant dans le meme niveau que e
 	 * \pre e non null
 	 */
-	public static int move(Entite e, Entite [][] tiles, List<Entite> l, List<EntiteTrace> lTrace) {
+	public static int move(Entite e, Entite [][] tiles, List<Entite> l, List<Bouclier> boucliers) {
 		if(e.getStrat().enVols)
 			e.getStrat().deplacement.y += 2;
-		return colision(e,tiles,l, lTrace);
+		return colision(e,tiles,l, boucliers);
 	}
 	
 	/*
@@ -33,7 +33,7 @@ public class Physique {
 	 * \pre l non null
 	 * \pre lTrace non null
 	 */
-	private static int colision(Entite e, Entite [][] tiles, List<Entite> l, List<EntiteTrace> lTrace) {
+	private static int colision(Entite e, Entite [][] tiles, List<Entite> l, List<Bouclier> boucliers) {
 		
 		// mouve est une copie du deplacement de e
 		// ce vecteur servira a effectuer ds operation sur le mouvemant de e sans influer sur ce dernier
@@ -74,11 +74,13 @@ public class Physique {
 		
 		//meme explication que listeEntite  -> fusion peut etre possible
 		List<EntiteTrace> listeTrace = new LinkedList<EntiteTrace>();
-		Iterator<EntiteTrace> traceIterator = lTrace.iterator();
-		for(int i=0; i < lTrace.size();i++){
-			EntiteTrace entite = traceIterator.next();
-			if(r.intersects(entite.getPosX(),entite.getPosY(),entite.getWidth(),entite.getHeight()) && !entite.equals(e)){
-				listeTrace.add(entite);
+		for (Bouclier unBouclier : boucliers) {
+			Iterator<EntiteTrace> traceIterator = unBouclier.ligne.iterator();
+			for(int i=0; i < unBouclier.ligne.size();i++){
+				EntiteTrace entite = traceIterator.next();
+				if(r.intersects(entite.getPosX(),entite.getPosY(),entite.getWidth(),entite.getHeight()) && !entite.equals(e)){
+					listeTrace.add(entite);
+				}
 			}
 		}
 		
@@ -230,7 +232,7 @@ public class Physique {
 			}
 			
 			//voirs pour les entités
-			traceIterator = listeTrace.iterator();
+			Iterator<EntiteTrace>traceIterator = listeTrace.iterator();
 			for(int j=0; j < listeTrace.size();j++){
 				EntiteTrace ent = traceIterator.next();
 				if(e.intersects(ent)){
