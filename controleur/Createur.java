@@ -2,7 +2,6 @@ package controleur;
 
 import java.awt.Point;
 import java.awt.Rectangle;
-import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -14,22 +13,20 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.StringTokenizer;
 
-import javax.imageio.ImageIO;
-
 import modele.Entite;
+import modele.EntiteAnime;
 import modele.HitBox;
 import modele.Niveau;
 import modele.StrategieJoueur;
 import modele.Strategie;
 import modele.StrategiePatrouille;
 import modele.StrategieScorable;
-import vue.SpriteBox;
+import vue.Sprite;
 import vue.SpriteStocker;
 
 public class Createur {
 
 	/*
-	 * Le fichier decrivant l'entite, est telement vide qu'il va certenement fusionner avec niveau
 	 * 
 	 * 
 	 * Permet de créer une entiter a partire d'un fichier
@@ -42,45 +39,58 @@ public class Createur {
 	 * Le fichier doit etre formaté de la maniere suivante:
 	 * 
 	 * Entite:
-	 * sprite: <chemin d'acces au descriptif de la hitBox/animation>
-	 * solid: <true/false>
+	 * sprite: <x du sprite de depart> <y du sprite de depart> <nombre de frame>
 	 * score: <point gagner en tuant l'entité>
 	 * 
 	 */
-	public static Entite creerEntiter(String path, Niveau niveau, int posX, int posY, Strategie strategie) throws IOException{
-		SpriteBox sprite = null;
+	public static EntiteAnime creerEntiter(String path, int posX, int posY, Strategie strategie, SpriteStocker stock) throws IOException{
+		int x = 0;
+		int y = 0;
+		int width = 0;
+		int height = 0;
+		int nbSprite = 0;
 		int score = 0;
-	    boolean solid = true;
 	    Strategie strat = strategie;
     	BufferedReader fichier=new BufferedReader(new FileReader(new File(Createur.class.getResource(path).getFile())));
     	String ligne;
     	StringTokenizer st =null;
+    	HitBox[] hitBox = null;
     	try{
     		ligne = fichier.readLine();
     		if(!ligne.equals("Entite:"))
     			throw new IllegalArgumentException("Entite:\nfichier au mauvais format");
+    		//lecture des info sur le sprite
     		ligne = fichier.readLine();
     		if(ligne != null)
     			st = new StringTokenizer(ligne);
     		if(!st.nextToken().equals("sprite:"))
     			throw new IllegalArgumentException("Entite:\nsprite: manquant");
     		if(st.hasMoreTokens())
-    			sprite = creerSpriteBox("/data"+st.nextToken(),posX,posY);
+    			try{
+    				x = Integer.parseInt(st.nextToken());
+    			}catch(NumberFormatException e){
+    				System.out.println("Entite:\nx du sprite mal formaté");
+    			}
     		else
     			throw new IllegalArgumentException("Entite:\ndescription sprite manquant");
-    		ligne = fichier.readLine();
-    		if(ligne != null)
-    			st = new StringTokenizer(ligne);
-    		else
-    			throw new IllegalArgumentException("Entite:\nfichier terminer apres sprite:");
-    		if(!st.nextToken().equals("solid:"))
-    			throw new IllegalArgumentException("Entite:\nsolid: manquant");
     		if(st.hasMoreTokens())
-    			solid = st.nextToken().equals("true");
+    			try{
+    				y = Integer.parseInt(st.nextToken());
+    			}catch(NumberFormatException e){
+    				System.out.println("Entite:\ny du sprite mal formaté");
+    			}
     		else
-    			throw new IllegalArgumentException("Entite:\nsolidité non renseigné");
+    			throw new IllegalArgumentException("Entite:\ndescription sprite manquant");
+    		if(st.hasMoreTokens())
+    			try{
+    				nbSprite = Integer.parseInt(st.nextToken());
+    			}catch(NumberFormatException e){
+    				System.out.println("Entite:\nnombre de sprite mal formaté");
+    			}
+    		else
+    			throw new IllegalArgumentException("Entite:\ndescription sprite manquant");
     		
-    		
+    		//lecture des infos de score
     		ligne = fichier.readLine();
     		if(ligne != null)
     			st = new StringTokenizer(ligne);
@@ -97,6 +107,70 @@ public class Createur {
     			}
     		else
     			throw new IllegalArgumentException("Entite:\nsolidité non renseigné");
+    		//lecture des infos de hitBox
+    		hitBox = new HitBox[nbSprite];
+    		HitBox hit = null;
+    		for(int i = 0; i < nbSprite;i++){
+    			ligne = fichier.readLine();
+    			if(ligne != null)
+    				st = new StringTokenizer(ligne," ,");
+    			else
+    				throw new IllegalArgumentException("SpriteBox:\n fichier vide apres sprite");
+    			if(!st.nextToken().equals("box:"))
+    				throw new IllegalArgumentException("SpriteBox:\n box: manquant");
+    			if(st.hasMoreTokens())
+    				try{
+    					width = Integer.parseInt(st.nextToken());
+    				}catch(NumberFormatException e){
+    					System.out.println("SpriteBox:\n largeur de box erroner");
+    				}
+    			else
+    				throw new IllegalArgumentException("SpriteBox:\n descrption taille global manquant");
+    			if(st.hasMoreTokens())
+    				try{
+    					height = Integer.parseInt(st.nextToken());
+    				}catch(NumberFormatException e){
+    					System.out.println("SpriteBox:\n longeur de box erroner");
+    					throw e;
+    				}
+    			else
+    				throw new IllegalArgumentException("SpriteBox:\n descrption taille global manquant");
+    			hit = new HitBox(new Rectangle(posX,posY,width,height));
+    			ligne = fichier.readLine();
+    			try{
+    				while(!ligne.equals("---")){
+    					st = new StringTokenizer(ligne," ,");
+    					if(!st.nextToken().equals("subBox:"))
+    						throw new IllegalArgumentException("Box:\n subBox mal formater");
+    					if(st.hasMoreTokens())
+    						posX = Integer.parseInt(st.nextToken());
+    					else
+    						throw new IllegalArgumentException("Box:\n subBox mal formater");
+    					if(st.hasMoreTokens())
+    						posY = Integer.parseInt(st.nextToken());
+    					else
+    						throw new IllegalArgumentException("Box:\n subBox mal formater");
+    					if(st.hasMoreTokens())
+    						width = Integer.parseInt(st.nextToken());
+    					else
+    						throw new IllegalArgumentException("Box:\n subBox mal formater");
+    					if(st.hasMoreTokens())
+    						height = Integer.parseInt(st.nextToken());
+    					else
+    						throw new IllegalArgumentException("Box:\n subBox mal formater");
+    					hit.add(new Rectangle(posX,posY,width,height));		
+    					ligne = fichier.readLine();
+    				}
+    				hitBox[i] = hit;
+    			}catch(NumberFormatException e){
+    				System.out.println("SpriteBox:\n taille subBox erroner");
+    				throw e;
+    			}catch(IllegalArgumentException e){
+    				System.out.println(e.getMessage());
+    				fichier.close();
+    				throw e;
+    			}
+    		}
     	}catch(IllegalArgumentException e){
     		System.out.println(e.getMessage());
     		fichier.close();
@@ -105,97 +179,8 @@ public class Createur {
     		e.printStackTrace();
     	}
     	fichier.close();
-    	return new Entite(sprite, niveau, solid, strat,score);
-	}
-
-	/*
-	 * sujet a changement lorsque les animations seront implementer
-	 */
-	public static SpriteBox creerSpriteBox(String path,int posX, int posY) throws IOException{
-		HitBox hitBox = null;
-		BufferedImage image = null;
-		BufferedReader fichier=new BufferedReader(new FileReader(new File(Createur.class.getResource(path).getFile())));
-		StringTokenizer st = null;
-		String ligne = fichier.readLine();
-		try{
-			if(ligne != null)
-				st = new StringTokenizer(ligne);
-			else
-				throw new IllegalArgumentException("SpriteBox:\n fichier vide");
-			if(!st.nextToken().equals("sprite:"))
-				throw new IllegalArgumentException("SpriteBox:\n sprite: manquant");
-			if(st.hasMoreTokens())
-				try {
-					image = ImageIO.read(Createur.class.getResource("/data/Sprites/"+st.nextToken()));
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-
-			ligne = fichier.readLine();
-			if(ligne != null)
-				st = new StringTokenizer(ligne," ,");
-			else
-				throw new IllegalArgumentException("SpriteBox:\n fichier vide apres sprite");
-			if(!st.nextToken().equals("box:"))
-				throw new IllegalArgumentException("SpriteBox:\n box: manquant");
-			int width = 0;
-			int height = 0;
-			if(st.hasMoreTokens())
-				try{
-					width = Integer.parseInt(st.nextToken());
-				}catch(NumberFormatException e){
-					System.out.println("SpriteBox:\n largeur de box erroner");
-				}
-			else
-				throw new IllegalArgumentException("SpriteBox:\n descrption taille global manquant");
-			if(st.hasMoreTokens())
-				try{
-					height = Integer.parseInt(st.nextToken());
-				}catch(NumberFormatException e){
-					System.out.println("SpriteBox:\n longeur de box erroner");
-					throw e;
-				}
-			else
-				throw new IllegalArgumentException("SpriteBox:\n descrption taille global manquant");
-			hitBox = new HitBox(new Rectangle(posX,posY,width,height));
-			ligne = fichier.readLine();
-			try{
-				while(ligne != null){
-					st = new StringTokenizer(ligne," ,");
-					if(!st.nextToken().equals("subBox:"))
-						throw new IllegalArgumentException("SpriteBox:\n subBox mal formater");
-					if(st.hasMoreTokens())
-						posX = Integer.parseInt(st.nextToken());
-					else
-						throw new IllegalArgumentException("SpriteBox:\n subBox mal formater");
-					if(st.hasMoreTokens())
-						posY = Integer.parseInt(st.nextToken());
-					else
-						throw new IllegalArgumentException("SpriteBox:\n subBox mal formater");
-					if(st.hasMoreTokens())
-						width = Integer.parseInt(st.nextToken());
-					else
-						throw new IllegalArgumentException("SpriteBox:\n subBox mal formater");
-					if(st.hasMoreTokens())
-						height = Integer.parseInt(st.nextToken());
-					else
-						throw new IllegalArgumentException("SpriteBox:\n subBox mal formater");
-					hitBox.add(new Rectangle(posX,posY,width,height));		
-					ligne = fichier.readLine();
-				}
-			}catch(NumberFormatException e){
-				System.out.println("SpriteBox:\n taille subBox erroner");
-				throw e;
-			}
-		}catch(IllegalArgumentException e){
-			System.out.println(e.getMessage());
-			fichier.close();
-			throw e;
-		}
-		fichier.close();
-		
-		return new SpriteBox(image,hitBox);
+    	return new EntiteAnime(posX, posY,
+    			null, true, strat, null ,nbSprite, score, hitBox,x,y);
 	}
 
 	/*
@@ -223,7 +208,7 @@ public class Createur {
 		SpriteStocker stock = null;
 		Entite[][] entite = null;
 		LinkedList<Entite> mob = null;
-		Entite joueur = null;
+		EntiteAnime joueur = null;
 		BufferedReader fichier = new BufferedReader(new FileReader(new File(Createur.class.getResource(path).getFile())));
 		String ligne;
 		try{
@@ -341,7 +326,7 @@ public class Createur {
 				while(!ligne.equals("Joueur:")){
 					st = new StringTokenizer(ligne," ,");
 					try{
-						mob.add(Createur.creerEntiter("/data/"+st.nextToken(),null,Integer.parseInt(st.nextToken()),Integer.parseInt(st.nextToken()),creerStrategie(st)));
+						mob.add(Createur.creerEntiter("/data/"+st.nextToken(),Integer.parseInt(st.nextToken()),Integer.parseInt(st.nextToken()),creerStrategie(st),stock));
 					}catch(NoSuchElementException e){
 						System.out.println(ligne);
 						System.out.println("Niveau:\n position d'un ennemis manquante ou erroner");
@@ -356,7 +341,7 @@ public class Createur {
 				}
 			}else
 				ligne = fichier.readLine();
-			
+
 			//recupération des donné du joueur
 			if(!ligne.equals("Joueur:"))
 				throw new IllegalArgumentException("Niveau:\n Joueur: manquant");
@@ -365,7 +350,7 @@ public class Createur {
 				throw new IllegalArgumentException("Niveau:\n Joueur manquant");
 			try{
 				st = new StringTokenizer(ligne,",");
-				joueur = new Entite(Integer.parseInt(st.nextToken()),Integer.parseInt(st.nextToken()),null,true,new StrategieJoueur(),"/data/Sprites/goblin.sprbx",0);
+				joueur = Createur.creerEntiter("/data/goblin",Integer.parseInt(st.nextToken()),Integer.parseInt(st.nextToken()),new StrategieJoueur(),stock);
 			}catch(NoSuchElementException e){
 				System.out.println("Niveau:\n position du joueur manquante ou erroner");
 				fichier.close();
@@ -385,15 +370,19 @@ public class Createur {
 		}
 		fichier.close();
 		Niveau niveau = new Niveau(stock, entite, mob, joueur);
-		
+
 		//toutes les entites on été créer sans reference au niveau (puisqu'il n'avais pas encors été créer) on leur donne donc leur reference maintenent
 		for(int i = 0; i< entite.length;i++)
 			for(int j = 0; j < entite[0].length; j++)
 				entite[i][j].setNiveau(niveau);
 		Iterator<Entite> it = mob.iterator();
-		while(it.hasNext())
-			it.next().setNiveau(niveau);
+		while(it.hasNext()){
+			Entite e = it.next();
+			e.setNiveau(niveau);
+			e.ajouterSprite();			
+		}
 		joueur.setNiveau(niveau);
+		joueur.ajouterSprite();
 		return niveau;
 	}
 

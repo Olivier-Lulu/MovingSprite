@@ -7,18 +7,18 @@ import modele.Parametres;
 
 public class gamethread implements Runnable {
 	
-	FenetreNiveau fn;
 	Niveau n;
+	FenetreNiveau fn;
 	Menu m;
 	JFrame frame;
 	Parametres p;
 	
 	public gamethread(Niveau n,Menu m,JFrame frame, Parametres p){
-		this.fn= new FenetreNiveau(n);
-		this.n = n;
+		this.n= n;
 		this.m = m;
 		this.frame = frame;
 		this.p = p;
+		fn = new FenetreNiveau(n);
 	}
 	
 	public void start(){
@@ -95,5 +95,4 @@ public class gamethread implements Runnable {
 			}
 		}
 	}
-
 }

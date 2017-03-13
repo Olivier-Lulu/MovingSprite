@@ -2,43 +2,35 @@ package modele;
 
 import java.awt.Graphics;
 import java.awt.Rectangle;
-import java.io.IOException;
-
-import controleur.Createur;
 import vue.Sprite;
-import vue.SpriteBox;
 
 
 public class Entite {
 
-    private SpriteBox sprite;
+    private Sprite sprite;
+    private HitBox hitBox;
 	private Niveau niveau;
     private boolean solid;
     private Strategie strat;
     private int score;
+    private int etat = 0;
     
-    public Entite(SpriteBox sprite, Niveau niveau, boolean solid, Strategie strat, int score){
+    public Entite(Sprite sprite, Niveau niveau, boolean solid, Strategie strat, int score, HitBox hitBox){
     	this.sprite = sprite;
     	this.niveau = niveau;
         this.solid = solid;
         this. strat = strat;    	
         this.score = score;
-    }
-
-    public Entite(int posX, int posY,  Niveau niveau,boolean solid,Strategie strat, String path,int score) throws IOException{
-    	this.sprite = Createur.creerSpriteBox(path, posX, posY);
-    	this.strat = strat;
-		this.niveau = niveau;
-		this.solid = solid;
-		this.score = score;
+        this.hitBox = hitBox;
     }
     
     public Entite(int posX, int posY, int width, int height, Niveau niveau, boolean solid, Strategie strat, Sprite sprite, int score) {
-    	this.sprite = new SpriteBox(new Rectangle(posX,posY,width,height),sprite);
+    	this.sprite = sprite;
     	this.strat = strat;
 		this.niveau = niveau;
 		this.solid = solid;
 		this.score = score;
+		this.hitBox = new HitBox(new Rectangle(posX,posY,width,height));
 	}
 
     public void setNiveau(Niveau niveau){
@@ -47,15 +39,15 @@ public class Entite {
     }
     
 	public boolean intersects(Entite e){
-    	return sprite.intersects(e.sprite);
+    	return hitBox.intersects(e.hitBox);
     }
     
     public int getPosX(){
-    	return sprite.getPosX();
+    	return hitBox.getPosX();
     }
     
     public int getPosY(){
-    	return sprite.getPosY();
+    	return hitBox.getPosY();
     }
     
     /*
@@ -64,17 +56,17 @@ public class Entite {
      */
     public void setPosition(int posX, int posY){
     	if(posX >= 0 && posY >= 0 )
-    		sprite.setPosition(posX, posY);
+    		hitBox.setPosition(posX, posY);
     	else
     		throw new IllegalArgumentException("coordonne negative");
     }
     
     public int getWidth(){
-    	return sprite.getWidth();
+    	return hitBox.getWidth();
     }
     
     public int getHeight(){
-    	return sprite.getHeight();
+    	return hitBox.getHeight();
     }
     
     public boolean isSolid(){
@@ -97,7 +89,7 @@ public class Entite {
     }
     
     public void drawDebug(Graphics g,int deltaX,int deltaY,int screenWidth,int screenHeight){
-    	sprite.drawDebug(g,deltaX,deltaY,screenWidth,screenHeight);
+    	hitBox.drawDebug(g,deltaX,deltaY,screenWidth,screenHeight);
     }
 
     public Sprite getSprite() {
@@ -119,7 +111,17 @@ public class Entite {
 	 * \param lTrace liste des boucliers du niveau
 	 */
 	public int eval(){
-		return strat.eval(this, niveau);
+		etat = strat.eval(this, niveau);
+		return etat;
+	}
+	
+	public int getEtat() {
+		return etat;
+	}
+
+	public int setEtat(int etat) {
+		this.etat = etat;
+		return etat;
 	}
 	
 	/*
@@ -128,6 +130,13 @@ public class Entite {
 	public void deces(Entite e){
 		Score.augmenterScore(score);
 		niveau.supprimerEntite(this);
+	}
+	
+	/*
+	 * 
+	 */
+	public void ajouterSprite(){
+		return;
 	}
 	
 }
