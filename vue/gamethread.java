@@ -34,7 +34,7 @@ public class gamethread implements Runnable {
 			images++;
 			if (maintenant -dernier > 1000){
 				dernier = maintenant;
-				System.out.println(images + " images par seconde");
+				//System.out.println(images + " images par seconde");
 				images=0;
 			}
 			while(m.isParam()){
@@ -47,7 +47,7 @@ public class gamethread implements Runnable {
 				images++;
 				if (maintenant -dernier > 1000){
 					dernier = maintenant;
-					System.out.println(images + " images par seconde");
+					//System.out.println(images + " images par seconde");
 					images=0;
 				}
 				try {
@@ -81,7 +81,7 @@ public class gamethread implements Runnable {
 			images++;
 			if (maintenant -dernier > 1000){
 				dernier = maintenant;
-				System.out.println(images + " images par seconde");
+				//System.out.println(images + " images par seconde");
 				images=0;
 			}
 			try {

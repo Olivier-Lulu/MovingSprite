@@ -1,7 +1,6 @@
 package vue;
 
 import java.awt.Graphics;
-import java.io.IOException;
 import java.util.Iterator;
 import java.util.ListIterator;
 import java.util.LinkedList;
@@ -17,6 +16,7 @@ import controleur.ActionDeplacementReleasedQ;
 import controleur.ActionTrace;
 import modele.Bouclier;
 import modele.Entite;
+import modele.EntiteBoulette;
 import modele.EntiteTrace;
 import modele.StrategieJoueur;
 import modele.StrategieTireur;
@@ -32,7 +32,7 @@ public class Niveau extends JPanel{
 	public LinkedList<Entite> mob;
 	public Entite joueur;
 	public LinkedList<Bouclier> boucliers = new LinkedList<Bouclier>();
-	public LinkedList<Entite> boulettes = new LinkedList<Entite>();
+	public LinkedList<EntiteBoulette> boulettes = new LinkedList<EntiteBoulette>();
 	
 	public Niveau(SpriteStocker stock, Entite[][] entite, LinkedList<Entite> mob, Entite joueur) {
 		super();
@@ -58,7 +58,7 @@ public class Niveau extends JPanel{
 
 		this.addMouseListener(new ActionTrace(this));
 		
-		mob.add(new Entite(200, 1000, 25, 25, this, true, new StrategieTireur(), new Sprite("/data/Sprites/goblin.png")));
+		mob.add(new Entite(200, 1000, 25, 25, this, true, new StrategieTireur(2), new Sprite(stock.getSprite(2, 4))));
 		
 	}
 
@@ -96,7 +96,7 @@ public class Niveau extends JPanel{
 		}
 		
 		//affichage des boulettes
-		ListIterator<Entite> itBoulette = boulettes.listIterator();
+		ListIterator<EntiteBoulette> itBoulette = boulettes.listIterator();
 		while(itBoulette.hasNext()){
 			itBoulette.next().rendu(g,
 					(300 -joueur.getWidth())-joueur.getPosX(),
@@ -132,9 +132,13 @@ public class Niveau extends JPanel{
 		}
 		
 		//évalutation des boulettes
-		ListIterator<Entite> itBoulette = boulettes.listIterator();
+		ListIterator<EntiteBoulette> itBoulette = boulettes.listIterator();
 		while(itBoulette.hasNext()){
-			itBoulette.next().eval();
+			EntiteBoulette boulette = itBoulette.next();
+			boulette.eval();
+			if (boulette.doitDeceder()){
+				boulettes.remove(boulette);
+			}
 		}
 		
 	}
@@ -180,6 +184,8 @@ public class Niveau extends JPanel{
 			deltaY = positionYCLickSouris - positionYLacheSouris;
 		}
 		
+		int typeTrace = (positionYCLickSouris - positionYLacheSouris < 0) ? 1 : 2;
+		
 		int curseurX =(positionXCLickSouris*600)/getWidth() - (300 - joueur.getWidth() - joueur.getPosX());
 		int curseurY =(positionYCLickSouris*600)/getHeight() - (300 - joueur.getHeight() - joueur.getPosY());
 		
@@ -196,7 +202,7 @@ public class Niveau extends JPanel{
 						Hud.manaBaisse();
 						trace.add(new EntiteTrace(curseurX, curseurY, 
 								this, new StrategieTrace(),
-								stock.get("4")));
+								stock.get("4"), typeTrace));
 					}
 
 					//il faut toujours tracer du click vers le lache
@@ -212,7 +218,9 @@ public class Niveau extends JPanel{
 						curseurY -= EntiteTrace.tailleBlockTrace;
 					}
 				}
-				boucliers.add(new Bouclier(trace));
+				
+				
+				boucliers.add(new Bouclier(trace, typeTrace));
 
 				//si l'ecart d'abscisse est plus grand, les blocks s'empilent
 				//horizontalement
@@ -227,7 +235,7 @@ public class Niveau extends JPanel{
 						Hud.manaBaisse();
 						trace.add(new EntiteTrace(curseurX, curseurY,
 								this, new StrategieTrace(), 
-								stock.get("4")));
+								stock.get("4"), typeTrace));
 					}
 
 					//il faut toujours tracer du click vers le lache
@@ -243,7 +251,7 @@ public class Niveau extends JPanel{
 						curseurY -= decalageVertical;
 					}
 				}
-				boucliers.add(new Bouclier(trace));
+				boucliers.add(new Bouclier(trace, typeTrace));
 			}
 		}
 	}

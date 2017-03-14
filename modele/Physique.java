@@ -1,9 +1,11 @@
 package modele;
+
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.ListIterator;
 
 
 public class Physique {
@@ -73,13 +75,11 @@ public class Physique {
 		}
 		
 		//meme explication que listeEntite  -> fusion peut etre possible
-		List<EntiteTrace> listeTrace = new LinkedList<EntiteTrace>();
+		List<Bouclier> listeBouclier = new LinkedList<Bouclier>();
 		for (Bouclier unBouclier : boucliers) {
-			Iterator<EntiteTrace> traceIterator = unBouclier.ligne.iterator();
-			for(int i=0; i < unBouclier.ligne.size();i++){
-				EntiteTrace entite = traceIterator.next();
+			for (EntiteTrace entite : unBouclier.ligne){
 				if(r.intersects(entite.getPosX(),entite.getPosY(),entite.getWidth(),entite.getHeight()) && !entite.equals(e)){
-					listeTrace.add(entite);
+					listeBouclier.add(unBouclier);
 				}
 			}
 		}
@@ -231,21 +231,17 @@ public class Physique {
 				}
 			}
 			
-			//voirs pour les entités
-			Iterator<EntiteTrace>traceIterator = listeTrace.iterator();
-			for(int j=0; j < listeTrace.size();j++){
-				EntiteTrace ent = traceIterator.next();
-				if(e.intersects(ent)){
-					//flag
-					//e est l'entite qui se déplace
-					//c'est deces qui représente le comportement a adopter lorsque 
-					//e va rencontrer le shield
-					
-					//e.refractionBoulette #le nom du truc qui va calculer l'angle 
-					//de rebond
+			for (Bouclier boubou : listeBouclier){
+				if (EntiteBoulette.class.isAssignableFrom(e.getClass())){
+					if ( !((EntiteBoulette) e).boucliersInterdits.contains(boubou) && ( boubou.getType() == ((EntiteBoulette)e).getType() ) ){
+						e.getStrat().deplacement = boubou.calculerDirectionRebond(e.getStrat().deplacement, e.getPosX(), e.getPosY());
+						((EntiteBoulette) e).boucliersInterdits.add(boubou);
+						((EntiteBoulette) e).aRebondit();
+					}
 				}
 			}
 		}
+	
 		
 		if (e.getStrat().estSensibleGravite)
 			e.getStrat().enVols=true;
