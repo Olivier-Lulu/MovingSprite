@@ -16,7 +16,6 @@ import controleur.ActionTrace;
 import modele.Bouclier;
 import modele.Entite;
 import modele.EntiteBoulette;
-import modele.EntiteTrace;
 import modele.Niveau;
 import modele.StrategieJoueur;
 

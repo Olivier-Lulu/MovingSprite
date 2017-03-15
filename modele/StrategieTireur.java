@@ -1,10 +1,9 @@
 package modele;
 
-import vue.Sprite;
-
 public class StrategieTireur extends Strategie {
 
 	private int pas = 0;
+	//Le sens ou direction du mouvement du tireur (en terme d'abscisse)
 	private int sens = 1;
 	private int type;
 	

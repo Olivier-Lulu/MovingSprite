@@ -5,7 +5,9 @@ import java.awt.event.MouseListener;
 
 import vue.FenetreNiveau;
 
-
+/*
+ * Décrit la réaction du jeu aux contrôles de la souris.
+ */
 public class ActionTrace implements MouseListener {
 
 	private boolean traceAutorise = true; 

@@ -2,6 +2,10 @@ package modele;
 
 import vue.Sprite;
 
+/*
+ * Les EntiteTrace sont les blocks composant les boucliers tracés par le joueur. Ces boucliers servent à renvoyer
+ * 	les boulettes envoyées par les monstres.
+ */
 public class EntiteTrace extends Entite{
 
 	private int ttl = 150;

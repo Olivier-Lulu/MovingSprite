@@ -2,10 +2,8 @@ package modele;
 
 import java.awt.Point;
 import java.awt.Rectangle;
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.ListIterator;
 
 
 public class Physique {
@@ -235,9 +233,9 @@ public class Physique {
 			for (Bouclier boubou : listeBouclier){
 				if (EntiteBoulette.class.isAssignableFrom(e.getClass())){
 					if ( !((EntiteBoulette) e).boucliersInterdits.contains(boubou) && ( boubou.getType() == ((EntiteBoulette)e).getType() ) ){
-						e.getStrat().deplacement = boubou.calculerDirectionRebond(e.getStrat().deplacement, e.getPosX(), e.getPosY());
+						e.getStrat().deplacement = boubou.calculerMouvmentApresRebond(e.getStrat().deplacement, e.getPosX(), e.getPosY());
 						((EntiteBoulette) e).boucliersInterdits.add(boubou);
-						((EntiteBoulette) e).aRebondit();
+						((EntiteBoulette) e).rebondit();
 					}
 				}
 			}

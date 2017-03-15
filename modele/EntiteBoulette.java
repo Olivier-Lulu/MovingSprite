@@ -3,11 +3,16 @@ package modele;
 import java.util.LinkedList;
 import vue.Sprite;
 
+/*
+ * Les EntiteBoulette représentent les boulettes envoyées par les monstres. Elles peuvent être renvoyées par les boucliers tracés par le joueur.
+ */
 public class EntiteBoulette extends Entite {
 
 	private int ttl = 75;
+	//Attribut à savoir si une boulette est mortelle pour les ennemis ou pas.
 	private boolean aRebondit = false;
 	public LinkedList<Bouclier> boucliersInterdits = new LinkedList<Bouclier>();
+	//Le type d'une boulette sert à savoir quel type de bouclier peut la renvoyer
 	private int type;
 	
 	public EntiteBoulette(int posX, int posY, Niveau niveau, int sens, int type) {
@@ -26,10 +31,11 @@ public class EntiteBoulette extends Entite {
 		return false;
 	}
 	
-	public void aRebondit() {
+	public void rebondit() {
 		aRebondit = true;
 	}
 	
+	//Une boulette ne peut tuer les ennemis que lorsqu'elle a rebondit au moins une fois sur un bouclier.
 	public boolean tueLesMobs (){
 		return aRebondit;
 	}
