@@ -13,7 +13,9 @@ import controleur.ActionDeplacementPressedZ;
 import controleur.ActionDeplacementReleasedD;
 import controleur.ActionDeplacementReleasedQ;
 import controleur.ActionTrace;
+import modele.Bouclier;
 import modele.Entite;
+import modele.EntiteBoulette;
 import modele.EntiteTrace;
 import modele.Niveau;
 import modele.StrategieJoueur;
@@ -73,9 +75,9 @@ public class FenetreNiveau extends JPanel {
 		//joueur.drawDebug(g,(300 -joueur.getWidth())-joueur.getPosX(),300 -joueur.getHeight()-joueur.getPosY(),getWidth(),getHeight());
 		
 		//affichage du tracé du joueur
-		Iterator<EntiteTrace> itTrace = niveau.trace.iterator();
-		while(itTrace.hasNext()){
-			itTrace.next().rendu(g,
+		Iterator<Bouclier> itBouclier = niveau.boucliers.iterator();
+		while(itBouclier.hasNext()){
+			itBouclier.next().rendu(g,
 					(300 -niveau.joueur.getWidth())-niveau.joueur.getPosX(),
 					300 -niveau.joueur.getHeight()-niveau.joueur.getPosY(),
 					getWidth(),
@@ -83,7 +85,7 @@ public class FenetreNiveau extends JPanel {
 		}
 		
 		//affichage des boulettes
-		ListIterator<Entite> itBoulette = niveau.boulettes.listIterator();
+		ListIterator<EntiteBoulette> itBoulette = niveau.boulettes.listIterator();
 		while(itBoulette.hasNext()){
 			itBoulette.next().rendu(g,
 					(300 -niveau.joueur.getWidth())-niveau.joueur.getPosX(),

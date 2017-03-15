@@ -34,7 +34,6 @@ public class Main{
 		frame.setVisible(true);
 		(new gamethread(n,m,frame,p)).start();
 		frame.revalidate();
-		System.out.println("pppp");
 		(new SoundThread(n)).play();
 	}
 }
