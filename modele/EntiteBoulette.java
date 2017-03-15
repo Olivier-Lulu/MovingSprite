@@ -11,7 +11,7 @@ public class EntiteBoulette extends Entite {
 	private int type;
 	
 	public EntiteBoulette(int posX, int posY, Niveau niveau, int sens, int type) {
-		super(posX, posY, 10, 10, niveau, true, 
+		super(posX, posY, 15, 15, niveau, true, 
 				new Strategie(sens * 10, 0, false, false), 
 				new Sprite(niveau.stock.getSprite(6, type+2)), 0);
 		// TODO Auto-generated constructor stub
@@ -27,7 +27,11 @@ public class EntiteBoulette extends Entite {
 	}
 	
 	public void aRebondit() {
-		aRebondit=true;
+		aRebondit = true;
+	}
+	
+	public boolean tueLesMobs (){
+		return aRebondit;
 	}
 	
 	public int getType (){

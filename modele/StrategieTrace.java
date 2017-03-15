@@ -12,7 +12,7 @@ public class StrategieTrace extends Strategie implements Eval {
 
 	public int eval(Entite e,Entite [][] tiles, List<Entite> l){
 		if ( ((EntiteTrace)e).doitDeceder() )
-			e.deces(null);
+			e.deces();
 		return 1;
 	}
 }
