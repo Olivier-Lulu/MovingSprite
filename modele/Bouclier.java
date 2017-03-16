@@ -4,6 +4,7 @@ import java.awt.Graphics;
 import java.awt.Point;
 import java.util.LinkedList;
 import java.util.ListIterator;
+
 /*!
  * La classe bouclier sert à stocker la liste qui représente ce bouclier et à ainsi centraliser tous les calculs nécessaires 
  * 	à celui du rebond des boulettes sur les boucliers du joueur.

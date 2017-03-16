@@ -119,10 +119,9 @@ public class Niveau{
 				for (int i = 0; i < deltaY; i += StrategieTrace.tailleBlockTrace){
 					if(Mana.aMana()){
 						Mana.manaBaisse();
-						trace.add(new Entite(
-								curseurX, curseurY, StrategieTrace.tailleBlockTrace, StrategieTrace.tailleBlockTrace,
-								this,true, new StrategieTrace(),
-								stock.get("4"), 0));
+						trace.add(new EntiteTrace(
+								curseurX, curseurY, 
+								this, new StrategieTrace(), typeTrace));
 					}
 
 					//il faut toujours tracer du click vers le lache
@@ -153,10 +152,9 @@ public class Niveau{
 				for (int i = 0; i < deltaX; i += StrategieTrace.tailleBlockTrace){
 					if(Mana.aMana()){
 						Mana.manaBaisse();
-						trace.add(new Entite(
-								curseurX, curseurY, StrategieTrace.tailleBlockTrace, StrategieTrace.tailleBlockTrace,
-								this,true, new StrategieTrace(),
-								stock.get("4"), 0));
+						trace.add(new EntiteTrace(
+								curseurX, curseurY, 
+								this, new StrategieTrace(), typeTrace));
 					}
 
 					//il faut toujours tracer du click vers le lache

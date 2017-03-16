@@ -12,8 +12,8 @@ public class EntiteTrace extends Entite{
 	public static int tailleBlockTrace = 5;
 	
 	public EntiteTrace(int posX, int posY, Niveau niveau,
-			Strategie strat, Sprite sprite, int typeTrace) {
-		super(posX, posY, tailleBlockTrace, tailleBlockTrace, niveau, false, strat, sprite, 0);
+			Strategie strat, int typeTrace) {
+		super(posX, posY, tailleBlockTrace, tailleBlockTrace, niveau, false, strat, new Sprite(niveau.stock.getSprite(typeTrace, 6)) , 0);
 	}
 
 	public boolean doitDeceder (){
