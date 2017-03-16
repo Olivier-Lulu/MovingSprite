@@ -8,6 +8,9 @@ import vue.SpriteStocker;
 
 public class Niveau{
 
+	//coordonnées de départ
+	private int x; 
+	private int y;
 
 	public SpriteStocker stock;
 
@@ -23,6 +26,8 @@ public class Niveau{
 		this.entite = entite;
 		this.mob = mob;
 		this.joueur = joueur;		
+		x = joueur.getPosX();
+		y = joueur.getPosY();
 		
 	}
 
@@ -72,7 +77,7 @@ public class Niveau{
 	 */
 	public void supprimerEntite(Entite e){
 		if(joueur.equals(e)){
-			joueur.setPosition(100, 400);
+			joueur.setPosition(x, y);
 		}else
 			if(mob.contains(e)){
 				mob.remove(e);

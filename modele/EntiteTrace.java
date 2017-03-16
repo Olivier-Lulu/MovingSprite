@@ -9,7 +9,7 @@ import vue.Sprite;
 public class EntiteTrace extends Entite{
 
 	private int ttl = 150;
-	public static int tailleBlockTrace = 5;
+	public static int tailleBlockTrace = 7;
 	
 	public EntiteTrace(int posX, int posY, Niveau niveau,
 			Strategie strat, int typeTrace) {

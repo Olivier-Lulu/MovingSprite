@@ -18,7 +18,7 @@ public class Physique {
 	 */
 	public static int move(Entite e, Niveau n) {
 		if(e.getStrat().enVols)
-			e.getStrat().deplacement.y += 2;
+			e.getStrat().deplacement.y += 1;
 		return colision(e, n);
 	}
 	
@@ -219,12 +219,21 @@ public class Physique {
 			if (!e.equals(n.joueur) && !(StrategieScorable.class.isAssignableFrom(e.getStrat().getClass())) && n.joueur.intersects(e) )
 				n.joueur.deces();
 			
+			
 			//apres avoirs fais un deplacement de e on test si il n'est pas en collision avec une autre entité 
+			
+			for (Entite mob : listeEntite)
+				if (e.equals(n.joueur) && (StrategieScorable.class.isAssignableFrom(mob.getStrat().getClass()))){
+					mob.deces();
+					listeEntite.remove(mob);
+				}
+			
 			
 			if(EntiteBoulette.class.isAssignableFrom(e.getClass())){
 				for (Entite ent : listeEntite) {
 					if (((EntiteBoulette) e).tueLesMobs()){
 						ent.deces();
+						listeEntite.remove(ent);
 					}
 				}
 			}

@@ -11,7 +11,7 @@ public class EntiteAnime extends Entite {
 	HitBox[] hitBox;
 	int timerJoueur = 0;
 	private int timerTireur = 0;
-	
+
 	public EntiteAnime(int posX, int posY,
 			Niveau niveau, boolean solid, Strategie strat, Sprite sprite, int taille, int score, HitBox[] hitBox, int x, int y) {
 		super(sprite, niveau, solid, strat, score, hitBox[0]);
@@ -20,7 +20,7 @@ public class EntiteAnime extends Entite {
 		this.x = x;
 		this.y = y;
 	}
-	
+
 	public void ajouterSprite(){
 		for (int i =0 ; i  < spritetab.length; i++){
 			spritetab[i] = new Sprite(this.getNiveau().stock.getSprite(i+x, y));
@@ -45,6 +45,7 @@ public class EntiteAnime extends Entite {
 					g.drawImage(spritetab[3].getBufferedImage(), ((getPosX()+deltaX)*screenWidth)/600, ((getPosY()+deltaY)*screenHeight)/600, (getWidth()*screenWidth)/600+1, (getHeight()*screenHeight)/600+1,null);
 				}
 			}
+
 			if (this.getEtat() == 1 && this.timerJoueur < 6){
 				this.setDernierEtat(1);
 				g.drawImage(spritetab[0].getBufferedImage(), ((getPosX()+deltaX)*screenWidth)/600, ((getPosY()+deltaY)*screenHeight)/600, (getWidth()*screenWidth)/600+1, (getHeight()*screenHeight)/600+1,null);
@@ -106,6 +107,16 @@ public class EntiteAnime extends Entite {
 				this.setDernierEtat(2);
 				this.timerTireur = 0;
 				g.drawImage(spritetab[0].getBufferedImage(), ((getPosX()+deltaX)*screenWidth)/600, ((getPosY()+deltaY)*screenHeight)/600, (getWidth()*screenWidth)/600+1, (getHeight()*screenHeight)/600+1,null);
+			}else if ( this.getEtat() == 0){
+				if (this.getDernierEtat() == 2 || this.getDernierEtat() == 4 || this.getDernierEtat() == 8 || this.getDernierEtat() == 0){
+					g.drawImage(spritetab[0].getBufferedImage(), ((getPosX()+deltaX)*screenWidth)/600, ((getPosY()+deltaY)*screenHeight)/600, (getWidth()*screenWidth)/600+1, (getHeight()*screenHeight)/600+1,null);
+					this.timerTireur=0;
+					this.setDernierEtat(2);
+				}else{
+					g.drawImage(spritetab[0].getBufferedImage(), ((getPosX()+deltaX)*screenWidth)/600+ (getWidth()*screenWidth)/600+1, ((getPosY()+deltaY)*screenHeight)/600, -(getWidth()*screenWidth)/600+1, (getHeight()*screenHeight)/600+1,null);
+					this.timerTireur=0;
+					this.setDernierEtat(1);
+				}
 			}
 		}
 		this.timerJoueur++;
@@ -148,53 +159,52 @@ public class EntiteAnime extends Entite {
 			return hitBox[3].intersects(e.hitBox);
 		}
 		return super.intersects(e);
-    }
-    
-	@Override
-    public void setPosition(int posX, int posY){
-    	if(posX < 0 || posY < 0 )
-    		throw new IllegalArgumentException("coordonne negative");
-    	for(int i = 0; i < hitBox.length; i++)
-    		hitBox[i].setPosition(posX, posY);
-    }
-	
-	@Override
-	 public void drawDebug(Graphics g,int deltaX,int deltaY,int screenWidth,int screenHeight){
-			if ( this.getEtat() == 0){
-				hitBox[0].drawDebug(g,deltaX,deltaY,screenWidth,screenHeight);
-			}
-			if (this.getEtat() == 1 && this.timerJoueur < 6){
-				hitBox[0].drawDebug(g,deltaX,deltaY,screenWidth,screenHeight);
+	}
 
-			}
-			if (this.getEtat() == 1 && this.timerJoueur >= 6 && this.timerJoueur < 12){
-				hitBox[1].drawDebug(g,deltaX,deltaY,screenWidth,screenHeight);
-			}
-			if (this.getEtat() == 1 && this.timerJoueur >= 12 && this.timerJoueur <18){
-				hitBox[1].drawDebug(g,deltaX,deltaY,screenWidth,screenHeight);
-			}
-			if (this.getEtat() == 1 && this.timerJoueur >= 18){
-				hitBox[2].drawDebug(g,deltaX,deltaY,screenWidth,screenHeight);
-			}
-			if (this.getEtat() == 2 && this.timerJoueur < 10){
-				hitBox[0].drawDebug(g,deltaX,deltaY,screenWidth,screenHeight);
-			}
-			if (this.getEtat() == 2 && this.timerJoueur >= 10 && this.timerJoueur < 20){
-				hitBox[1].drawDebug(g,deltaX,deltaY,screenWidth,screenHeight);
-			}
-			if (this.getEtat() == 2 && this.timerJoueur >= 20){
-				hitBox[2].drawDebug(g,deltaX,deltaY,screenWidth,screenHeight);
-			}
-			if (this.getEtat() == 3){
-				hitBox[3].drawDebug(g,deltaX,deltaY,screenWidth,screenHeight);
-			}
-			if (this.getEtat() == 4){
-				hitBox[3].drawDebug(g,deltaX,deltaY,screenWidth,screenHeight);
-			}
-			this.timerJoueur++;
-			if (timerJoueur > 24){
-				timerJoueur = 0;
-			}
-	    }
+	@Override
+	public void setPosition(int posX, int posY){
+		if(posX < 0 || posY < 0 )
+			throw new IllegalArgumentException("coordonne negative");
+		for(int i = 0; i < hitBox.length; i++)
+			hitBox[i].setPosition(posX, posY);
+	}
 
+	@Override
+	public void drawDebug(Graphics g,int deltaX,int deltaY,int screenWidth,int screenHeight){
+		if ( this.getEtat() == 0){
+			hitBox[0].drawDebug(g,deltaX,deltaY,screenWidth,screenHeight);
+		}
+		if (this.getEtat() == 1 && this.timerJoueur < 6){
+			hitBox[0].drawDebug(g,deltaX,deltaY,screenWidth,screenHeight);
+
+		}
+		if (this.getEtat() == 1 && this.timerJoueur >= 6 && this.timerJoueur < 12){
+			hitBox[1].drawDebug(g,deltaX,deltaY,screenWidth,screenHeight);
+		}
+		if (this.getEtat() == 1 && this.timerJoueur >= 12 && this.timerJoueur <18){
+			hitBox[1].drawDebug(g,deltaX,deltaY,screenWidth,screenHeight);
+		}
+		if (this.getEtat() == 1 && this.timerJoueur >= 18){
+			hitBox[2].drawDebug(g,deltaX,deltaY,screenWidth,screenHeight);
+		}
+		if (this.getEtat() == 2 && this.timerJoueur < 10){
+			hitBox[0].drawDebug(g,deltaX,deltaY,screenWidth,screenHeight);
+		}
+		if (this.getEtat() == 2 && this.timerJoueur >= 10 && this.timerJoueur < 20){
+			hitBox[1].drawDebug(g,deltaX,deltaY,screenWidth,screenHeight);
+		}
+		if (this.getEtat() == 2 && this.timerJoueur >= 20){
+			hitBox[2].drawDebug(g,deltaX,deltaY,screenWidth,screenHeight);
+		}
+		if (this.getEtat() == 3){
+			hitBox[3].drawDebug(g,deltaX,deltaY,screenWidth,screenHeight);
+		}
+		if (this.getEtat() == 4){
+			hitBox[3].drawDebug(g,deltaX,deltaY,screenWidth,screenHeight);
+		}
+		this.timerJoueur++;
+		if (timerJoueur > 24){
+			timerJoueur = 0;
+		}
+	}
 }

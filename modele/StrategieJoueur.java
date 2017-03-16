@@ -40,8 +40,9 @@ public class StrategieJoueur extends Strategie{
 	}
 
 
+	//Le joueur peut sauter environ 5 block et demi
 	public void saut(){
 		if (!enVols)
-			deplacement.y = -25;
+			deplacement.y = -18;
 	}
 }

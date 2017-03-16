@@ -363,7 +363,7 @@ public class Createur {
 						fichier.close();
 						throw e;
 					}
-					entite[i][j] = new Entite(i*25,j*25,25,25,null,l.get(code).x == 1,null,stock.get(""+l.get(code).y),0);//le fait d'utiliser un string pourra peut etre changer
+					entite[i][j] = new Entite(i*25,j*25,25,25,null,l.get(code).x == 1,null,stock.get(l.get(code).y),0);//le fait d'utiliser un string pourra peut etre changer
 				}
 			}
 			
@@ -490,7 +490,7 @@ public class Createur {
 		// recuperation de la Hauteur de saut
 		if(st.hasMoreTokens())
 			try{
-				hauteurSaut = Integer.parseInt(st.nextToken());
+				hauteurSaut = - Integer.parseInt(st.nextToken());
 			}catch(NumberFormatException e){
 				System.out.println("Patrouille:\n hauteur de saut mal formatée");
 				throw e;
@@ -554,7 +554,7 @@ public class Createur {
 		// recuperation de la Hauteur de saut
 		if(st.hasMoreTokens())
 			try{
-				hauteurSaut = Integer.parseInt(st.nextToken());
+				hauteurSaut = - Integer.parseInt(st.nextToken());
 			}catch(NumberFormatException e){
 				System.out.println("Tireur:\n hauteur de saut mal formatée");
 				throw e;

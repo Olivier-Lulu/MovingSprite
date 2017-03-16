@@ -7,12 +7,12 @@ import javax.imageio.ImageIO;
 
 public class SpriteStocker {
 	
-	private HashMap<String,Sprite> stock;
+	private HashMap<Integer,Sprite> stock;
 	
 	public static BufferedImage table = null;
 	
 	public SpriteStocker(String path,int i){
-		stock = new HashMap<String, Sprite>();
+		stock = new HashMap<Integer, Sprite>();
 		
 		try {
 			table = ImageIO.read(getClass().getResource(path));
@@ -22,16 +22,16 @@ public class SpriteStocker {
 		}
 		int j = 0;
 		while(j++ != i){
-			stock.put(""+j,new Sprite(getSprite(j, 1)));
+			stock.put(j,new Sprite(getSprite(j, 1)));
 		}
 	}
 	
-	public void add(Sprite s,String nom){
+	public void add(Sprite s,Integer nom){
 		if(!stock.containsKey(nom))
 			stock.put(nom,s);
 	}
 
-	public Sprite get(String nom){
+	public Sprite get(Integer nom){
 		if(stock.containsKey(nom))
 			return stock.get(nom);
 		return null;

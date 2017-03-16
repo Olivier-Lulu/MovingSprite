@@ -4,7 +4,7 @@ import vue.Sprite;
 
 public class Mana {
 
-	private static final int MANA_MAXIMUM = 400;
+	private static final int MANA_MAXIMUM = 100;
 	private static final Sprite MANA_VIDE = new Sprite("/data/Sprites/manaVide.png");
 	private static final Sprite MANA_PLEIN = new Sprite("/data/Sprites/manaPlein.png");
 	
