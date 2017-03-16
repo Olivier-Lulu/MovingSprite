@@ -341,7 +341,7 @@ public class Createur {
 			}
 			
 			//recuperation de la structure du niveau
-			for(int j = 0; j < entite[0].length;j++){
+			for(int j = 0; j < entite[0].length ;j++){
 				ligne = fichier.readLine();
 				if(ligne != null)
 					st = new StringTokenizer(ligne);
@@ -352,7 +352,7 @@ public class Createur {
 				for(int i = 0;i <entite.length;i++){
 					if(!st.hasMoreTokens()){
 						fichier.close();
-						throw new IllegalArgumentException("Niveau:\n ligne du monde manquant");
+						throw new IllegalArgumentException("Niveau:\n colone du monde manquant");
 					}
 					ligne = st.nextToken();
 					int code = 0;

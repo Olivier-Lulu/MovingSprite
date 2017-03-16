@@ -5,7 +5,7 @@ import javax.swing.JFrame;
 import modele.Niveau;
 import modele.Parametres;
 
-public class gamethread implements Runnable {
+public class gamethread extends Thread {
 	
 	Niveau n;
 	FenetreNiveau fn;
@@ -21,26 +21,21 @@ public class gamethread implements Runnable {
 		fn = new FenetreNiveau(n);
 	}
 	
-	public void start(){
-		Thread t = new Thread(this);
-        t.start();
-	}
-	
 	public void run(){
 		long dernier = System.currentTimeMillis();
 		int images = 0;
 		this.frame.setContentPane(m);
 		this.frame.validate();
-		while (m.isRunning()){
+		while (m.isRunning() && !this.isInterrupted()){
 			long maintenant = System.currentTimeMillis();
 			m.repaint();
 			images++;
 			if (maintenant -dernier > 1000){
 				dernier = maintenant;
-				//System.out.println(images + " images par seconde");
+				System.out.println(images + " images par seconde");
 				images=0;
 			}
-			while(m.isParam()){
+			while(m.isParam() && !this.isInterrupted()){
 				maintenant = System.currentTimeMillis();
 				this.frame.remove(m);
 				this.frame.setContentPane(p);
@@ -50,14 +45,13 @@ public class gamethread implements Runnable {
 				images++;
 				if (maintenant -dernier > 1000){
 					dernier = maintenant;
-					//System.out.println(images + " images par seconde");
+					System.out.println(images + " images par seconde");
 					images=0;
 				}
 				try {
 					Thread.sleep(15);
 				} catch (Exception e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					this.interrupt();
 				}
 			}
 			if(!m.isParam()&& this.frame.getContentPane().equals(p)){
@@ -69,29 +63,27 @@ public class gamethread implements Runnable {
 			try {
 				Thread.sleep(15);
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				this.interrupt();
 			}
 		}	
 		this.frame.remove(m);
 		this.frame.setContentPane(fn);
 		this.frame.revalidate();
 		this.frame.repaint();
-		while(true){
+		while(!this.isInterrupted()){
 			long maintenant = System.currentTimeMillis();
 			fn.repaint();
 			n.bouger();
 			images++;
 			if (maintenant -dernier > 1000){
 				dernier = maintenant;
-				//System.out.println(images + " images par seconde");
+				System.out.println(images + " images par seconde");
 				images=0;
 			}
 			try {
 				Thread.sleep(15);
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				this.interrupt();
 			}
 		}
 	}
