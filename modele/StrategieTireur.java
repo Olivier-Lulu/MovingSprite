@@ -1,28 +1,24 @@
 package modele;
 
-import vue.Sprite;
+import java.awt.Point;
 
-public class StrategieTireur extends Strategie {
+public class StrategieTireur extends StrategiePatrouille{
 
-	private int pas = 0;
 	private int sens = 1;
+	private int frequenceTire;
 	private int type;
 	
-	public StrategieTireur(int type) {
-		super(1, 0, true, true);
-		// TODO Auto-generated constructor stub
+	public StrategieTireur(int frequenceTire,int type ,Point deplacement, int taillePatrouille, int frequenceSaut, int hauteurSaut) {
+		super(deplacement, taillePatrouille, frequenceSaut, hauteurSaut);
 		this.type = type;
+		this.frequenceTire = frequenceTire;
 	}
 
 	@Override
 	public int eval(Entite e, Niveau n){
 		//s'il va à gauche c'est pair
-		int etat = Physique.move(e, n.entite, n.mob, n.boucliers);
-		if (pas < 50){
-			pas++;
-		}else{
-			pas = 0;
-			this.deplacement.x = -this.deplacement.x;
+		int etat = super.eval(e, n);
+		if (pas % frequenceTire == 1){
 			if ( etat % 2 == 0 )
 				sens = -1;
 			else

@@ -1,15 +1,16 @@
 package modele;
 
-import java.util.List;
-
 public class StrategieScorable extends Strategie {
-
+	/*
+	 * cette classe est utiliser comme strategie pour les objet
+	 */
+	
 	public StrategieScorable() {
 		super(0, 0, false, false);
-		// TODO Auto-generated constructor stub
 	}
 	
-	public int eval(Entite e,Entite [][] tiles, List<Entite> l){
+	@Override
+	public int eval(Entite e,Niveau n){
 		return 1;
 	}
 }

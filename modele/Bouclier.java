@@ -5,18 +5,16 @@ import java.awt.Point;
 import java.util.LinkedList;
 import java.util.ListIterator;
 
-import vue.Hud;
-
 public class Bouclier {
 
-	public LinkedList<EntiteTrace> ligne;
+	public LinkedList<Entite> ligne;
 	private int type;
 	private double pente;
 	private double penteAxeSymetrie;
 	private double abscisseOrigineAxeSymetrie;
 	private double abscisseOrigineAxeProjection;
 	
-	public Bouclier (LinkedList<EntiteTrace> ligne, int type){
+	public Bouclier (LinkedList<Entite> ligne, int type){
 		this.ligne = ligne;
 		calculerEquationLigne();
 		this.type = type;
@@ -78,9 +76,9 @@ public class Bouclier {
 	}
 	
 	public void disparitionNaturelle (){
-		ListIterator<EntiteTrace> itTrace = ligne.listIterator();
+		ListIterator<Entite> itTrace = ligne.listIterator();
 		while (itTrace.hasNext()){
-			if (itTrace.next().doitDeceder()){
+			if (((StrategieTrace) itTrace.next().getStrat()).doitDeceder()){
 				itTrace.previous();
 				itTrace.remove();
 				Mana.manaHausse();
@@ -98,7 +96,7 @@ public class Bouclier {
 	
 	public void rendu (Graphics g, int deltaX, int deltaY,
 			int screenWidth, int screenHeight){
-		for (EntiteTrace block : ligne){
+		for (Entite block : ligne){
 			block.rendu(g, deltaX, deltaY, screenWidth, screenHeight);
 		}
 	}

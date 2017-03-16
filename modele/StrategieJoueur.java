@@ -11,6 +11,10 @@ public class StrategieJoueur extends Strategie{
 		return Physique.move(e, n.entite, n.mob, n.boucliers);
 	}
 
+	
+	/*
+	 * les methodes deplacement  permette de faire varier la vitesse du joueur
+	 */
 	public void deplacementDroitDebut(){
 		if (deplacement.x < 1) {
 			deplacement.x = deplacement.x+2;

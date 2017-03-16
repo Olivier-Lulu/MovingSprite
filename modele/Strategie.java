@@ -4,7 +4,7 @@ import java.awt.Point;
 
 public class Strategie implements Eval{
 	
-	public Point deplacement;
+	public Point deplacement;//vecteur de deplacement a apliquer pour le prochain appele de eval 
 	public boolean enVols;
 	public boolean estSensibleGravite;
 	

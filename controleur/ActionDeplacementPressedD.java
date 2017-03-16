@@ -16,8 +16,8 @@ public class ActionDeplacementPressedD extends AbstractAction {
 		super ("pressed D");
 		this.joueurStrat = joueurStrat;
 	}
+	
 	public void actionPerformed(ActionEvent arg0) {
-		// TODO Auto-generated method stub
 		joueurStrat.deplacementDroitDebut();
 	}
 

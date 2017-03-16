@@ -5,7 +5,6 @@ import java.awt.Rectangle;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.ListIterator;
 
 
 public class Physique {
@@ -77,7 +76,7 @@ public class Physique {
 		//meme explication que listeEntite  -> fusion peut etre possible
 		List<Bouclier> listeBouclier = new LinkedList<Bouclier>();
 		for (Bouclier unBouclier : boucliers) {
-			for (EntiteTrace entite : unBouclier.ligne){
+			for (Entite entite : unBouclier.ligne){
 				if(r.intersects(entite.getPosX(),entite.getPosY(),entite.getWidth(),entite.getHeight()) && !entite.equals(e)){
 					listeBouclier.add(unBouclier);
 				}

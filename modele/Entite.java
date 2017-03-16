@@ -8,7 +8,7 @@ import vue.Sprite;
 public class Entite {
 
     private Sprite sprite;
-    private HitBox hitBox;
+    protected HitBox hitBox;
 	private Niveau niveau;
     private boolean solid;
     private Strategie strat;
@@ -33,11 +33,17 @@ public class Entite {
 		this.hitBox = new HitBox(new Rectangle(posX,posY,width,height));
 	}
 
+    /*
+     * Les entite creer via Createur n'ont pas de niveau, cette methode permet de leur definir un niveau
+     */
     public void setNiveau(Niveau niveau){
     	if(this.niveau == null && niveau != null)
     		this.niveau = niveau;
     }
     
+    /*
+     * detecte si l'entite est en colision avec une autre
+     */
 	public boolean intersects(Entite e){
     	return hitBox.intersects(e.hitBox);
     }
@@ -88,6 +94,9 @@ public class Entite {
     	g.drawImage(sprite.getBufferedImage(), ((getPosX()+deltaX)*screenWidth)/600, ((getPosY()+deltaY)*screenHeight)/600, (getWidth()*screenWidth)/600+1, (getHeight()*screenHeight)/600+1,null);
     }
     
+    /*
+     * permet de dessiner les hitBox de l'entite
+     */
     public void drawDebug(Graphics g,int deltaX,int deltaY,int screenWidth,int screenHeight){
     	hitBox.drawDebug(g,deltaX,deltaY,screenWidth,screenHeight);
     }
@@ -125,7 +134,7 @@ public class Entite {
 	}
 	
 	/*
-	 * premet de supprimer l'entité du niveau auquel elle est rattacher
+	 * permet de supprimer l'entité du niveau auquel elle est rattacher
 	 */
 	public void deces(Entite e){
 		Score.augmenterScore(score);
@@ -133,10 +142,8 @@ public class Entite {
 	}
 	
 	/*
-	 * 
+	 * declaration d'une fonction specifie dans EntiteAnime
 	 */
-	public void ajouterSprite(){
-		return;
-	}
+	public void ajouterSprite(){};
 	
 }
