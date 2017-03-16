@@ -136,7 +136,7 @@ public class Entite {
 	/*
 	 * permet de supprimer l'entité du niveau auquel elle est rattacher
 	 */
-	public void deces(Entite e){
+	public void deces(){
 		Score.augmenterScore(score);
 		niveau.supprimerEntite(this);
 	}

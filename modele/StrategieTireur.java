@@ -1,9 +1,11 @@
 package modele;
 
+
 import java.awt.Point;
 
 public class StrategieTireur extends StrategiePatrouille{
 
+	//Le sens ou direction du mouvement du tireur (en terme d'abscisse)
 	private int sens = 1;
 	private int frequenceTire;
 	private int type;

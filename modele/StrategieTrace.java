@@ -15,7 +15,7 @@ public class StrategieTrace extends Strategie implements Eval {
 
 	public int eval(Entite e,Entite [][] tiles, List<Entite> l){
 		if (ttl < 1){
-			e.deces(null);
+			e.deces();
 		}
 		ttl--;
 		return 1;

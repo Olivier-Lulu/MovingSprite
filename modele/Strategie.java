@@ -22,7 +22,7 @@ public class Strategie implements Eval{
 	
 	@Override
 	public int eval(Entite e, Niveau n){
-		return Physique.move(e, n.entite, n.mob, n.boucliers);
+		return Physique.move(e, n);
 	}
 
 }
