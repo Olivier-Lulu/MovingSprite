@@ -537,57 +537,65 @@ public class Createur {
 		int hauteurSaut = 0;
 		int taillePatrouille = 0;
 		int frequenceSaut = 0;
-		int type =0;
-		int frequenceTire=0;
+		int type = 0;
+		int frequenceTir = 0;
+		int mouvTirX = 0;
+		int mouvTirY = 0;
 		
+		int nombreArgumentRequis = 8;
 		//recuperation de la vitesse
 		if(st.hasMoreTokens())
 			try{
 				vitesse = Integer.parseInt(st.nextToken());
+				nombreArgumentRequis --;
 			}catch(NumberFormatException e){
 				System.out.println("Tireur:\n vitesse mal formatée");
 				throw e;
 			}
 		else
-			throw new IllegalArgumentException("Tireur:\nIl manque 6 argument numerique");
+			throw new IllegalArgumentException("Tireur:\nIl manque "+nombreArgumentRequis+" argument numerique");
 		
 		// recuperation de la Hauteur de saut
 		if(st.hasMoreTokens())
 			try{
 				hauteurSaut = - Integer.parseInt(st.nextToken());
+				nombreArgumentRequis --;
 			}catch(NumberFormatException e){
 				System.out.println("Tireur:\n hauteur de saut mal formatée");
 				throw e;
 			}
 		else
-			throw new IllegalArgumentException("Tireur:\nIl manque 5 argument numerique");
+			throw new IllegalArgumentException("Tireur:\nIl manque "+nombreArgumentRequis+" argument numerique");
 		
 		// recuperation de la distance de patrouille
 		if(st.hasMoreTokens())
 			try{
 				taillePatrouille = Integer.parseInt(st.nextToken());
+				nombreArgumentRequis --;
 			}catch(NumberFormatException e){
 				System.out.println("Tireur:\n taille de la patrouille mal formatée");
 				throw e;
 			}
 		else
-			throw new IllegalArgumentException("Tireur:\nIl manque 4 argument numerique");
+			throw new IllegalArgumentException("Tireur:\nIl manque "+nombreArgumentRequis+" argument numerique");
 		
 		// recuperation de la frequence de saut
 		if(st.hasMoreTokens())
 			try{
 				frequenceSaut = Integer.parseInt(st.nextToken());
+				nombreArgumentRequis --;
 			}catch(NumberFormatException e){
 				System.out.println("Tireur:\n frequence de saut mal formatée");
 				throw e;
 			}
 		else
-			throw new IllegalArgumentException("Tireur:\nIl manque 3 argument numerique");
+			throw new IllegalArgumentException("Tireur:\nIl manque "+nombreArgumentRequis+" argument numerique");
 		
 		// recuperation du type de tire
 		if(st.hasMoreTokens())
 			try{
 				type = Integer.parseInt(st.nextToken());
+				nombreArgumentRequis --;
 				if(type != 1 && type != 2 && type != 3)
 					throw new IllegalArgumentException("Tireur:\nle type de tire ne peut etre que 1, 2 ou 3");
 			}catch(NumberFormatException e){
@@ -595,19 +603,44 @@ public class Createur {
 				throw e;
 			}
 		else
-			throw new IllegalArgumentException("Tireur:\nIl manque 2 argument numerique");
+			throw new IllegalArgumentException("Tireur:\nIl manque "+nombreArgumentRequis+" argument numerique");
 		
 		// recuperation de la frequence de tire
 		if(st.hasMoreTokens())
 			try{
-				frequenceTire = Integer.parseInt(st.nextToken());
+				frequenceTir = Integer.parseInt(st.nextToken());
+				nombreArgumentRequis --;
 			}catch(NumberFormatException e){
 				System.out.println("Tireur:\n frequence de tire mal formatée");
 				throw e;
 			}
 		else
-			throw new IllegalArgumentException("Tireur:\nIl manque 1 argument numerique");
+			throw new IllegalArgumentException("Tireur:\nIl manque "+nombreArgumentRequis+" argument numerique");
+
+		// recuperation du mouvementde tir
+		if(st.hasMoreTokens())
+			try{
+				mouvTirX = Integer.parseInt(st.nextToken());
+				nombreArgumentRequis --;
+			}catch(NumberFormatException e){
+				System.out.println("Tireur:\n mouvement en X de tir mal formaté");
+				throw e;
+			}
+		else
+			throw new IllegalArgumentException("Tireur:\nIl manque "+nombreArgumentRequis+" argument numerique");
+
+		if(st.hasMoreTokens())
+			try{
+				mouvTirY = - Integer.parseInt(st.nextToken());
+				nombreArgumentRequis --;
+			}catch(NumberFormatException e){
+				System.out.println("Tireur:\n mouvement en Y de tire mal formatée");
+				throw e;
+			}
+		else
+			throw new IllegalArgumentException("Tireur:\nIl manque "+nombreArgumentRequis+" argument numerique");
 		
-		return new StrategieTireur(frequenceTire, type,new Point(vitesse,0), taillePatrouille, frequenceSaut, hauteurSaut);
+		
+		return new StrategieTireur(frequenceTir, type,new Point(vitesse,0), taillePatrouille, frequenceSaut, hauteurSaut, mouvTirX, mouvTirY);
 	}
 }

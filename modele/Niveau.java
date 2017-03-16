@@ -1,5 +1,6 @@
 package modele;
 
+import java.awt.Rectangle;
 import java.util.Iterator;
 import java.util.ListIterator;
 import java.util.LinkedList;
@@ -8,9 +9,10 @@ import vue.SpriteStocker;
 
 public class Niveau{
 
-	//coordonnées de départ
-	private int x; 
-	private int y;
+	//coordonnées de pop du joueur
+	public int xPop; 
+	public int yPop;
+	private Rectangle finDuNiveau;
 
 	public SpriteStocker stock;
 
@@ -26,8 +28,8 @@ public class Niveau{
 		this.entite = entite;
 		this.mob = mob;
 		this.joueur = joueur;		
-		x = joueur.getPosX();
-		y = joueur.getPosY();
+		xPop = joueur.getPosX();
+		yPop = joueur.getPosY();
 		
 	}
 
@@ -77,7 +79,7 @@ public class Niveau{
 	 */
 	public void supprimerEntite(Entite e){
 		if(joueur.equals(e)){
-			joueur.setPosition(x, y);
+			joueur.setPosition(xPop, yPop);
 		}else
 			if(mob.contains(e)){
 				mob.remove(e);
@@ -181,4 +183,7 @@ public class Niveau{
 		}
 	}
 	
+	public Rectangle getFinDuNiveau (){
+		return finDuNiveau;
+	}
 }
