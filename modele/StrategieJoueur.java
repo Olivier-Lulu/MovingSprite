@@ -8,9 +8,13 @@ public class StrategieJoueur extends Strategie{
 	
 	@Override
 	public int eval(Entite e, Niveau n){
-		return Physique.move(e, n.entite, n.mob, n.boucliers);
+		return Physique.move(e, n);
 	}
 
+	
+	/*
+	 * les methodes deplacement  permette de faire varier la vitesse du joueur
+	 */
 	public void deplacementDroitDebut(){
 		if (deplacement.x < 1) {
 			deplacement.x = deplacement.x+2;

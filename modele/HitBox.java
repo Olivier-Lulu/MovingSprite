@@ -9,8 +9,8 @@ import java.util.Iterator;
 
 public class HitBox{
 	
-	private Rectangle global;
-	private List<Rectangle> list;
+	private Rectangle global;// hitBox global
+	private List<Rectangle> list;// liste de toute les sous hitBoxs
 	
 	public HitBox(){
 		list = new LinkedList<Rectangle>();
@@ -22,6 +22,9 @@ public class HitBox{
 		global = r;
 	}
 
+	/*
+	 * permet d'ajouter un rectangle a la liste des sous hitBoxs
+	 */
 	public void add(Rectangle r){
 		list.add(r);
 	}
@@ -46,6 +49,9 @@ public class HitBox{
     	global.setLocation(posX, posY);
     }
     
+    /*
+     * permet de savoirs si deux HitBox s'intersecte
+     */
     public boolean intersects(HitBox hitBox){
     	if(global.intersects(hitBox.global)){
     		Iterator<Rectangle> it = list.iterator();
@@ -59,8 +65,7 @@ public class HitBox{
 
     /*
      * cette fonction test si une hitBox intersect un sous rectangle d'une autre hitBox
-     * 
-     * \pre le rectangle global de la HtiBaox de r intersect this.global
+     * le rectangle global de la HitBox de r est suppose intersect this.global
      */
     private boolean intersects(Rectangle r,int posX, int posY){
     	if(list.isEmpty())
@@ -77,6 +82,9 @@ public class HitBox{
     	return false;
     }
 
+    /*
+     * fonction dessinant en rouge le rectangle global et en bleu les sous rectangles
+     */
 	public void drawDebug(Graphics g,int deltaX,int deltaY,int screenWidth,int screenHeight) {
 		// TODO Auto-generated method stub
 		g.setColor(Color.RED);

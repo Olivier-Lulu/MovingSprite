@@ -6,6 +6,9 @@ import javax.swing.AbstractAction;
 
 import modele.StrategieJoueur;
 
+/*
+ * Décrit la réaction du joueur lorsqu'on appuie sur la touche d
+ */
 public class ActionDeplacementPressedD extends AbstractAction {
 	
 	private static final long serialVersionUID = 1L;
@@ -16,8 +19,8 @@ public class ActionDeplacementPressedD extends AbstractAction {
 		super ("pressed D");
 		this.joueurStrat = joueurStrat;
 	}
+	
 	public void actionPerformed(ActionEvent arg0) {
-		// TODO Auto-generated method stub
 		joueurStrat.deplacementDroitDebut();
 	}
 

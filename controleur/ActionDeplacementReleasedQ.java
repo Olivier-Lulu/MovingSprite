@@ -6,6 +6,9 @@ import javax.swing.AbstractAction;
 
 import modele.StrategieJoueur;
 
+/*
+ * Décrit la réaction du joueur lorsqu'on relâche la touche q
+ */
 public class ActionDeplacementReleasedQ extends AbstractAction {
 	private static final long serialVersionUID = 1L;
 	

@@ -1,7 +1,5 @@
 package vue;
 
-import java.awt.Color;
-
 import javax.swing.JFrame;
 
 import modele.Niveau;
@@ -52,7 +50,6 @@ public class gamethread implements Runnable {
 				images++;
 				if (maintenant -dernier > 1000){
 					dernier = maintenant;
-					this.frame.getGraphics().drawString("IPS ="+ images, this.frame.getWidth()-30, this.frame.getHeight()-30);
 					//System.out.println(images + " images par seconde");
 					images=0;
 				}

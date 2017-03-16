@@ -4,7 +4,7 @@ import java.awt.Point;
 
 public class Strategie implements Eval{
 	
-	public Point deplacement;
+	public Point deplacement;//vecteur de deplacement a apliquer pour le prochain appele de eval 
 	public boolean enVols;
 	public boolean estSensibleGravite;
 	
@@ -22,7 +22,7 @@ public class Strategie implements Eval{
 	
 	@Override
 	public int eval(Entite e, Niveau n){
-		return Physique.move(e, n.entite, n.mob, n.boucliers);
+		return Physique.move(e, n);
 	}
 
 }

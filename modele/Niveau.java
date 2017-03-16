@@ -1,11 +1,9 @@
 package modele;
 
-import java.awt.Rectangle;
 import java.util.Iterator;
 import java.util.ListIterator;
 import java.util.LinkedList;
 
-import vue.Sprite;
 import vue.SpriteStocker;
 
 public class Niveau{
@@ -24,11 +22,7 @@ public class Niveau{
 		this.stock = stock;
 		this.entite = entite;
 		this.mob = mob;
-		this.joueur = joueur;
-		HitBox [] h = new HitBox[2];
-		h[0]=new HitBox(new Rectangle(200,1000,25,25));
-		
-		mob.add(new EntiteAnime(200, 1000, this, true, new StrategieTireur(1), new Sprite(stock.getSprite(2, 3)),2,0, h,1,4));
+		this.joueur = joueur;		
 		
 	}
 
@@ -119,16 +113,16 @@ public class Niveau{
 		//verticalement
 		if(Mana.aMana()){
 			if (deltaX <= deltaY){
-				if (deltaY < EntiteTrace.tailleBlockTrace)
+				if (deltaY < StrategieTrace.tailleBlockTrace)
 					return;
-				int decalageHorizontal = deltaX / (deltaY / EntiteTrace.tailleBlockTrace);
+				int decalageHorizontal = deltaX / (deltaY / StrategieTrace.tailleBlockTrace);
 
-				for (int i = 0; i < deltaY; i += EntiteTrace.tailleBlockTrace){
+				for (int i = 0; i < deltaY; i += StrategieTrace.tailleBlockTrace){
 					if(Mana.aMana()){
 						Mana.manaBaisse();
-						trace.add(new EntiteTrace(curseurX, curseurY, 
-								this, new StrategieTrace(),
-								stock.get("4"), typeTrace));
+						trace.add(new EntiteTrace(
+								curseurX, curseurY, 
+								this, new StrategieTrace(), typeTrace));
 					}
 
 					//il faut toujours tracer du click vers le lache
@@ -152,16 +146,16 @@ public class Niveau{
 				//horizontalement
 			}else{
 
-				if (deltaX < EntiteTrace.tailleBlockTrace)
+				if (deltaX < StrategieTrace.tailleBlockTrace)
 					return;
-				int decalageVertical = deltaY / (deltaX / EntiteTrace.tailleBlockTrace);
+				int decalageVertical = deltaY / (deltaX / StrategieTrace.tailleBlockTrace);
 
-				for (int i = 0; i < deltaX; i += EntiteTrace.tailleBlockTrace){
+				for (int i = 0; i < deltaX; i += StrategieTrace.tailleBlockTrace){
 					if(Mana.aMana()){
 						Mana.manaBaisse();
-						trace.add(new EntiteTrace(curseurX, curseurY,
-								this, new StrategieTrace(), 
-								stock.get("4"), typeTrace));
+						trace.add(new EntiteTrace(
+								curseurX, curseurY, 
+								this, new StrategieTrace(), typeTrace));
 					}
 
 					//il faut toujours tracer du click vers le lache

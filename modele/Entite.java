@@ -8,13 +8,17 @@ import vue.Sprite;
 public class Entite {
 
     private Sprite sprite;
-    private HitBox hitBox;
+    protected HitBox hitBox;
 	private Niveau niveau;
     private boolean solid;
     private Strategie strat;
     private int score;
     private int etat = 0;
     private int dernierEtat =0;
+    
+    // defnit les coordoner du sprite dans le tilset
+    private int x;
+    private int y;
     
     public Entite(Sprite sprite, Niveau niveau, boolean solid, Strategie strat, int score, HitBox hitBox){
     	this.sprite = sprite;
@@ -33,12 +37,29 @@ public class Entite {
 		this.score = score;
 		this.hitBox = new HitBox(new Rectangle(posX,posY,width,height));
 	}
+    
+    public Entite (Strategie strat, int score, HitBox hitBox, int x, int y){
+    	this.sprite = null;
+    	this.niveau = null;
+        this.solid = true;
+        this. strat = strat;    	
+        this.score = score;
+        this.hitBox = hitBox;
+        this.x = x;
+        this.y = y;
+    }
 
+    /*
+     * Les entite creer via Createur n'ont pas de niveau, cette methode permet de leur definir un niveau
+     */
     public void setNiveau(Niveau niveau){
     	if(this.niveau == null && niveau != null)
     		this.niveau = niveau;
     }
     
+    /*
+     * detecte si l'entite est en colision avec une autre
+     */
 	public boolean intersects(Entite e){
     	return hitBox.intersects(e.hitBox);
     }
@@ -89,6 +110,9 @@ public class Entite {
     	g.drawImage(sprite.getBufferedImage(), ((getPosX()+deltaX)*screenWidth)/600, ((getPosY()+deltaY)*screenHeight)/600, (getWidth()*screenWidth)/600+1, (getHeight()*screenHeight)/600+1,null);
     }
     
+    /*
+     * permet de dessiner les hitBox de l'entite
+     */
     public void drawDebug(Graphics g,int deltaX,int deltaY,int screenWidth,int screenHeight){
     	hitBox.drawDebug(g,deltaX,deltaY,screenWidth,screenHeight);
     }
@@ -125,20 +149,6 @@ public class Entite {
 		return etat;
 	}
 	
-	/*
-	 * premet de supprimer l'entité du niveau auquel elle est rattacher
-	 */
-	public void deces(Entite e){
-		Score.augmenterScore(score);
-		niveau.supprimerEntite(this);
-	}
-	
-	/*
-	 * 
-	 */
-	public void ajouterSprite(){
-		return;
-	}
 
 	public int getDernierEtat() {
 		return dernierEtat;
@@ -147,5 +157,21 @@ public class Entite {
 	public void setDernierEtat(int dernierEtat) {
 		this.dernierEtat = dernierEtat;
 	}
+
+	/*
+	 * permet de supprimer l'entité du niveau auquel elle est rattacher
+	 */
+	public void deces(){
+		Score.augmenterScore(score);
+		niveau.supprimerEntite(this);
+	}
+	
+	/*
+	 * permet d'avoir acces au sprite apres la definition du niveau
+	 */
+	public void ajouterSprite(){
+		if(niveau != null)
+			sprite = new Sprite(niveau.stock.getSprite(x, y));
+	};
 	
 }

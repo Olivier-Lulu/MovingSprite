@@ -113,4 +113,88 @@ public class EntiteAnime extends Entite {
 			this.timerJoueur = 0;
 		}
 	}	
+
+	@Override
+	public boolean intersects(Entite e){
+		if ( this.getEtat() == 0){
+			return hitBox[0].intersects(e.hitBox);
+		}
+		if (this.getEtat() == 1 && this.timerJoueur < 6){
+			return hitBox[0].intersects(e.hitBox);
+
+		}
+		if (this.getEtat() == 1 && this.timerJoueur >= 6 && this.timerJoueur < 12){
+			return hitBox[1].intersects(e.hitBox);
+		}
+		if (this.getEtat() == 1 && this.timerJoueur >= 12 && this.timerJoueur <18){
+			return hitBox[1].intersects(e.hitBox);
+		}
+		if (this.getEtat() == 1 && this.timerJoueur >= 18){
+			return hitBox[2].intersects(e.hitBox);
+		}
+		if (this.getEtat() == 2 && this.timerJoueur < 10){
+			return hitBox[0].intersects(e.hitBox);
+		}
+		if (this.getEtat() == 2 && this.timerJoueur >= 10 && this.timerJoueur < 20){
+			return hitBox[1].intersects(e.hitBox);
+		}
+		if (this.getEtat() == 2 && this.timerJoueur >= 20){
+			return hitBox[2].intersects(e.hitBox);
+		}
+		if (this.getEtat() == 3){
+			return hitBox[3].intersects(e.hitBox);
+		}
+		if (this.getEtat() == 4){
+			return hitBox[3].intersects(e.hitBox);
+		}
+		return super.intersects(e);
+    }
+    
+	@Override
+    public void setPosition(int posX, int posY){
+    	if(posX < 0 || posY < 0 )
+    		throw new IllegalArgumentException("coordonne negative");
+    	for(int i = 0; i < hitBox.length; i++)
+    		hitBox[i].setPosition(posX, posY);
+    }
+	
+	@Override
+	 public void drawDebug(Graphics g,int deltaX,int deltaY,int screenWidth,int screenHeight){
+			if ( this.getEtat() == 0){
+				hitBox[0].drawDebug(g,deltaX,deltaY,screenWidth,screenHeight);
+			}
+			if (this.getEtat() == 1 && this.timerJoueur < 6){
+				hitBox[0].drawDebug(g,deltaX,deltaY,screenWidth,screenHeight);
+
+			}
+			if (this.getEtat() == 1 && this.timerJoueur >= 6 && this.timerJoueur < 12){
+				hitBox[1].drawDebug(g,deltaX,deltaY,screenWidth,screenHeight);
+			}
+			if (this.getEtat() == 1 && this.timerJoueur >= 12 && this.timerJoueur <18){
+				hitBox[1].drawDebug(g,deltaX,deltaY,screenWidth,screenHeight);
+			}
+			if (this.getEtat() == 1 && this.timerJoueur >= 18){
+				hitBox[2].drawDebug(g,deltaX,deltaY,screenWidth,screenHeight);
+			}
+			if (this.getEtat() == 2 && this.timerJoueur < 10){
+				hitBox[0].drawDebug(g,deltaX,deltaY,screenWidth,screenHeight);
+			}
+			if (this.getEtat() == 2 && this.timerJoueur >= 10 && this.timerJoueur < 20){
+				hitBox[1].drawDebug(g,deltaX,deltaY,screenWidth,screenHeight);
+			}
+			if (this.getEtat() == 2 && this.timerJoueur >= 20){
+				hitBox[2].drawDebug(g,deltaX,deltaY,screenWidth,screenHeight);
+			}
+			if (this.getEtat() == 3){
+				hitBox[3].drawDebug(g,deltaX,deltaY,screenWidth,screenHeight);
+			}
+			if (this.getEtat() == 4){
+				hitBox[3].drawDebug(g,deltaX,deltaY,screenWidth,screenHeight);
+			}
+			this.timerJoueur++;
+			if (timerJoueur > 24){
+				timerJoueur = 0;
+			}
+	    }
+
 }

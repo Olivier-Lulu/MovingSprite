@@ -21,7 +21,7 @@ import modele.StrategieJoueur;
 import modele.Strategie;
 import modele.StrategiePatrouille;
 import modele.StrategieScorable;
-import vue.Sprite;
+import modele.StrategieTireur;
 import vue.SpriteStocker;
 
 public class Createur {
@@ -41,9 +41,13 @@ public class Createur {
 	 * Entite:
 	 * sprite: <x du sprite de depart> <y du sprite de depart> <nombre de frame>
 	 * score: <point gagner en tuant l'entité>
-	 * 
+	 * box: <taille globale x>,<taille globale y>
+	 * subBox: <position x par rapport au point haut Gauche de l'entité>,<position y par rapport au point haut Gauche de l'entité> <taille x de la sous boite>,<taille en y de la sous boite>
+	 * repeter autant de subBox que voulus
+	 * --- 
+	 * repeter autemp de box que de frame dans l'animation
 	 */
-	public static EntiteAnime creerEntiter(String path, int posX, int posY, Strategie strategie, SpriteStocker stock) throws IOException{
+	public static Entite creerEntiter(String path, int posX, int posY, Strategie strategie, SpriteStocker stock) throws IOException{
 		int x = 0;
 		int y = 0;
 		int width = 0;
@@ -57,87 +61,115 @@ public class Createur {
     	HitBox[] hitBox = null;
     	try{
     		ligne = fichier.readLine();
-    		if(!ligne.equals("Entite:"))
+    		if(!ligne.equals("Entite:")){
+    			fichier.close();
     			throw new IllegalArgumentException("Entite:\nfichier au mauvais format");
+    		}
     		//lecture des info sur le sprite
     		ligne = fichier.readLine();
     		if(ligne != null)
     			st = new StringTokenizer(ligne);
-    		if(!st.nextToken().equals("sprite:"))
+    		if(!st.nextToken().equals("sprite:")){
+    			fichier.close();
     			throw new IllegalArgumentException("Entite:\nsprite: manquant");
+    		}
     		if(st.hasMoreTokens())
     			try{
     				x = Integer.parseInt(st.nextToken());
     			}catch(NumberFormatException e){
     				System.out.println("Entite:\nx du sprite mal formaté");
     			}
-    		else
+    		else{
+    			fichier.close();
     			throw new IllegalArgumentException("Entite:\ndescription sprite manquant");
+    		}
     		if(st.hasMoreTokens())
     			try{
     				y = Integer.parseInt(st.nextToken());
     			}catch(NumberFormatException e){
     				System.out.println("Entite:\ny du sprite mal formaté");
     			}
-    		else
+    		else{
+    			fichier.close();
     			throw new IllegalArgumentException("Entite:\ndescription sprite manquant");
+    		}
     		if(st.hasMoreTokens())
     			try{
     				nbSprite = Integer.parseInt(st.nextToken());
     			}catch(NumberFormatException e){
     				System.out.println("Entite:\nnombre de sprite mal formaté");
     			}
-    		else
+    		else{
+    			fichier.close();
     			throw new IllegalArgumentException("Entite:\ndescription sprite manquant");
+    		}
     		
     		//lecture des infos de score
     		ligne = fichier.readLine();
     		if(ligne != null)
     			st = new StringTokenizer(ligne);
-    		else
+    		else{
+    			fichier.close();
     			throw new IllegalArgumentException("Entite:\nfichier terminer apres solide:");
-    		if(!st.nextToken().equals("score:"))
+    		}
+    		if(!st.nextToken().equals("score:")){
+    			fichier.close();
     			throw new IllegalArgumentException("Entite:\nscore: manquant");
+    		}
     		if(st.hasMoreTokens())
     			try{
     			score = Integer.parseInt(st.nextToken());
     			}catch(NumberFormatException e){
     				System.out.println("Entite:\nscore mal formaté");
+    				fichier.close();
     				throw e;
     			}
-    		else
+    		else{
+    			fichier.close();
     			throw new IllegalArgumentException("Entite:\nsolidité non renseigné");
+    		}
+
     		//lecture des infos de hitBox
     		hitBox = new HitBox[nbSprite];
     		HitBox hit = null;
-    		for(int i = 0; i < nbSprite;i++){
+    		for(int i = 0; i < nbSprite;i++){// pour chaque frame de l'animation
     			ligne = fichier.readLine();
     			if(ligne != null)
     				st = new StringTokenizer(ligne," ,");
-    			else
+    			else{
+        			fichier.close();
     				throw new IllegalArgumentException("SpriteBox:\n fichier vide apres sprite");
-    			if(!st.nextToken().equals("box:"))
+    			}
+    			if(!st.nextToken().equals("box:")){
+        			fichier.close();
     				throw new IllegalArgumentException("SpriteBox:\n box: manquant");
+    			}
     			if(st.hasMoreTokens())
     				try{
     					width = Integer.parseInt(st.nextToken());
     				}catch(NumberFormatException e){
     					System.out.println("SpriteBox:\n largeur de box erroner");
     				}
-    			else
+    			else{
+        			fichier.close();
     				throw new IllegalArgumentException("SpriteBox:\n descrption taille global manquant");
+    			}
     			if(st.hasMoreTokens())
     				try{
     					height = Integer.parseInt(st.nextToken());
     				}catch(NumberFormatException e){
     					System.out.println("SpriteBox:\n longeur de box erroner");
+    					fichier.close();
     					throw e;
     				}
-    			else
+    			else{
+        			fichier.close();
     				throw new IllegalArgumentException("SpriteBox:\n descrption taille global manquant");
+    			}
     			hit = new HitBox(new Rectangle(posX,posY,width,height));
     			ligne = fichier.readLine();
-    			try{
+
+    			try{//lecture de toute les sous boites
     				while(!ligne.equals("---")){
     					st = new StringTokenizer(ligne," ,");
     					if(!st.nextToken().equals("subBox:"))
@@ -164,23 +196,20 @@ public class Createur {
     				hitBox[i] = hit;
     			}catch(NumberFormatException e){
     				System.out.println("SpriteBox:\n taille subBox erroner");
-    				throw e;
-    			}catch(IllegalArgumentException e){
-    				System.out.println(e.getMessage());
     				fichier.close();
     				throw e;
     			}
     		}
-    	}catch(IllegalArgumentException e){
-    		System.out.println(e.getMessage());
-    		fichier.close();
-    		throw e;
     	}catch(IOException e){
     		e.printStackTrace();
     	}
     	fichier.close();
-    	return new EntiteAnime(posX, posY,
-    			null, true, strat, null ,nbSprite, score, hitBox,x,y);
+    	
+    	if(nbSprite < 2)
+    		return new Entite(strat,score, hitBox[0],x,y);
+    	else
+    		return new EntiteAnime(posX, posY,
+    				null, true, strat, null ,nbSprite, score, hitBox,x,y);
 	}
 
 	/*
@@ -208,24 +237,29 @@ public class Createur {
 		SpriteStocker stock = null;
 		Entite[][] entite = null;
 		LinkedList<Entite> mob = null;
-		EntiteAnime joueur = null;
+		Entite joueur = null;
 		BufferedReader fichier = new BufferedReader(new FileReader(new File(Createur.class.getResource(path).getFile())));
 		String ligne;
 		try{
 			ligne = fichier.readLine();
-			if(!ligne.equals("Niveau:"))
+			if(!ligne.equals("Niveau:")){
+				fichier.close();
 				throw new IllegalArgumentException("Niveau:\n fichier au mauvais format");
-			
+			}
 			//recupération de la taille du monde
 			ligne = fichier.readLine();
 			StringTokenizer st;
 			if(ligne != null)
 				st = new StringTokenizer(ligne," ,");
-			else
+			else{
+				fichier.close();
 				throw new IllegalArgumentException("Niveau:\n description taille monde manquant");
+			}
 			ligne = st.nextToken();
-			if(!ligne.equals("Taille:"))
+			if(!ligne.equals("Taille:")){
+				fichier.close();
 				throw new IllegalArgumentException("Niveau:\n description Taille : monde manquant");
+			}
 			int x = 0;
 			int y = 0;
 			if(st.hasMoreTokens())
@@ -236,8 +270,10 @@ public class Createur {
 					fichier.close();
 					throw e;
 				}
-			else
+			else{
+				fichier.close();
 				throw new IllegalArgumentException("Niveau:\n taille du monde manquant");
+			}
 			if(st.hasMoreTokens())
 				try{
 					y = Integer.parseInt(st.nextToken());
@@ -246,18 +282,24 @@ public class Createur {
 					fichier.close();
 					throw e;
 				}
-			else
+			else{
+				fichier.close();
 				throw new IllegalArgumentException("Niveau:\n taille du monde manquant");
+			}
 			entite = new Entite[x][y];
 			
 			//recuperation du tileSet
 			ligne = fichier.readLine();
-			if(ligne == null)
+			if(ligne == null){
+				fichier.close();
 				throw new IllegalArgumentException("Niveau:\n tileSet manquant");
+			}
 			st = new StringTokenizer(ligne);
-			ligne = st.nextToken();// onstock le chemin d'acces du tileset
-			if(!st.hasMoreTokens())
+			ligne = st.nextToken();// on stock le chemin d'acces du tileset
+			if(!st.hasMoreTokens()){
+				fichier.close();
 				throw new IllegalArgumentException("Niveau:\n taille tileSet manquant");
+			}
 			try{
 				x = Integer.parseInt(st.nextToken());// on stock le nombre d'image a charger
 			}catch(NumberFormatException e){
@@ -272,16 +314,19 @@ public class Createur {
 				throw new IllegalArgumentException("Niveau:\n tileSet manquant ou eroner");
 			}
 			
-			// creation de la liste des blocs different du decors
-			List<Point> l = new ArrayList<Point>();//arrayList car il faut un acces facil au ième element de la liste
+			// creation de la liste des different blocs du decors
+			List<Point> l = new ArrayList<Point>();//arrayList car il faut un acces facile au ième element de la liste
 			ligne = fichier.readLine();
-			if(!ligne.equals("solidité sprite"))
+			if(!ligne.equals("solidité sprite")){
+				fichier.close();
 				throw new IllegalArgumentException("Niveau:\n legende code solidité sprite manquant ");
+			}
 			while(!ligne.equals("Monde:")){// on decris un nouveau bloc tant que on a pas atteint la fin de la liste marquer par le debut du monde
 				ligne = fichier.readLine();
-				if(ligne == null)
+				if(ligne == null){
+					fichier.close();
 					throw new IllegalArgumentException("Niveau:\n fin du fichier dans la descrition du decors ");
-				else{
+				}else{
 					if(!ligne.equals("Monde:")){
 						st = new StringTokenizer(ligne);
 						try{
@@ -300,11 +345,15 @@ public class Createur {
 				ligne = fichier.readLine();
 				if(ligne != null)
 					st = new StringTokenizer(ligne);
-				else
+				else{
+					fichier.close();
 					throw new IllegalArgumentException("Niveau:\n ligne du monde manquant");
+				}
 				for(int i = 0;i <entite.length;i++){
-					if(!st.hasMoreTokens())
+					if(!st.hasMoreTokens()){
+						fichier.close();
 						throw new IllegalArgumentException("Niveau:\n ligne du monde manquant");
+					}
 					ligne = st.nextToken();
 					int code = 0;
 					try{
@@ -343,14 +392,19 @@ public class Createur {
 				ligne = fichier.readLine();
 
 			//recupération des donné du joueur
-			if(!ligne.equals("Joueur:"))
+			if(!ligne.equals("Joueur:")){
+				fichier.close();
 				throw new IllegalArgumentException("Niveau:\n Joueur: manquant");
+			}
 			ligne = fichier.readLine();
-			if(ligne == null)
+			if(ligne == null){
+				fichier.close();
 				throw new IllegalArgumentException("Niveau:\n Joueur manquant");
+			}
 			try{
 				st = new StringTokenizer(ligne,",");
-				joueur = Createur.creerEntiter("/data/goblin",Integer.parseInt(st.nextToken()),Integer.parseInt(st.nextToken()),new StrategieJoueur(),stock);
+
+				joueur = Createur.creerEntiter("/data/humain",Integer.parseInt(st.nextToken()),Integer.parseInt(st.nextToken()),new StrategieJoueur(),stock);
 			}catch(NoSuchElementException e){
 				System.out.println("Niveau:\n position du joueur manquante ou erroner");
 				fichier.close();
@@ -363,15 +417,12 @@ public class Createur {
 		}catch(IOException e){
 			e.printStackTrace();
 			fichier.close();
-		}catch(IllegalArgumentException e){
-			System.out.println(e.getMessage());
-			fichier.close();
-			throw e;
 		}
 		fichier.close();
 		Niveau niveau = new Niveau(stock, entite, mob, joueur);
 
 		//toutes les entites on été créer sans reference au niveau (puisqu'il n'avais pas encors été créer) on leur donne donc leur reference maintenent
+		//de meme les entite animé on besoin d'un acces a niveau pour cceder au spritstocker pour charger leur animation
 		for(int i = 0; i< entite.length;i++)
 			for(int j = 0; j < entite[0].length; j++)
 				entite[i][j].setNiveau(niveau);
@@ -404,6 +455,9 @@ public class Createur {
 			break;
 		case "scorable":
 			strategie = new StrategieScorable();
+			break;
+		case "tireur":
+			strategie = creerStrategieTireur(st);
 			break;
 		}
 		return strategie;
@@ -469,5 +523,91 @@ public class Createur {
 		if(st.hasMoreTokens())
 			throw new IllegalArgumentException("Patrouille:\nTrop d'argument");
 		return new StrategiePatrouille(new Point(vitesse,0), taillePatrouille, frequenceSaut, hauteurSaut);
+	}
+
+	/*
+	 * permet de créer un strategie de tireur 
+	 * 
+	 * les parrametre doivent etre formaté de la maniere suivante:
+	 * <vitesse de deplacement horizontal> <vitesse vertical lors des sauts> <nombre de pas a effectuer avant demi-tours> <frequenc des saut> <type de tire> <frequence de tire>
+	 * 
+	 */
+	private static Strategie creerStrategieTireur(StringTokenizer st){
+		int vitesse = 0;
+		int hauteurSaut = 0;
+		int taillePatrouille = 0;
+		int frequenceSaut = 0;
+		int type =0;
+		int frequenceTire=0;
+		
+		//recuperation de la vitesse
+		if(st.hasMoreTokens())
+			try{
+				vitesse = Integer.parseInt(st.nextToken());
+			}catch(NumberFormatException e){
+				System.out.println("Tireur:\n vitesse mal formatée");
+				throw e;
+			}
+		else
+			throw new IllegalArgumentException("Tireur:\nIl manque 6 argument numerique");
+		
+		// recuperation de la Hauteur de saut
+		if(st.hasMoreTokens())
+			try{
+				hauteurSaut = Integer.parseInt(st.nextToken());
+			}catch(NumberFormatException e){
+				System.out.println("Tireur:\n hauteur de saut mal formatée");
+				throw e;
+			}
+		else
+			throw new IllegalArgumentException("Tireur:\nIl manque 5 argument numerique");
+		
+		// recuperation de la distance de patrouille
+		if(st.hasMoreTokens())
+			try{
+				taillePatrouille = Integer.parseInt(st.nextToken());
+			}catch(NumberFormatException e){
+				System.out.println("Tireur:\n taille de la patrouille mal formatée");
+				throw e;
+			}
+		else
+			throw new IllegalArgumentException("Tireur:\nIl manque 4 argument numerique");
+		
+		// recuperation de la frequence de saut
+		if(st.hasMoreTokens())
+			try{
+				frequenceSaut = Integer.parseInt(st.nextToken());
+			}catch(NumberFormatException e){
+				System.out.println("Tireur:\n frequence de saut mal formatée");
+				throw e;
+			}
+		else
+			throw new IllegalArgumentException("Tireur:\nIl manque 3 argument numerique");
+		
+		// recuperation du type de tire
+		if(st.hasMoreTokens())
+			try{
+				type = Integer.parseInt(st.nextToken());
+				if(type != 1 && type != 2 && type != 3)
+					throw new IllegalArgumentException("Tireur:\nle type de tire ne peut etre que 1, 2 ou 3");
+			}catch(NumberFormatException e){
+				System.out.println("Tireur:\n type de tire mal formatée");
+				throw e;
+			}
+		else
+			throw new IllegalArgumentException("Tireur:\nIl manque 2 argument numerique");
+		
+		// recuperation de la frequence de tire
+		if(st.hasMoreTokens())
+			try{
+				frequenceTire = Integer.parseInt(st.nextToken());
+			}catch(NumberFormatException e){
+				System.out.println("Tireur:\n frequence de tire mal formatée");
+				throw e;
+			}
+		else
+			throw new IllegalArgumentException("Tireur:\nIl manque 1 argument numerique");
+		
+		return new StrategieTireur(frequenceTire, type,new Point(vitesse,0), taillePatrouille, frequenceSaut, hauteurSaut);
 	}
 }
