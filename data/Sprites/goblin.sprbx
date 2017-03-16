@@ -1,9 +1,0 @@
-sprite: goblin.png
-box: 21,53
-subBox: 3,0 10,9
-subBox: 4,6 16,13
-subBox: 6,19 13,22
-subBox: 0,24 6,17
-subBox: 3,19 4,6
-subBox: 17,36 4,5
-subBox: 6,41 13,12

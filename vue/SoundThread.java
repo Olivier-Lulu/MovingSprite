@@ -5,6 +5,8 @@ import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import javax.sound.sampled.DataLine;
 
+import modele.Niveau;
+
 public class SoundThread implements Runnable{
 
 	private AudioInputStream as;

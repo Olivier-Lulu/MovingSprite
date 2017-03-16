@@ -1,10 +1,5 @@
 package modele;
 
-import java.io.IOException;
-import java.util.List;
-
-import vue.Niveau;
-
 public interface Eval {
 
 	/*

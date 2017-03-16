@@ -1,9 +1,11 @@
 package modele;
+
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.ListIterator;
 
 
 public class Physique {
@@ -16,10 +18,10 @@ public class Physique {
 	 * \param lTrace liste des boucliers existant dans le meme niveau que e
 	 * \pre e non null
 	 */
-	public static int move(Entite e, Entite [][] tiles, List<Entite> l, List<EntiteTrace> lTrace) {
+	public static int move(Entite e, Entite [][] tiles, List<Entite> l, List<Bouclier> boucliers) {
 		if(e.getStrat().enVols)
 			e.getStrat().deplacement.y += 2;
-		return colision(e,tiles,l, lTrace);
+		return colision(e,tiles,l, boucliers);
 	}
 	
 	/*
@@ -33,7 +35,7 @@ public class Physique {
 	 * \pre l non null
 	 * \pre lTrace non null
 	 */
-	private static int colision(Entite e, Entite [][] tiles, List<Entite> l, List<EntiteTrace> lTrace) {
+	private static int colision(Entite e, Entite [][] tiles, List<Entite> l, List<Bouclier> boucliers) {
 		
 		// mouve est une copie du deplacement de e
 		// ce vecteur servira a effectuer ds operation sur le mouvemant de e sans influer sur ce dernier
@@ -73,12 +75,12 @@ public class Physique {
 		}
 		
 		//meme explication que listeEntite  -> fusion peut etre possible
-		List<EntiteTrace> listeTrace = new LinkedList<EntiteTrace>();
-		Iterator<EntiteTrace> traceIterator = lTrace.iterator();
-		for(int i=0; i < lTrace.size();i++){
-			EntiteTrace entite = traceIterator.next();
-			if(r.intersects(entite.getPosX(),entite.getPosY(),entite.getWidth(),entite.getHeight()) && !entite.equals(e)){
-				listeTrace.add(entite);
+		List<Bouclier> listeBouclier = new LinkedList<Bouclier>();
+		for (Bouclier unBouclier : boucliers) {
+			for (EntiteTrace entite : unBouclier.ligne){
+				if(r.intersects(entite.getPosX(),entite.getPosY(),entite.getWidth(),entite.getHeight()) && !entite.equals(e)){
+					listeBouclier.add(unBouclier);
+				}
 			}
 		}
 		
@@ -179,7 +181,7 @@ public class Physique {
 						if(b){
 							e.setPosition(e.getPosX(), e.getPosY()+1);
 							possibleY = true;
-							mouve.y += 2;
+							mouve.y -= 1;
 						}else
 							possibleY = false;
 					}else{
@@ -229,21 +231,17 @@ public class Physique {
 				}
 			}
 			
-			//voirs pour les entités
-			traceIterator = listeTrace.iterator();
-			for(int j=0; j < listeTrace.size();j++){
-				EntiteTrace ent = traceIterator.next();
-				if(e.intersects(ent)){
-					//flag
-					//e est l'entite qui se déplace
-					//c'est deces qui représente le comportement a adopter lorsque 
-					//e va rencontrer le shield
-					
-					//e.refractionBoulette #le nom du truc qui va calculer l'angle 
-					//de rebond
+			for (Bouclier boubou : listeBouclier){
+				if (EntiteBoulette.class.isAssignableFrom(e.getClass())){
+					if ( !((EntiteBoulette) e).boucliersInterdits.contains(boubou) && ( boubou.getType() == ((EntiteBoulette)e).getType() ) ){
+						e.getStrat().deplacement = boubou.calculerDirectionRebond(e.getStrat().deplacement, e.getPosX(), e.getPosY());
+						((EntiteBoulette) e).boucliersInterdits.add(boubou);
+						((EntiteBoulette) e).aRebondit();
+					}
 				}
 			}
 		}
+	
 		
 		if (e.getStrat().estSensibleGravite)
 			e.getStrat().enVols=true;
@@ -269,6 +267,8 @@ public class Physique {
 			return 4;
 		}else if (e.getStrat().enVols && temp == 1){
 			return 3;
+		}else if (e.getStrat().enVols && temp == 0){
+			return 5;
 		}
 		return temp;
 	}

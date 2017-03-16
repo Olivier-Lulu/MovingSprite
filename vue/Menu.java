@@ -14,7 +14,9 @@ import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-public class Menu extends JPanel implements MouseListener{
+import controleur.MenuClick;
+
+public class Menu extends JPanel{
 
 	/**
 	 * 
@@ -32,7 +34,7 @@ public class Menu extends JPanel implements MouseListener{
 	
 	
 	public Menu(boolean running, boolean param) {
-		addMouseListener(this);
+		addMouseListener(new MenuClick(this));
 		this.running= running;
 		this.param = param;
 		try{
@@ -46,15 +48,6 @@ public class Menu extends JPanel implements MouseListener{
 		g.drawImage(image,0,0,getWidth(),getHeight(),0,0,1920,1080,null);	
 	}
 
-	public void mouseClicked(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-		if (arg0.getX() > getWidth()/2.42 && arg0.getX() < getWidth()/1.97 && arg0.getY() > getHeight()/3.24 && arg0.getY() < getHeight()/2.71){
-			this.running = false;
-		}
-		if (arg0.getX() > getWidth()/2.42 && arg0.getX() < getWidth()/1.63 && arg0.getY() > getHeight()/2.38 && arg0.getY() < getHeight()/2.12){
-			this.param = true;
-		}
-	}
 
 	public boolean isParam() {
 		return param;
@@ -62,26 +55,6 @@ public class Menu extends JPanel implements MouseListener{
 
 	public void setParam(boolean param) {
 		this.param = param;
-	}
-
-	public void mouseEntered(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	public void mouseExited(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	public void mousePressed(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	public void mouseReleased(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-		
 	}
 
 	public boolean isRunning() {

@@ -1,12 +1,16 @@
 package vue;
 
+import java.awt.Color;
+
 import javax.swing.JFrame;
 
+import modele.Niveau;
 import modele.Parametres;
 
 public class gamethread implements Runnable {
 	
 	Niveau n;
+	FenetreNiveau fn;
 	Menu m;
 	JFrame frame;
 	Parametres p;
@@ -16,6 +20,7 @@ public class gamethread implements Runnable {
 		this.m = m;
 		this.frame = frame;
 		this.p = p;
+		fn = new FenetreNiveau(n);
 	}
 	
 	public void start(){
@@ -34,7 +39,7 @@ public class gamethread implements Runnable {
 			images++;
 			if (maintenant -dernier > 1000){
 				dernier = maintenant;
-				System.out.println(images + " images par seconde");
+				//System.out.println(images + " images par seconde");
 				images=0;
 			}
 			while(m.isParam()){
@@ -47,7 +52,8 @@ public class gamethread implements Runnable {
 				images++;
 				if (maintenant -dernier > 1000){
 					dernier = maintenant;
-					System.out.println(images + " images par seconde");
+					this.frame.getGraphics().drawString("IPS ="+ images, this.frame.getWidth()-30, this.frame.getHeight()-30);
+					//System.out.println(images + " images par seconde");
 					images=0;
 				}
 				try {
@@ -71,17 +77,17 @@ public class gamethread implements Runnable {
 			}
 		}	
 		this.frame.remove(m);
-		this.frame.setContentPane(n);
+		this.frame.setContentPane(fn);
 		this.frame.revalidate();
 		this.frame.repaint();
 		while(true){
 			long maintenant = System.currentTimeMillis();
-			n.repaint();
+			fn.repaint();
 			n.bouger();
 			images++;
 			if (maintenant -dernier > 1000){
 				dernier = maintenant;
-				System.out.println(images + " images par seconde");
+				//System.out.println(images + " images par seconde");
 				images=0;
 			}
 			try {
@@ -92,5 +98,4 @@ public class gamethread implements Runnable {
 			}
 		}
 	}
-
 }
