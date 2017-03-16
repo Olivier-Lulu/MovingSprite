@@ -1,0 +1,17 @@
+Entite:
+sprite: 1 4 2
+score: 10
+box: 25,25
+subBox: 0,4 10,5 //canon
+subBox: 10,0 15,11 //tete
+subBox: 12,10 10,14 //corp droit
+subBox: 9,12 3,12 //corp centre
+subBox: 3,17 6,7 //corp gauche
+---
+box: 25,25
+subBox: 0,4 10,5 //canon
+subBox: 10,0 15,11 //tete
+subBox: 12,10 10,14 //corp droit
+subBox: 9,12 3,12 //corp centre
+subBox: 3,17 6,7 //corp gauche
+---

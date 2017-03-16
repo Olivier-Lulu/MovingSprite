@@ -15,6 +15,10 @@ public class Entite {
     private int score;
     private int etat = 0;
     
+    // defnit les coordoner du sprite dans le tilset
+    private int x;
+    private int y;
+    
     public Entite(Sprite sprite, Niveau niveau, boolean solid, Strategie strat, int score, HitBox hitBox){
     	this.sprite = sprite;
     	this.niveau = niveau;
@@ -32,6 +36,17 @@ public class Entite {
 		this.score = score;
 		this.hitBox = new HitBox(new Rectangle(posX,posY,width,height));
 	}
+    
+    public Entite (Strategie strat, int score, HitBox hitBox, int x, int y){
+    	this.sprite = null;
+    	this.niveau = null;
+        this.solid = true;
+        this. strat = strat;    	
+        this.score = score;
+        this.hitBox = hitBox;
+        this.x = x;
+        this.y = y;
+    }
 
     /*
      * Les entite creer via Createur n'ont pas de niveau, cette methode permet de leur definir un niveau
@@ -142,8 +157,11 @@ public class Entite {
 	}
 	
 	/*
-	 * declaration d'une fonction specifie dans EntiteAnime
+	 * permet d'avoir acces au sprite apres la definition du niveau
 	 */
-	public void ajouterSprite(){};
+	public void ajouterSprite(){
+		if(niveau != null)
+			sprite = new Sprite(niveau.stock.getSprite(x, y));
+	};
 	
 }

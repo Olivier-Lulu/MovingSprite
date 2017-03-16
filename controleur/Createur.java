@@ -22,6 +22,7 @@ import modele.Strategie;
 import modele.StrategiePatrouille;
 import modele.StrategieScorable;
 import modele.StrategieTireur;
+import vue.Sprite;
 import vue.SpriteStocker;
 
 public class Createur {
@@ -47,7 +48,7 @@ public class Createur {
 	 * --- 
 	 * repeter autemp de box que de frame dans l'animation
 	 */
-	public static EntiteAnime creerEntiter(String path, int posX, int posY, Strategie strategie, SpriteStocker stock) throws IOException{
+	public static Entite creerEntiter(String path, int posX, int posY, Strategie strategie, SpriteStocker stock) throws IOException{
 		int x = 0;
 		int y = 0;
 		int width = 0;
@@ -185,8 +186,11 @@ public class Createur {
     		e.printStackTrace();
     	}
     	fichier.close();
-    	return new EntiteAnime(posX, posY,
-    			null, true, strat, null ,nbSprite, score, hitBox,x,y);
+    	if(nbSprite < 2)
+    		return new Entite(strat,score, hitBox[0],x,y);
+    	else
+    		return new EntiteAnime(posX, posY,
+    				null, true, strat, null ,nbSprite, score, hitBox,x,y);
 	}
 
 	/*
@@ -214,7 +218,7 @@ public class Createur {
 		SpriteStocker stock = null;
 		Entite[][] entite = null;
 		LinkedList<Entite> mob = null;
-		EntiteAnime joueur = null;
+		Entite joueur = null;
 		BufferedReader fichier = new BufferedReader(new FileReader(new File(Createur.class.getResource(path).getFile())));
 		String ligne;
 		try{

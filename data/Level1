@@ -72,5 +72,6 @@ Monde:
 Ennemis:
 humain 500,700 patrouille 2 25 100 10
 humain 200,1000 tireur 2 0 50 0 1 50
+piece 600,1050 scorable
 Joueur:
 200,700
