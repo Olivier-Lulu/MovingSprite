@@ -69,9 +69,9 @@ public class FenetreNiveau extends JPanel {
 		}
 		
 		//affichage du joueur
-		niveau.joueur.rendu(g,(300 -niveau.joueur.getWidth())-niveau.joueur.getPosX(),
-			300 -niveau.joueur.getHeight()-niveau.joueur.getPosY(),getWidth(),getHeight());
-		//niveau.joueur.drawDebug(g,(300 -niveau.joueur.getWidth())- niveau.joueur.getPosX(),300 - niveau.joueur.getHeight()- niveau.joueur.getPosY(),getWidth(),getHeight());
+		//niveau.joueur.rendu(g,(300 -niveau.joueur.getWidth())-niveau.joueur.getPosX(),
+			//300 -niveau.joueur.getHeight()-niveau.joueur.getPosY(),getWidth(),getHeight());
+		niveau.joueur.drawDebug(g,(300 -niveau.joueur.getWidth())- niveau.joueur.getPosX(),300 - niveau.joueur.getHeight()- niveau.joueur.getPosY(),getWidth(),getHeight());
 		
 		//affichage du tracé du joueur
 		Iterator<Bouclier> itBouclier = niveau.boucliers.iterator();
