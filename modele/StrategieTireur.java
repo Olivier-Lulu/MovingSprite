@@ -26,7 +26,8 @@ public class StrategieTireur extends StrategiePatrouille{
 		int etat = super.eval(e, n);
 		if (pas % frequenceTire == 1){
 			if ( etat % 2 == 0 )
-				sens = -1;
+				if (etat != 0)
+					sens = -1;
 			else
 				sens = 1;
 			tirer(e, n);
