@@ -28,6 +28,8 @@ public class StrategieTireur extends StrategiePatrouille{
 			if ( etat % 2 == 0 )
 				if (etat != 0)
 					sens = -1;
+				else
+					sens = 1;
 			else
 				sens = 1;
 			tirer(e, n);
@@ -37,6 +39,6 @@ public class StrategieTireur extends StrategiePatrouille{
 	}
 	
 	private void tirer (Entite e, Niveau n){
-		n.boulettes.add(new EntiteBoulette(e.getPosX(), e.getPosY(), n, sens, type, mouvXTir, mouvYTir));
+		n.boulettes.add(new EntiteBoulette(e.getPosX(), e.getPosY(), n, type,sens * mouvXTir, mouvYTir));
 	}
 }
