@@ -51,7 +51,7 @@ public class Bouclier {
 		if ((x2-x1)!=0)
 			pente = (y2 - y1)/(x2 - x1);
 		else
-			pente = 0;		
+			pente = -1;		
 	}
 	
 	//xContact et yContact sont les coordonnés du point de contact entre le bouclier et la boulette
@@ -78,7 +78,7 @@ public class Bouclier {
 	}
 	
 	public Point calculerMouvmentApresRebond (Point mouvementIncident, int xContact, int yContact){
-		if ( pente!= 0 ){
+		if ( pente!= 0 && pente != -1 ){
 			calculerEquationAxeSymetrie(xContact, yContact);
 
 			int xProjete = xContact - mouvementIncident.x;
@@ -97,8 +97,13 @@ public class Bouclier {
 			int yImageMouvement = yImage - yContact;
 
 			return new Point(xImageMouvement, yImageMouvement);
-		}else
-			return new Point(-mouvementIncident.x, -mouvementIncident.y);
+		}else{
+			if (pente == -1)
+				return new Point(-mouvementIncident.x, mouvementIncident.y);
+			if (pente == 0)
+				return new Point(mouvementIncident.x, -mouvementIncident.y);
+		}	
+		return new Point(0,0);
 	}
 	
 	/*

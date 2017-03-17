@@ -53,10 +53,12 @@ public class Niveau{
 		//évaluation du tracé
 		ListIterator<Bouclier> itBouclier = boucliers.listIterator();
 		while (itBouclier.hasNext()){
-			Bouclier pointeur = itBouclier.next();
-			pointeur.disparitionNaturelle();
-			if (pointeur.doitDeceder())
-				boucliers.remove(pointeur);
+			itBouclier.next().disparitionNaturelle();
+			itBouclier.previous();
+			if (itBouclier.next().doitDeceder()){
+				itBouclier.previous();
+				itBouclier.remove();
+			}
 		}
 		
 		//évalutation des boulettes
