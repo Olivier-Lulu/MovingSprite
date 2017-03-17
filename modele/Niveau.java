@@ -1,5 +1,6 @@
 package modele;
 
+import java.awt.Rectangle;
 import java.util.Iterator;
 import java.util.ListIterator;
 import java.util.LinkedList;
@@ -8,9 +9,11 @@ import vue.SpriteStocker;
 
 public class Niveau{
 
-	//coordonnées de départ
-	private int x; 
-	private int y;
+	//coordonnées de pop du joueur
+	public int xPop; 
+	public int yPop;
+	private Rectangle finDuNiveau;
+	private boolean peutBouger = true;
 
 	public SpriteStocker stock;
 
@@ -20,14 +23,15 @@ public class Niveau{
 	public LinkedList<Bouclier> boucliers = new LinkedList<Bouclier>();
 	public LinkedList<EntiteBoulette> boulettes = new LinkedList<EntiteBoulette>();
 	
-	public Niveau(SpriteStocker stock, Entite[][] entite, LinkedList<Entite> mob, Entite joueur) {
+	public Niveau(SpriteStocker stock, Entite[][] entite, LinkedList<Entite> mob, Entite joueur,int x, int y) {
 		super();
 		this.stock = stock;
 		this.entite = entite;
 		this.mob = mob;
 		this.joueur = joueur;		
-		x = joueur.getPosX();
-		y = joueur.getPosY();
+		xPop = joueur.getPosX();
+		yPop = joueur.getPosY();
+		this.finDuNiveau = new Rectangle(x,y,25,25);
 		
 	}
 
@@ -36,6 +40,7 @@ public class Niveau{
 	 * force les entités du niveau a éffectuer leur action
 	 */
 	public void bouger(){
+		peutBouger = false;
 		// évaluation des ennemis
 		Iterator<Entite> it = mob.iterator();
 		while(it.hasNext()){
@@ -57,13 +62,14 @@ public class Niveau{
 		//évalutation des boulettes
 		ListIterator<EntiteBoulette> itBoulette = boulettes.listIterator();
 		while(itBoulette.hasNext()){
-			EntiteBoulette boulette = itBoulette.next();
-			boulette.eval();
-			if (boulette.doitDeceder()){
-				boulettes.remove(boulette);
+			itBoulette.next().eval();
+			itBoulette.previous();
+			if (itBoulette.next().doitDeceder()){
+				itBoulette.previous();
+				itBoulette.remove();
 			}
 		}
-		
+		peutBouger = true;
 	}
 	
 	public Entite ajouterEntite(Entite e){
@@ -77,7 +83,7 @@ public class Niveau{
 	 */
 	public void supprimerEntite(Entite e){
 		if(joueur.equals(e)){
-			joueur.setPosition(x, y);
+			joueur.setPosition(xPop, yPop);
 		}else
 			if(mob.contains(e)){
 				mob.remove(e);
@@ -179,6 +185,14 @@ public class Niveau{
 				boucliers.add(new Bouclier(trace, typeTrace));
 			}
 		}
+	}
+	
+	public Rectangle getFinDuNiveau (){
+		return finDuNiveau;
+	}
+	
+	public boolean peutBouger (){
+		return peutBouger;
 	}
 	
 }

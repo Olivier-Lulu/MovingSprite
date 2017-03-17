@@ -219,13 +219,26 @@ public class Physique {
 			if (!e.equals(n.joueur) && !(StrategieScorable.class.isAssignableFrom(e.getStrat().getClass())) && n.joueur.intersects(e) )
 				n.joueur.deces();
 			
-			
+			//flag collision
 			//apres avoirs fais un deplacement de e on test si il n'est pas en collision avec une autre entité 
-			
-			for (Entite mob : listeEntite)
-				if (e.equals(n.joueur) && (StrategieScorable.class.isAssignableFrom(mob.getStrat().getClass()))){
-					mob.deces();
-					listeEntite.remove(mob);
+			if (e.equals(n.joueur) )
+				for (Entite mob : listeEntite){
+					if (StrategieScorable.class.isAssignableFrom(mob.getStrat().getClass())){
+						mob.deces();
+						listeEntite.remove(mob);
+					}
+
+					if (StrategieCheckPoint.class.isAssignableFrom(mob.getStrat().getClass())){
+						if (n.getFinDuNiveau().intersects(n.joueur.getPosX(), n.joueur.getPosY(),
+								n.joueur.getWidth(), n.joueur.getHeight())){
+							//fin du niveau
+							System.out.println("FIN DU NIVEAU !!!");
+						}
+						else{
+							n.xPop = e.getPosX();
+							n.yPop = e.getPosY();
+						}
+					}
 				}
 			
 			

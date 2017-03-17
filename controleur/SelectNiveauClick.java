@@ -21,11 +21,11 @@ public class SelectNiveauClick implements MouseListener {
 	public void mouseClicked(MouseEvent arg0) {
 		// TODO Auto-generated method stub
 		for (int i =1 ; i <= sn.getNomNiveau().size(); i++){
-			//if (arg0.getX() > sn.getWidth()/10 + sn.getLargeurString() && arg0.getX() < sn.getWidth()/10 + sn.getLargeurString() + 50 && arg0.getY() > sn.getHeight()/10   && arg0.getY() < sn.getHeight()/10 + 18  ){
 			if (sn.getZc()[i-1].contains(arg0.getX(),arg0.getY())){	
 				Niveau niveau = null;
+				System.out.println("aaaaa");
 				try {
-					niveau = Createur.creerNiveau(sn.getNomNiveau().get(i));
+					niveau = Createur.creerNiveau("/data/"+sn.getNomNiveau().get(i-1));
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();

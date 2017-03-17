@@ -28,8 +28,9 @@ public class FenetreNiveau extends JPanel {
 	
 	private Niveau niveau;
 	
-	public FenetreNiveau(Niveau niveau){
-		this.niveau = niveau;
+	public FenetreNiveau(Niveau n){
+		
+		this.niveau = n;
 		
 		this.getInputMap(WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("pressed D"), "pressed D");
 		this.getActionMap().put("pressed D",new ActionDeplacementPressedD((StrategieJoueur)niveau.joueur.getStrat())  );
@@ -71,8 +72,8 @@ public class FenetreNiveau extends JPanel {
 		//affichage du joueur
 		niveau.joueur.rendu(g,(300 -niveau.joueur.getWidth())-niveau.joueur.getPosX(),
 			300 -niveau.joueur.getHeight()-niveau.joueur.getPosY(),getWidth(),getHeight());
-		//joueur.drawDebug(g,(300 -joueur.getWidth())-joueur.getPosX(),300 -joueur.getHeight()-joueur.getPosY(),getWidth(),getHeight());
-		
+		//niveau.joueur.drawDebug(g,(300 - niveau.joueur.getWidth())- niveau.joueur.getPosX(),300 - niveau.joueur.getHeight()- niveau.joueur.getPosY(),getWidth(),getHeight());
+		System.out.println(niveau.joueur.getPosX()+","+niveau.joueur.getPosY());
 		//affichage du tracé du joueur
 		Iterator<Bouclier> itBouclier = niveau.boucliers.iterator();
 		while(itBouclier.hasNext()){

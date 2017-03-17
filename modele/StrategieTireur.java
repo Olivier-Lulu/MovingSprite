@@ -8,11 +8,16 @@ public class StrategieTireur extends StrategiePatrouille{
 	private int sens = 1;
 	private int frequenceTire;
 	private int type;
+	private int mouvXTir;
+	private int mouvYTir;
 	
-	public StrategieTireur(int frequenceTire,int type ,Point deplacement, int taillePatrouille, int frequenceSaut, int hauteurSaut) {
+	public StrategieTireur(int frequenceTire,int type ,Point deplacement,
+			int taillePatrouille, int frequenceSaut, int hauteurSaut, int mouvX, int mouvY) {
 		super(deplacement, taillePatrouille, frequenceSaut, hauteurSaut);
 		this.type = type;
 		this.frequenceTire = frequenceTire;
+		mouvXTir = mouvX;
+		mouvYTir = mouvY;
 	}
 
 	@Override
@@ -21,7 +26,10 @@ public class StrategieTireur extends StrategiePatrouille{
 		int etat = super.eval(e, n);
 		if (pas % frequenceTire == 1){
 			if ( etat % 2 == 0 )
-				sens = -1;
+				if (etat != 0)
+					sens = -1;
+				else
+					sens = 1;
 			else
 				sens = 1;
 			tirer(e, n);
@@ -31,6 +39,6 @@ public class StrategieTireur extends StrategiePatrouille{
 	}
 	
 	private void tirer (Entite e, Niveau n){
-		n.boulettes.add(new EntiteBoulette(e.getPosX(), e.getPosY(), n, sens, type));
+		n.boulettes.add(new EntiteBoulette(e.getPosX(), e.getPosY(), n, type,sens * mouvXTir, mouvYTir));
 	}
 }
