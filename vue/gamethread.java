@@ -73,7 +73,8 @@ public class gamethread extends Thread {
 		while(!this.isInterrupted()){
 			long maintenant = System.currentTimeMillis();
 			fn.repaint();
-			n.bouger();
+			if (n.peutBouger())
+				n.bouger();
 			images++;
 			if (maintenant -dernier > 1000){
 				dernier = maintenant;

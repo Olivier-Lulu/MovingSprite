@@ -33,7 +33,7 @@ public class Main{
 		gamethread gt = new gamethread(n,m,frame,p);
 		gt.start();
 		frame.revalidate();
-		SoundThread st = new SoundThread();
-		st.start();
+		//SoundThread st = new SoundThread();
+		//st.start();
 	}
 }

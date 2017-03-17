@@ -13,6 +13,7 @@ public class Niveau{
 	public int xPop; 
 	public int yPop;
 	private Rectangle finDuNiveau;
+	private boolean peutBouger = true;
 
 	public SpriteStocker stock;
 
@@ -39,6 +40,7 @@ public class Niveau{
 	 * force les entités du niveau a éffectuer leur action
 	 */
 	public void bouger(){
+		peutBouger = false;
 		// évaluation des ennemis
 		Iterator<Entite> it = mob.iterator();
 		while(it.hasNext()){
@@ -60,13 +62,14 @@ public class Niveau{
 		//évalutation des boulettes
 		ListIterator<EntiteBoulette> itBoulette = boulettes.listIterator();
 		while(itBoulette.hasNext()){
-			EntiteBoulette boulette = itBoulette.next();
-			boulette.eval();
-			if (boulette.doitDeceder()){
-				boulettes.remove(boulette);
+			itBoulette.next().eval();
+			itBoulette.previous();
+			if (itBoulette.next().doitDeceder()){
+				itBoulette.previous();
+				itBoulette.remove();
 			}
 		}
-		
+		peutBouger = true;
 	}
 	
 	public Entite ajouterEntite(Entite e){
@@ -187,4 +190,9 @@ public class Niveau{
 	public Rectangle getFinDuNiveau (){
 		return finDuNiveau;
 	}
+	
+	public boolean peutBouger (){
+		return peutBouger;
+	}
+	
 }
