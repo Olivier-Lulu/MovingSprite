@@ -10,6 +10,7 @@ public class StrategieTireur extends StrategiePatrouille{
 	private int type;
 	private int mouvXTir;
 	private int mouvYTir;
+	private int pas = 1;
 	
 	public StrategieTireur(int frequenceTire,int type ,Point deplacement,
 			int taillePatrouille, int frequenceSaut, int hauteurSaut, int mouvX, int mouvY) {
@@ -24,7 +25,7 @@ public class StrategieTireur extends StrategiePatrouille{
 	public int eval(Entite e, Niveau n){
 		//s'il va à gauche c'est pair
 		int etat = super.eval(e, n);
-		if (pas % frequenceTire == 1){
+		if (pas % frequenceTire == 0){
 			if ( etat % 2 == 0 ){
 				if (etat != 0)
 					sens = -1;
@@ -33,6 +34,7 @@ public class StrategieTireur extends StrategiePatrouille{
 			tirer(e, n);
 			etat = 6;
 		}
+		pas++;
 		if (etat == 0)
 			if (mouvXTir < 0)
 				return 2;
