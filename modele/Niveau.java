@@ -55,9 +55,10 @@ public class Niveau{
 		while (itBouclier.hasNext()){
 			itBouclier.next().disparitionNaturelle();
 			itBouclier.previous();
-			if (itBouclier.next().doitDeceder())
+			if (itBouclier.next().doitDeceder()){
 				itBouclier.previous();
 				itBouclier.remove();
+			}
 		}
 		
 		//évalutation des boulettes

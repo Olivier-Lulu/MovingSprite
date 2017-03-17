@@ -5,7 +5,7 @@ import java.awt.Point;
 public class StrategiePatrouille extends Strategie {
 	
 	private int taillePatrouille;//nombre de pas a faire dans une direction avant de faire demi-tours
-	protected int pas = 0;// nombre de pas effecuer depuis le dernier demi-tours
+	private int pas = 1;// nombre de pas effecuer depuis le dernier demi-tours
 	private int frequenceSaut;//frequence a laquelle il faut faire un saut
 	private int hauteurSaut;// vitesse vertical a donner lors des saut
 	
@@ -22,7 +22,7 @@ public class StrategiePatrouille extends Strategie {
 			deplacement.y = hauteurSaut;
 		if(pas == taillePatrouille){
 			deplacement.x = deplacement.x*-1;
-			pas = 0;
+			pas = 1;
 		}else
 			pas++;
 		return super.eval(e, n);
