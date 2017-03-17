@@ -216,7 +216,7 @@ public class Physique {
 			else
 				possibleY = false;
 
-			if (!e.equals(n.joueur) && !(StrategieScorable.class.isAssignableFrom(e.getStrat().getClass())) && n.joueur.intersects(e) )
+			/*if (!e.equals(n.joueur) && !(StrategieScorable.class.isAssignableFrom(e.getStrat().getClass())) && n.joueur.intersects(e) )
 				n.joueur.deces();
 			
 			//flag collision
@@ -240,7 +240,7 @@ public class Physique {
 						}
 					}
 				}
-			
+			*/
 			
 			if(EntiteBoulette.class.isAssignableFrom(e.getClass())){
 				for (Entite ent : listeEntite) {

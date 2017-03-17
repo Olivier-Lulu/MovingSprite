@@ -63,7 +63,20 @@ pique 850,825 null
 pique 1250,825 null
 pique 1275,825 null
 pique 1300,825 null
-tourelle1 875,575 tireur 1 0 50 0 1 20 10 -5
+tourelle1 850,575 tireur 0 0 80 0 1 80 -10 -8
+tourelle2 900,525 tireur 0 0 80 0 2 80 -10 -8
+humain 900,775 patrouille 2 0 32 0
+tourelle1 1250,575 tireur 0 0 80 0 1 80 10 -8
+tourelle2 1200,525 tireur 0 0 80 0 2 80 10 -8
+humain 1100,775 patrouille 2 0 32 0
+tourelle3 1005,575 tireur 2 0 30 0 3 100 5 -10
+drapeauFanion 1050,1024 checkPoint
+drapeauMat 1915,1050 checkPoint
+drapeauMat 1915,1025 checkPoint
+drapeauMat 1915,1000 checkPoint
+drapeauFanion 1915,975 checkPoint
+tourelle1 1700,1050 tireur 1 0 20 0 1 80 -10 0
+humain 1500,1025 patrouille 2 0 40 0
 Joueur:
 320,770
-Fin: 320,780
+Fin: 1915,1050

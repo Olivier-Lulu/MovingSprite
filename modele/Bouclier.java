@@ -78,7 +78,7 @@ public class Bouclier {
 	}
 	
 	public Point calculerMouvmentApresRebond (Point mouvementIncident, int xContact, int yContact){
-		if ( pente!= 0 ){
+		if ( pente!= 0 && pente != -1 ){
 			calculerEquationAxeSymetrie(xContact, yContact);
 
 			int xProjete = xContact - mouvementIncident.x;
