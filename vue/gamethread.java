@@ -6,7 +6,6 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import modele.Mana;
-import modele.Niveau;
 import modele.Parametres;
 import modele.Score;
 
