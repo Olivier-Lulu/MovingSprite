@@ -393,6 +393,7 @@ public class Createur {
 
 			//recupération des donné du joueur
 			if(!ligne.equals("Joueur:")){
+				System.out.println(ligne);
 				fichier.close();
 				throw new IllegalArgumentException("Niveau:\n Joueur: manquant");
 			}

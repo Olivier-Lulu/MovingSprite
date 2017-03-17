@@ -20,7 +20,7 @@ public class Main{
 		JFrame frame = new JFrame();
 		Niveau n = null;
 		try {
-			n = Createur.creerNiveau("/data/Level1");
+			n = Createur.creerNiveau("/data/NiveauOlivier.niveau");
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

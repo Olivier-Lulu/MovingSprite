@@ -17,7 +17,7 @@ public class SoundThread implements Runnable{
 	}
 
 
-    private String fichier = "/data/Sprites/Musique3.wav";
+    private String fichier = "/data/Sprites/Musique1bis.wav";
 
     public void play() {
         Thread t = new Thread(this);

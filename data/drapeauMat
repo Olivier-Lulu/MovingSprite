@@ -1,0 +1,6 @@
+Entite:
+sprite: 7 2 1
+score: 0
+box: 25,25
+subBox: 8,0 8,25
+---
