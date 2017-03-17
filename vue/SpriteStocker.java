@@ -1,4 +1,5 @@
 package vue;
+
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.HashMap;
@@ -6,14 +7,14 @@ import java.util.HashMap;
 import javax.imageio.ImageIO;
 
 public class SpriteStocker {
-	
-	private HashMap<Integer,Sprite> stock;
-	
+
+	private HashMap<Integer, Sprite> stock;
+
 	public static BufferedImage table = null;
-	
-	public SpriteStocker(String path,int i){
+
+	public SpriteStocker(String path, int i) {
 		stock = new HashMap<Integer, Sprite>();
-		
+
 		try {
 			table = ImageIO.read(getClass().getResource(path));
 		} catch (IOException e) {
@@ -21,27 +22,27 @@ public class SpriteStocker {
 			e.printStackTrace();
 		}
 		int j = 0;
-		while(j++ != i){
-			stock.put(j,new Sprite(getSprite(j, 1)));
+		while (j++ != i) {
+			stock.put(j, new Sprite(getSprite(j, 1)));
 		}
 	}
-	
-	public void add(Sprite s,Integer nom){
-		if(!stock.containsKey(nom))
-			stock.put(nom,s);
+
+	public void add(Sprite s, Integer nom) {
+		if (!stock.containsKey(nom))
+			stock.put(nom, s);
 	}
 
-	public Sprite get(Integer nom){
-		if(stock.containsKey(nom))
+	public Sprite get(Integer nom) {
+		if (stock.containsKey(nom))
 			return stock.get(nom);
 		return null;
 	}
-	
-	public int getTaille(){
+
+	public int getTaille() {
 		return stock.size();
 	}
-	
-	public BufferedImage getSprite(int x, int y){
-		return table.getSubimage(x*25-25, y*25-25, 25, 25);
+
+	public BufferedImage getSprite(int x, int y) {
+		return table.getSubimage(x * 25 - 25, y * 25 - 25, 25, 25);
 	}
 }
