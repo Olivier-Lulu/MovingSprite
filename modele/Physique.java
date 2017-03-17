@@ -230,8 +230,10 @@ public class Physique {
 
 					if (StrategieCheckPoint.class.isAssignableFrom(mob.getStrat().getClass())){
 						if (n.getFinDuNiveau().intersects(n.joueur.getPosX(), n.joueur.getPosY(),
-								n.joueur.getWidth(), n.joueur.getHeight()));
-						//fin du niveau
+								n.joueur.getWidth(), n.joueur.getHeight())){
+							//fin du niveau
+							System.out.println("FIN DU NIVEAU !!!");
+						}
 						else{
 							n.xPop = e.getPosX();
 							n.yPop = e.getPosY();

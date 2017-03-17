@@ -22,7 +22,7 @@ public class Niveau{
 	public LinkedList<Bouclier> boucliers = new LinkedList<Bouclier>();
 	public LinkedList<EntiteBoulette> boulettes = new LinkedList<EntiteBoulette>();
 	
-	public Niveau(SpriteStocker stock, Entite[][] entite, LinkedList<Entite> mob, Entite joueur) {
+	public Niveau(SpriteStocker stock, Entite[][] entite, LinkedList<Entite> mob, Entite joueur,int x, int y) {
 		super();
 		this.stock = stock;
 		this.entite = entite;
@@ -30,6 +30,7 @@ public class Niveau{
 		this.joueur = joueur;		
 		xPop = joueur.getPosX();
 		yPop = joueur.getPosY();
+		this.finDuNiveau = new Rectangle(x,y,25,25);
 		
 	}
 
