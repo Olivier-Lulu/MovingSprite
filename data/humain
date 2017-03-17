@@ -1,0 +1,43 @@
+Entite:
+sprite: 1 2 4
+score: 0
+box: 28,50
+subBox: 6,0 16,12 //tete
+subBox: 8,12 10,4 //coup
+subBox: 6,16 16,16 //corp
+subBox: 0,18 4,16 //bras d
+subBox: 24,18 4,16 //bras g
+subBox: 8,30 12,10 //bas corp
+subBox: 6,38 8,12 //jambe d
+subBox: 16,38 12,10 //jambe g
+---
+box: 28,50
+subBox: 6,0 16,12 //tete
+subBox: 8,12 10,4 //coup
+subBox: 6,16 16,16 //corp
+subBox: 0,18 4,16 //bras d
+subBox: 24,18 4,16 //bras g
+subBox: 8,30 12,10 //bas corp
+subBox: 6,38 8,12 //jambe d
+subBox: 18,36 10,10 //jambe g
+---
+box: 28,50
+subBox: 6,0 16,12 //tete
+subBox: 8,12 10,4 //coup
+subBox: 6,16 16,16 //corp
+subBox: 0,18 4,16 //bras d
+subBox: 24,18 4,16 //bras g
+subBox: 8,30 12,10 //bas corp
+subBox: 6,38 8,12 //jambe d
+subBox: 0,38 12,10 //jambe g
+---
+box: 28,50
+subBox: 6,0 16,12 //tete
+subBox: 8,12 10,4 //coup
+subBox: 6,16 16,16 //corp
+subBox: 0,6 6,16 //bras d
+subBox: 25,6 3,16 //bras g
+subBox: 8,30 12,10 //bas corp
+subBox: 0,38 8,10 //jambe d
+subBox: 20,38 10,8 //jambe g
+---
