@@ -27,11 +27,12 @@ public class Main{
 		}
 		Menu m = new Menu (true, false);
 		Parametres p = new Parametres(frame,m);
+		SelectNiveau sn = new SelectNiveau();
 		frame.setSize(WIDTH,HEIGHT);
 		frame.setBackground(Color.black);
-		frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);		
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);		
 		frame.setVisible(true);
-		(new gamethread(n,m,frame,p)).start();
+		(new gamethread(n,m,frame,p,sn)).start();
 		frame.revalidate();
 		(new SoundThread(n)).play();
 	}

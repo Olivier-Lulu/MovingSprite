@@ -100,6 +100,14 @@ public class FenetreNiveau extends JPanel {
 	public void tracerLigne (int positionXCLickSouris ,int positionYCLickSouris ,int positionXLacheSouris ,int positionYLacheSouris ){
 		niveau.tracerLigne(positionXCLickSouris, positionYCLickSouris, positionXLacheSouris, positionYLacheSouris,getWidth(),getHeight());
 	}
+
+	public Niveau getNiveau() {
+		return niveau;
+	}
+
+	public void setNiveau(Niveau niveau) {
+		this.niveau = niveau;
+	}
 		
 	
 	

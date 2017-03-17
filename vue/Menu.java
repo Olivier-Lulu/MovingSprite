@@ -38,7 +38,7 @@ public class Menu extends JPanel{
 	}
 	
 	public void paint(Graphics g){
-		g.drawImage(image,0,0,getWidth(),getHeight(),0,0,1920,1080,null);	
+		g.drawImage(image,0,0,getWidth(),getHeight(),0,0,1920,1080,null);
 	}
 
 
