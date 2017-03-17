@@ -23,7 +23,6 @@ public class SelectNiveauClick implements MouseListener {
 		for (int i =1 ; i <= sn.getNomNiveau().size(); i++){
 			if (sn.getZc()[i-1].contains(arg0.getX(),arg0.getY())){	
 				Niveau niveau = null;
-				System.out.println("aaaaa");
 				try {
 					niveau = Createur.creerNiveau("/data/"+sn.getNomNiveau().get(i-1));
 				} catch (IOException e) {
