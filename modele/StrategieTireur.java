@@ -25,17 +25,21 @@ public class StrategieTireur extends StrategiePatrouille{
 		//s'il va à gauche c'est pair
 		int etat = super.eval(e, n);
 		if (pas % frequenceTire == 1){
-			if ( etat % 2 == 0 )
+			if ( etat % 2 == 0 ){
 				if (etat != 0)
 					sens = -1;
-				else
-					sens = 1;
-			else
+			}else
 				sens = 1;
 			tirer(e, n);
 			etat = 6;
 		}
-		return etat;
+		if (etat == 0)
+			if (mouvXTir < 0)
+				return 2;
+			else 
+				return 1;
+		else 
+			return etat;
 	}
 	
 	private void tirer (Entite e, Niveau n){
