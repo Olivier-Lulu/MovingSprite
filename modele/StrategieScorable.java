@@ -2,7 +2,7 @@ package modele;
 
 public class StrategieScorable extends Strategie {
 	/*
-	 * cette classe est utiliser comme strategie pour les objet
+	 * cette classe est utiliser comme strategie pour les objets ne servant qu'a augmenter le score
 	 */
 	
 	public StrategieScorable() {

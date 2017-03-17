@@ -19,6 +19,7 @@ import modele.HitBox;
 import modele.Niveau;
 import modele.StrategieJoueur;
 import modele.Strategie;
+import modele.StrategieCheckPoint;
 import modele.StrategiePatrouille;
 import modele.StrategieScorable;
 import modele.StrategieTireur;
@@ -458,6 +459,9 @@ public class Createur {
 			break;
 		case "tireur":
 			strategie = creerStrategieTireur(st);
+			break;
+		case "checkPoint":
+			strategie = new StrategieCheckPoint();
 			break;
 		}
 		return strategie;
