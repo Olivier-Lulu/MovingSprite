@@ -5,10 +5,15 @@ import java.awt.event.MouseListener;
 
 import javax.swing.JFrame;
 
-import modele.Parametres;
+import vue.Parametres;
+
 
 public class ParamClick implements MouseListener {
 
+	/*
+	 * Cette classe permet de récuperer les clicks lorsque les paramètres sont le JPanel actif.
+	 */
+	
 	Parametres p;
 
 	public ParamClick(Parametres p) {

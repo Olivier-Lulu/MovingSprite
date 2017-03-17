@@ -10,6 +10,10 @@ import vue.SelectNiveau;
 
 public class SelectNiveauClick implements MouseListener {
 
+	/*
+	 * Cette classe permet de récuperer les clicks lorsque le sélecteur de niveau est le JPanel actif.
+	 */
+	
 	SelectNiveau sn;
 
 	public SelectNiveauClick(SelectNiveau sn) {

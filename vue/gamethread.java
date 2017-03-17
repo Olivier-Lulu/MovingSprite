@@ -6,7 +6,6 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import modele.Mana;
-import modele.Parametres;
 import modele.Score;
 
 public class gamethread extends Thread {
@@ -16,6 +15,10 @@ public class gamethread extends Thread {
 	JFrame frame;
 	Parametres p;
 	SelectNiveau sn;
+	/*
+	 * Le papaPanel est le JPanel principal dans lequel le cardLayout sera mis en place.
+	 * Le cardLayout comprendra tous les autres JPanel.
+	 */
 	final JPanel papaPanel = new JPanel();
 	final CardLayout card = new CardLayout();
 
@@ -36,6 +39,9 @@ public class gamethread extends Thread {
 		this.frame.setContentPane(papaPanel);
 		this.frame.validate();
 		card.show(papaPanel, "un");
+		/*
+		 * Cette boucle permet de repaint le JPanel menu tant qu'il est actif.
+		 */
 		while (m.isRunning() && !this.isInterrupted()) {
 			long maintenant = System.currentTimeMillis();
 			m.repaint();
@@ -45,6 +51,9 @@ public class gamethread extends Thread {
 				System.out.println(images + " images par seconde");
 				images = 0;
 			}
+			/*
+			 * Cette boucle permet de repaint le JPanel parametres tant qu'il est actif.
+			 */
 			while (m.isParam() && !this.isInterrupted()) {
 				maintenant = System.currentTimeMillis();
 				card.show(papaPanel, "deux");
@@ -72,12 +81,21 @@ public class gamethread extends Thread {
 		}
 
 		card.show(papaPanel, "trois");
+		/*
+		 * Cette boucle permet de repaint le sélecteur de niveau tant qu'il est actif.
+		 * La boucle est infinie car lors d'une fin de niveau on retourne obligatoirement 
+		 * au sélecteur de niveau
+		 */
 		while (true) {
 			sn.repaint();
 			if (sn.getNiveauRunning() != null) {
 				fn = new FenetreNiveau(sn.getNiveauRunning());
 				papaPanel.add(fn, "quatre");
 			}
+			/*
+			 * Cette boucle permet de repaint le niveau attribué à la 
+			 * fenêtre de niveau tant qu'il est actif.
+			 */
 			while (fn != null && fn.getNiveau() != null) {
 				card.show(papaPanel, "quatre");
 				long maintenant = System.currentTimeMillis();

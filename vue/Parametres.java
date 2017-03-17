@@ -1,4 +1,4 @@
-package modele;
+package vue;
 
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
@@ -8,24 +8,26 @@ import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-import vue.Menu;
 
 import controleur.ParamClick;
 
 public class Parametres extends JPanel {
 
-	/**
-	 * 
+	/*
+	 * Cette classe est un Conponent qui permet l'affichage des paramètres.
 	 */
+	
 	private static final long serialVersionUID = 1L;
 
+	/*
+	 * Permet de récuperer le chemin d'accès vers l'image de fond.
+	 */
 	private static String fichier = "/data/Sprites/Parametres.png";
-
-	java.net.URL url = this.getClass().getResource(fichier);
+	private java.net.URL url = this.getClass().getResource(fichier);
 
 	BufferedImage image;
-
-	JFrame frame;
+	
+	private JFrame frame;
 
 	private Menu m;
 
@@ -39,7 +41,8 @@ public class Parametres extends JPanel {
 			e.printStackTrace();
 		}
 	}
-
+	
+	
 	public void paint(Graphics g) {
 		g.drawImage(image, 0, 0, getWidth(), getHeight(), 0, 0, 800, 800, null);
 	}

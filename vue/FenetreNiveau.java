@@ -22,9 +22,6 @@ import modele.StrategieJoueur;
 
 public class FenetreNiveau extends JPanel {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 
 	private Niveau niveau;
@@ -114,10 +111,6 @@ public class FenetreNiveau extends JPanel {
 				(300 - niveau.joueur.getWidth()) - niveau.joueur.getPosX(), 300
 						- niveau.joueur.getHeight() - niveau.joueur.getPosY(),
 				getWidth(), getHeight());
-		// niveau.joueur.drawDebug(g,(300 - niveau.joueur.getWidth())-
-		// niveau.joueur.getPosX(),300 - niveau.joueur.getHeight()-
-		// niveau.joueur.getPosY(),getWidth(),getHeight());
-		// affichage du tracé du joueur
 		Iterator<Bouclier> itBouclier = niveau.boucliers.iterator();
 		while (itBouclier.hasNext()) {
 			itBouclier.next().rendu(g,

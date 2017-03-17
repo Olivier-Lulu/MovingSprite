@@ -7,6 +7,10 @@ import javax.sound.sampled.DataLine;
 
 public class SoundThread extends Thread {
 
+	/*
+	 * Cette classe est un Thread qui permet de rajouter du son en parallèle du gamethread.
+	 */
+	
 	private AudioInputStream as;
 	private Clip c;
 

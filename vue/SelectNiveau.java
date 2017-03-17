@@ -20,9 +20,10 @@ import controleur.SelectNiveauClick;
 
 public class SelectNiveau extends JPanel {
 
-	/**
-	 * 
+	/*
+	 * Cette classe est un Conponent qui permet l'affichage des paramètres.
 	 */
+	
 	private static final long serialVersionUID = 1L;
 
 	String fichier = "/data/Sprites/SelectNiveau.jpg";
