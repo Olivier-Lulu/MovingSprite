@@ -28,8 +28,9 @@ public class FenetreNiveau extends JPanel {
 	
 	private Niveau niveau;
 	
-	public FenetreNiveau(Niveau niveau){
-		this.niveau = niveau;
+	public FenetreNiveau(Niveau n){
+		
+		this.niveau = n;
 		
 		this.getInputMap(WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("pressed D"), "pressed D");
 		this.getActionMap().put("pressed D",new ActionDeplacementPressedD((StrategieJoueur)niveau.joueur.getStrat())  );
@@ -99,6 +100,14 @@ public class FenetreNiveau extends JPanel {
 	
 	public void tracerLigne (int positionXCLickSouris ,int positionYCLickSouris ,int positionXLacheSouris ,int positionYLacheSouris ){
 		niveau.tracerLigne(positionXCLickSouris, positionYCLickSouris, positionXLacheSouris, positionYLacheSouris,getWidth(),getHeight());
+	}
+
+	public Niveau getNiveau() {
+		return niveau;
+	}
+
+	public void setNiveau(Niveau niveau) {
+		this.niveau = niveau;
 	}
 		
 	
