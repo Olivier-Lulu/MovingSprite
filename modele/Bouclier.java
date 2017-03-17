@@ -29,56 +29,59 @@ import java.util.ListIterator;
 public class Bouclier {
 
 	public LinkedList<EntiteTrace> ligne;
-	//c'est le type du bouclier qui détermine le type de boulette qu'il peut renvoyer
+	// c'est le type du bouclier qui détermine le type de boulette qu'il peut
+	// renvoyer
 
 	private int type;
 	private double pente;
 	private double penteAxeSymetrie;
 	private double abscisseOrigineAxeSymetrie;
 	private double abscisseOrigineAxeProjection;
-	
-	public Bouclier (LinkedList<EntiteTrace> ligne, int type){
+
+	public Bouclier(LinkedList<EntiteTrace> ligne, int type) {
 		this.ligne = ligne;
 		calculerEquationLigne();
 		this.type = type;
 	}
-	
-	public void calculerEquationLigne (){
+
+	public void calculerEquationLigne() {
 		double x1 = ligne.getFirst().getPosX();
 		double y1 = ligne.getFirst().getPosY();
 		double x2 = ligne.getLast().getPosX();
 		double y2 = ligne.getLast().getPosY();
-		if ((x2-x1)!=0)
-			pente = (y2 - y1)/(x2 - x1);
+		if ((x2 - x1) != 0)
+			pente = (y2 - y1) / (x2 - x1);
 		else
-			pente = -1;		
+			pente = -1;
 	}
-	
-	//xContact et yContact sont les coordonnés du point de contact entre le bouclier et la boulette
-	public void calculerEquationAxeSymetrie (int xContact, int yContact){
-		if (pente != 0){
-			penteAxeSymetrie = - (1.0/pente);
+
+	// xContact et yContact sont les coordonnés du point de contact entre le
+	// bouclier et la boulette
+	public void calculerEquationAxeSymetrie(int xContact, int yContact) {
+		if (pente != 0) {
+			penteAxeSymetrie = -(1.0 / pente);
 			abscisseOrigineAxeSymetrie = yContact - penteAxeSymetrie * xContact;
-		}else{
+		} else {
 			penteAxeSymetrie = 0;
 			abscisseOrigineAxeSymetrie = yContact;
 		}
 	}
-	
-	public void calculerAbscisseOrigineAxeProjection(int xProjete, int yProjete){
+
+	public void calculerAbscisseOrigineAxeProjection(int xProjete, int yProjete) {
 		abscisseOrigineAxeProjection = yProjete - pente * xProjete;
 	}
-	
-	public Point calculerCentreSymetrie(){
-		int xCentreSymetrie = (int) (((abscisseOrigineAxeSymetrie - abscisseOrigineAxeProjection) * pente) / (1 + Math.pow(pente, 2)));
+
+	public Point calculerCentreSymetrie() {
+		int xCentreSymetrie = (int) (((abscisseOrigineAxeSymetrie - abscisseOrigineAxeProjection) * pente) / (1 + Math
+				.pow(pente, 2)));
 		int yCentreSymetrie = (int) (pente * xCentreSymetrie + abscisseOrigineAxeProjection);
-		
-		
-		return new Point(xCentreSymetrie,yCentreSymetrie);
+
+		return new Point(xCentreSymetrie, yCentreSymetrie);
 	}
-	
-	public Point calculerMouvmentApresRebond (Point mouvementIncident, int xContact, int yContact){
-		if ( pente!= 0 && pente != -1 ){
+
+	public Point calculerMouvmentApresRebond(Point mouvementIncident,
+			int xContact, int yContact) {
+		if (pente != 0 && pente != -1) {
 			calculerEquationAxeSymetrie(xContact, yContact);
 
 			int xProjete = xContact - mouvementIncident.x;
@@ -88,52 +91,54 @@ public class Bouclier {
 
 			Point centreSymetrie = calculerCentreSymetrie();
 
-			int xImage = 2*centreSymetrie.x - xProjete;
-			int yImage = 2*centreSymetrie.y - yProjete;
+			int xImage = 2 * centreSymetrie.x - xProjete;
+			int yImage = 2 * centreSymetrie.y - yProjete;
 
-			//le nouveau mouvement est donc le vecteur entre les coordonnées du point de contact et
-			//ceux de l'image du point projeté
+			// le nouveau mouvement est donc le vecteur entre les coordonnées du
+			// point de contact et
+			// ceux de l'image du point projeté
 			int xImageMouvement = xImage - xContact;
 			int yImageMouvement = yImage - yContact;
 
 			return new Point(xImageMouvement, yImageMouvement);
-		}else{
+		} else {
 			if (pente == -1)
 				return new Point(-mouvementIncident.x, mouvementIncident.y);
 			if (pente == 0)
 				return new Point(mouvementIncident.x, -mouvementIncident.y);
-		}	
-		return new Point(0,0);
+		}
+		return new Point(0, 0);
 	}
-	
+
 	/*
-	 * Méthode faisant disparaître la ligne du bouclier à la fin de sa durée de vie
+	 * Méthode faisant disparaître la ligne du bouclier à la fin de sa durée de
+	 * vie
 	 */
-	public void disparitionNaturelle (){
+	public void disparitionNaturelle() {
 		ListIterator<EntiteTrace> itTrace = ligne.listIterator();
-		while (itTrace.hasNext()){
-			if (((StrategieTrace) itTrace.next().getStrat()).doitDeceder()){
+		while (itTrace.hasNext()) {
+			if (((StrategieTrace) itTrace.next().getStrat()).doitDeceder()) {
 				itTrace.previous();
 				itTrace.remove();
 				Mana.manaHausse();
 			}
 		}
 	}
-	
-	public boolean doitDeceder (){
+
+	public boolean doitDeceder() {
 		return (ligne.size() == 0);
 	}
-	
-	public int getType (){
+
+	public int getType() {
 		return type;
 	}
 
-	public void rendu (Graphics g, int deltaX, int deltaY,
-			int screenWidth, int screenHeight){
-		for (EntiteTrace block : ligne){
+	public void rendu(Graphics g, int deltaX, int deltaY, int screenWidth,
+			int screenHeight) {
+		for (EntiteTrace block : ligne) {
 
 			block.rendu(g, deltaX, deltaY, screenWidth, screenHeight);
 		}
 	}
-	
+
 }

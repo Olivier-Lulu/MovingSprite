@@ -9,38 +9,37 @@ import javax.swing.JPanel;
 
 import controleur.MenuClick;
 
-public class Menu extends JPanel{
+public class Menu extends JPanel {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 
-	public static String fichier = "/data/Sprites/FondFini.png"; 
-	
+	public static String fichier = "/data/Sprites/FondFini.png";
+
 	private boolean running;
-	
+
 	private boolean param;
-	
+
 	BufferedImage image;
 	java.net.URL url = this.getClass().getResource(fichier);
-	
-	
+
 	public Menu(boolean running, boolean param) {
 		addMouseListener(new MenuClick(this));
-		this.running= running;
+		this.running = running;
 		this.param = param;
-		try{
+		try {
 			this.image = ImageIO.read(url);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
-	
-	public void paint(Graphics g){
-		g.drawImage(image,0,0,getWidth(),getHeight(),0,0,1920,1080,null);
-	}
 
+	public void paint(Graphics g) {
+		g.drawImage(image, 0, 0, getWidth(), getHeight(), 0, 0, 1920, 1080,
+				null);
+	}
 
 	public boolean isParam() {
 		return param;

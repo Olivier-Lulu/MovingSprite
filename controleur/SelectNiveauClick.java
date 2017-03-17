@@ -11,7 +11,7 @@ import vue.SelectNiveau;
 public class SelectNiveauClick implements MouseListener {
 
 	SelectNiveau sn;
-	
+
 	public SelectNiveauClick(SelectNiveau sn) {
 		// TODO Auto-generated constructor stub
 		this.sn = sn;
@@ -20,12 +20,13 @@ public class SelectNiveauClick implements MouseListener {
 	@Override
 	public void mouseClicked(MouseEvent arg0) {
 		// TODO Auto-generated method stub
-		for (int i =1 ; i <= sn.getNomNiveau().size(); i++){
-			if (sn.getZc()[i-1].contains(arg0.getX(),arg0.getY())){	
+		for (int i = 1; i <= sn.getNomNiveau().size(); i++) {
+			if (sn.getZc()[i - 1].contains(arg0.getX(), arg0.getY())) {
 				Niveau niveau = null;
 				System.out.println("aaaaa");
 				try {
-					niveau = Createur.creerNiveau("/data/"+sn.getNomNiveau().get(i-1));
+					niveau = Createur.creerNiveau("/data/"
+							+ sn.getNomNiveau().get(i - 1));
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();

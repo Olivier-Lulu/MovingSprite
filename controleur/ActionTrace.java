@@ -10,16 +10,16 @@ import vue.FenetreNiveau;
  */
 public class ActionTrace implements MouseListener {
 
-	private boolean traceAutorise = true; 
+	private boolean traceAutorise = true;
 	private int positionXCLickSouris = 0;
 	private int positionYCLickSouris = 0;
 	private FenetreNiveau niveau;
-	
-	public ActionTrace(FenetreNiveau niveau){
+
+	public ActionTrace(FenetreNiveau niveau) {
 		super();
 		this.niveau = niveau;
 	}
-	
+
 	public void mouseClicked(MouseEvent arg0) {
 		// TODO Auto-generated method stub
 	}
@@ -43,8 +43,9 @@ public class ActionTrace implements MouseListener {
 
 	public void mouseReleased(MouseEvent click) {
 		// TODO Auto-generated method stub
-		if (!traceAutorise){
-			niveau.tracerLigne( positionXCLickSouris , positionYCLickSouris ,click.getX() , click.getY() );
+		if (!traceAutorise) {
+			niveau.tracerLigne(positionXCLickSouris, positionYCLickSouris,
+					click.getX(), click.getY());
 			traceAutorise = true;
 		}
 	}
