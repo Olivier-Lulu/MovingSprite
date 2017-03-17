@@ -3,7 +3,6 @@ import java.awt.Color;
 import java.io.IOException;
 
 import javax.swing.JFrame;
-import javax.swing.WindowConstants;
 
 import modele.Niveau;
 import modele.Parametres;
@@ -29,10 +28,12 @@ public class Main{
 		Parametres p = new Parametres(frame,m);
 		frame.setSize(WIDTH,HEIGHT);
 		frame.setBackground(Color.black);
-		frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);		
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setVisible(true);
-		(new gamethread(n,m,frame,p)).start();
+		gamethread gt = new gamethread(n,m,frame,p);
+		gt.start();
 		frame.revalidate();
-		(new SoundThread(n)).play();
+		SoundThread st = new SoundThread();
+		st.start();
 	}
 }

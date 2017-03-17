@@ -19,6 +19,7 @@ import modele.HitBox;
 import modele.Niveau;
 import modele.StrategieJoueur;
 import modele.Strategie;
+import modele.StrategieCheckPoint;
 import modele.StrategiePatrouille;
 import modele.StrategieScorable;
 import modele.StrategieTireur;
@@ -45,7 +46,7 @@ public class Createur {
 	 * subBox: <position x par rapport au point haut Gauche de l'entité>,<position y par rapport au point haut Gauche de l'entité> <taille x de la sous boite>,<taille en y de la sous boite>
 	 * repeter autant de subBox que voulus
 	 * --- 
-	 * repeter autemp de box que de frame dans l'animation
+	 * repeter autant de box que de frame dans l'animation
 	 */
 	public static Entite creerEntiter(String path, int posX, int posY, Strategie strategie, SpriteStocker stock) throws IOException{
 		int x = 0;
@@ -231,6 +232,7 @@ public class Createur {
 	 * <nom du fichier decrivant l'enemis> <position en x>,<position en Y> <nom de la strategie> <parrametre de la stratégie, voire chaque strategie individuellement>
 	 * Joueur: 
 	 * <position en X du joueur>,<position en y de joueur>
+	 * Fin: <position X de la fin>,<position Y de la fin>  toutefois, il faut  mettre un checkpoint sur la fin pour que le joueur puisse la détecter
 	 *
 	 */
 	public static Niveau creerNiveau(String path) throws IOException{
@@ -240,6 +242,8 @@ public class Createur {
 		Entite joueur = null;
 		BufferedReader fichier = new BufferedReader(new FileReader(new File(Createur.class.getResource(path).getFile())));
 		String ligne;
+		int x = 0;
+		int y = 0;
 		try{
 			ligne = fichier.readLine();
 			if(!ligne.equals("Niveau:")){
@@ -260,8 +264,6 @@ public class Createur {
 				fichier.close();
 				throw new IllegalArgumentException("Niveau:\n description Taille : monde manquant");
 			}
-			int x = 0;
-			int y = 0;
 			if(st.hasMoreTokens())
 				try{
 					x = Integer.parseInt(st.nextToken());
@@ -341,7 +343,7 @@ public class Createur {
 			}
 			
 			//recuperation de la structure du niveau
-			for(int j = 0; j < entite[0].length;j++){
+			for(int j = 0; j < entite[0].length ;j++){
 				ligne = fichier.readLine();
 				if(ligne != null)
 					st = new StringTokenizer(ligne);
@@ -352,7 +354,7 @@ public class Createur {
 				for(int i = 0;i <entite.length;i++){
 					if(!st.hasMoreTokens()){
 						fichier.close();
-						throw new IllegalArgumentException("Niveau:\n ligne du monde manquant");
+						throw new IllegalArgumentException("Niveau:\n colone du monde manquant");
 					}
 					ligne = st.nextToken();
 					int code = 0;
@@ -415,12 +417,47 @@ public class Createur {
 				fichier.close();
 				throw e;
 			}
+			
+			//recuperation des infos de fin de niveau
+			ligne = fichier.readLine();
+			if(ligne == null){
+				fichier.close();
+				throw new IllegalArgumentException("Niveau:\n Fin de niveau manquant");
+			}
+			st = new StringTokenizer(ligne," ,");
+			if(!st.nextToken().equals("Fin:")){
+				fichier.close();
+				throw new IllegalArgumentException("Niveau:\n Fin: manquant");
+			}
+			if(!st.hasMoreTokens()){
+				fichier.close();
+				throw new IllegalArgumentException("Niveau:\n argument de fin de niveau manquant");
+			}
+			try{
+				x = Integer.parseInt(st.nextToken());
+			}catch(NumberFormatException e){
+				System.out.println("Niveau:\n x de fin de niveau mal formater");
+				fichier.close();
+				throw e;
+			}
+			if(!st.hasMoreTokens()){
+				fichier.close();
+				throw new IllegalArgumentException("Niveau:\n argument de fin de niveau manquant");
+			}
+			try{
+				y = Integer.parseInt(st.nextToken());
+			}catch(NumberFormatException e){
+				System.out.println("Niveau:\n y de fin de niveau mal formater");
+				fichier.close();
+				throw e;
+			}
+			
 		}catch(IOException e){
 			e.printStackTrace();
 			fichier.close();
 		}
 		fichier.close();
-		Niveau niveau = new Niveau(stock, entite, mob, joueur);
+		Niveau niveau = new Niveau(stock, entite, mob, joueur,x,y);
 
 		//toutes les entites on été créer sans reference au niveau (puisqu'il n'avais pas encors été créer) on leur donne donc leur reference maintenent
 		//de meme les entite animé on besoin d'un acces a niveau pour cceder au spritstocker pour charger leur animation
@@ -459,6 +496,12 @@ public class Createur {
 			break;
 		case "tireur":
 			strategie = creerStrategieTireur(st);
+			break;
+		case "checkPoint":
+			strategie = new StrategieCheckPoint();
+			break;
+		case "null":
+			strategie = new Strategie(new Point(0,0),false,false);
 			break;
 		}
 		return strategie;

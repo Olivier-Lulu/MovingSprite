@@ -5,24 +5,19 @@ import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import javax.sound.sampled.DataLine;
 
-import modele.Niveau;
 
-public class SoundThread implements Runnable{
+public class SoundThread extends Thread{
 
 	private AudioInputStream as;
 	private Clip c;
 	
-	public SoundThread(Niveau n) {
+	public SoundThread() {
 		// TODO Auto-generated constructor stub
+		super();
 	}
 
 
     private String fichier = "/data/Sprites/Musique1bis.wav";
-
-    public void play() {
-        Thread t = new Thread(this);
-        t.start();
-    }
 
     public void run(){
     	playSound();
@@ -36,6 +31,8 @@ public class SoundThread implements Runnable{
     	        c = (Clip)AudioSystem.getLine(info);
     	        c.open(as);
     	        c.loop(-1);
+    	        while(!this.isInterrupted()){}
+    	        c.stop();
     	    } catch (Exception e) {
     	        e.printStackTrace();
     	    }
