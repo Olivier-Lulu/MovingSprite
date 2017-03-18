@@ -12,14 +12,14 @@ import controleur.MenuClick;
 public class Menu extends JPanel {
 
 	/*
-	 * Cette classe est un Conponent qui permet l'affichage du menu principal.
+	 * Cette classe est un Component qui permet l'affichage du menu principal.
 	 */
 	private static final long serialVersionUID = 1L;
 
 	public static String fichier = "/data/Sprites/FondFini.png";
 	
 	/*
-	 * booléens nécessaires pour les boucles du gamethread
+	 * booléens nécessaires pour les boucles du GameThread
 	 */
 	private boolean running;
 
@@ -53,7 +53,6 @@ public class Menu extends JPanel {
 	}
 
 	public boolean isRunning() {
-		// TODO Auto-generated method stub
 		return running;
 	}
 

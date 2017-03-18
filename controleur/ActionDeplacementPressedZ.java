@@ -7,7 +7,7 @@ import javax.swing.AbstractAction;
 import modele.StrategieJoueur;
 
 /*
- * Décrit la réaction du joueur lorsqu'on appuie sur la touche z
+ * Décrit la réaction du joueur lorsqu'on appuie sur la touche z.
  */
 public class ActionDeplacementPressedZ extends AbstractAction {
 	private static final long serialVersionUID = 1L;

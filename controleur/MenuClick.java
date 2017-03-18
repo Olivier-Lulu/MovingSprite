@@ -8,7 +8,7 @@ import vue.Menu;
 public class MenuClick implements MouseListener {
 
 	/*
-	 * Cette classe permet de récuperer les clicks lorsque le menu est le JPanel actif.
+	 * Cette classe permet de récupérer les clicks lorsque le menu est le JPanel actif.
 	 */
 	
 	private Menu m;
@@ -19,7 +19,6 @@ public class MenuClick implements MouseListener {
 
 	@Override
 	public void mouseClicked(MouseEvent arg0) {
-		// TODO Auto-generated method stub
 		if (arg0.getX() > m.getWidth() / 2.42
 				&& arg0.getX() < m.getWidth() / 1.97
 				&& arg0.getY() > m.getHeight() / 3.24

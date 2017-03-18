@@ -7,7 +7,7 @@ import javax.swing.AbstractAction;
 import modele.StrategieJoueur;
 
 /*
- * Décrit la réaction du joueur lorsqu'on appuie sur la touche d
+ * Décrit la réaction du joueur lorsqu'on appuie sur la touche d.
  */
 public class ActionDeplacementPressedD extends AbstractAction {
 

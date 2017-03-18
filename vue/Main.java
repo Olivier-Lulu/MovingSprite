@@ -19,7 +19,7 @@ public class Main {
 		frame.setBackground(Color.black);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setVisible(true);
-		gamethread gt = new gamethread(m, frame, p, sn);
+		GameThread gt = new GameThread(m, frame, p, sn);
 		gt.start();
 		frame.revalidate();
 	}

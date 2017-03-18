@@ -16,7 +16,6 @@ public class SoundThread extends Thread {
 	private String fichier;
 
 	public SoundThread(String fichier) {
-		// TODO Auto-generated constructor stub
 		super();
 		this.fichier = fichier;
 	}
@@ -41,6 +40,5 @@ public class SoundThread extends Thread {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		// playSound(fileName);
 	}
 }

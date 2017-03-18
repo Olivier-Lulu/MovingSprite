@@ -9,11 +9,14 @@ import vue.SpriteStocker;
 
 public class Niveau {
 
-	// coordonnées de repositionnement du joueur
+	//coordonnées de repositionnement du joueur
 	public int xPop;
 	public int yPop;
+	//enregistre la zone de la fin du niveau
 	private Rectangle finDuNiveau;
+	//bloque les accès concurrents à bouger()
 	private boolean peutBouger = true;
+	//indique si le joueur a atteint la fin du niveau, ou a appuyé sur p
 	public boolean aFini= false;
 
 	public SpriteStocker stock;
@@ -38,7 +41,7 @@ public class Niveau {
 	}
 
 	/*
-	 * force les entités du niveau a éffectuer leur action
+	 * force les entités du niveau à effectuer leur action
 	 */
 	public void bouger() {
 		peutBouger = false;
@@ -48,10 +51,10 @@ public class Niveau {
 			it.next().eval();
 		}
 
-		// évaluation du joueur
+		//évaluation du joueur
 		joueur.eval();
 
-		// évaluation du tracé
+		//évaluation des boucliers
 		ListIterator<Bouclier> itBouclier = boucliers.listIterator();
 		while (itBouclier.hasNext()) {
 			itBouclier.next().disparitionNaturelle();
@@ -62,7 +65,7 @@ public class Niveau {
 			}
 		}
 
-		// évalutation des boulettes
+		//évalutation des boulettes
 		ListIterator<EntiteBoulette> itBoulette = boulettes.listIterator();
 		while (itBoulette.hasNext()) {
 			itBoulette.next().eval();
@@ -76,7 +79,7 @@ public class Niveau {
 	}
 
 	/*
-	 * utiliser pour supprimer un ennemis ou repositionner le joueur
+	 * utilisé pour supprimer un ennemi ou repositionner le joueur
 	 */
 	public void supprimerEntite(Entite e) {
 		if (joueur.equals(e)) {
@@ -87,7 +90,7 @@ public class Niveau {
 	}
 
 	/*
-	 * créer le tracer protegeant des boulettes
+	 * créer le bouclier protégeant des boulettes
 	 */
 	public void creerBouclier(int positionXCLickSouris, int positionYCLickSouris,
 			int positionXLacheSouris, int positionYLacheSouris, int width,
@@ -97,7 +100,8 @@ public class Niveau {
 		// bouclier
 		LinkedList<EntiteTrace> trace = new LinkedList<EntiteTrace>();
 
-		// determiner le plus grand des décalages de coordonnees
+		// déterminer le plus grand des décalages de coordonnées
+		// on a besoin de le savoir pour correctement juxtaposer les blocks
 		int deltaX;
 		if (positionXCLickSouris <= positionXLacheSouris) {
 			deltaX = positionXLacheSouris - positionXCLickSouris;
@@ -120,7 +124,7 @@ public class Niveau {
 		int curseurY = (positionYCLickSouris * 600) / height
 				- (300 - joueur.getHeight() - joueur.getPosY());
 
-		// si l'ecart d'ordonnee est plus grand, les blocks s'empilent
+		// si l'écart d'ordonnée est plus grand, les blocks se juxtaposent
 		// verticalement
 		if (Mana.aMana()) {
 			if (deltaX <= deltaY) {
@@ -136,7 +140,7 @@ public class Niveau {
 								new StrategieTrace(), typeTrace));
 					}
 
-					// il faut toujours tracer du click vers le lache
+					// il faut toujours tracer du click vers le laché
 					if (positionXCLickSouris <= positionXLacheSouris) {
 						curseurX += decalageHorizontal;
 					} else {
@@ -152,7 +156,7 @@ public class Niveau {
 
 				boucliers.add(new Bouclier(trace, typeTrace));
 
-				// si l'ecart d'abscisse est plus grand, les blocks s'empilent
+				// si l'écart d'abscisse est plus grand, les blocks se juxtaposent
 				// horizontalement
 			} else {
 
@@ -168,7 +172,7 @@ public class Niveau {
 								new StrategieTrace(), typeTrace));
 					}
 
-					// il faut toujours tracer du click vers le lache
+					// il faut toujours tracer du click vers le laché
 					if (positionXCLickSouris <= positionXLacheSouris) {
 						curseurX += EntiteTrace.tailleBlockTrace;
 					} else {

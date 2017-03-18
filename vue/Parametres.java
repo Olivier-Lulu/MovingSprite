@@ -14,7 +14,7 @@ import controleur.ParamClick;
 public class Parametres extends JPanel {
 
 	/*
-	 * Cette classe est un Conponent qui permet l'affichage des paramètres.
+	 * Cette classe est un Component qui permet l'affichage des paramètres.
 	 */
 	
 	private static final long serialVersionUID = 1L;
@@ -29,7 +29,7 @@ public class Parametres extends JPanel {
 	
 	private JFrame frame;
 
-	private Menu m;
+	private Menu menu;
 
 	public Parametres(JFrame frame, Menu m) {
 		addMouseListener(new ParamClick(this));
@@ -56,10 +56,10 @@ public class Parametres extends JPanel {
 	}
 
 	public Menu getM() {
-		return m;
+		return menu;
 	}
 
 	public void setM(Menu m) {
-		this.m = m;
+		this.menu = m;
 	}
 }

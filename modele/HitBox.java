@@ -9,8 +9,8 @@ import java.util.Iterator;
 
 public class HitBox {
 
-	private Rectangle global;// hitBox global
-	private List<Rectangle> list;// liste de toute les sous hitBoxs
+	private Rectangle global;// hitBox globale
+	private List<Rectangle> list;// liste de toutes les sous hitBoxs
 
 	public HitBox() {
 		list = new LinkedList<Rectangle>();
@@ -23,7 +23,7 @@ public class HitBox {
 	}
 
 	/*
-	 * permet d'ajouter un rectangle a la liste des sous hitBoxs
+	 * permet d'ajouter un rectangle à la liste des sous hitBoxs
 	 */
 	public void add(Rectangle r) {
 		list.add(r);
@@ -50,7 +50,7 @@ public class HitBox {
 	}
 
 	/*
-	 * permet de savoirs si deux HitBox s'intersecte
+	 * permet de savoir si deux HitBoxs s'intersectent
 	 */
 	public boolean intersects(HitBox hitBox) {
 		if (global.intersects(hitBox.global)) {
@@ -64,9 +64,9 @@ public class HitBox {
 	}
 
 	/*
-	 * cette fonction test si une hitBox intersect un sous rectangle d'une autre
-	 * hitBox le rectangle global de la HitBox de r est suppose intersect
-	 * this.global
+	 * cette fonction teste si une hitBox intersecte un sous rectangle d'une autre
+	 * hitBox
+	 * on suppose que le rectangle global de la HitBox de r intersecte this.global
 	 */
 	private boolean intersects(Rectangle r, int posX, int posY) {
 		if (list.isEmpty())
@@ -91,7 +91,6 @@ public class HitBox {
 	 */
 	public void drawDebug(Graphics g, int deltaX, int deltaY, int screenWidth,
 			int screenHeight) {
-		// TODO Auto-generated method stub
 		g.setColor(Color.RED);
 		g.fillRect(((getPosX() + deltaX) * screenWidth) / 600,
 				((getPosY() + deltaY) * screenHeight) / 600,

@@ -27,9 +27,7 @@ import vue.SpriteStocker;
 
 public class Createur {
 
-	/*
-	 * 
-	 * 
+	/* 
 	 * Permet de créer une entité à partir d'un fichier   
 	 * On considère "l'origine" de l'entité comme son point le plus en haut à gauche.
 	 * Le fichier doit être formaté de la manière suivante:
@@ -42,8 +40,7 @@ public class Createur {
 	 * repeter autant de subBox que voulus 
 	 * ---
 	 *  
-	 * repeter autant de box que de
-	 * frame dans l'animation
+	 * répéter autant de box que de frame dans l'animation
 	 */
 	public static Entite creerEntiter(String path, int posX, int posY,
 			Strategie strategie, SpriteStocker stock) throws IOException {
@@ -66,7 +63,7 @@ public class Createur {
 				throw new IllegalArgumentException(
 						"Entite:\nfichier au mauvais format");
 			}
-			// lecture des info sur le sprite
+			// lecture des infos sur le sprite
 			ligne = fichier.readLine();
 			if (ligne != null)
 				st = new StringTokenizer(ligne);
@@ -182,7 +179,7 @@ public class Createur {
 				hit = new HitBox(new Rectangle(posX, posY, width, height));
 				ligne = fichier.readLine();
 
-				try {// lecture de toute les sous boites
+				try {// lecture de toutes les sous boites
 					while (!ligne.equals("---")) {
 						st = new StringTokenizer(ligne, " ,");
 						if (!st.nextToken().equals("subBox:"))
@@ -231,29 +228,28 @@ public class Createur {
 	}
 
 	/*
-	 * permet de créer un niveau a partire d'un fichier   path chemin
-	 * d'acces au fichier décrivant le niveau
+	 * Permet de créer un niveau à partir d'un fichier.
 	 * 
-	 * Le fichier doit etre formaté de la maniere suivante:
+	 * Le fichier doit être formaté de la manière suivante:
 	 * 
 	 * Niveau:
 	 * Taille: <taille en X>,<taille en Y> 
 	 * <chemin d'acces au tileSet contenant une ligne d'image de 25*25> <nombre d'image a charger> 
 	 * solidité 				sprite 
-	 * <1 pour solide 0 sinon> <numero de sprite a charger> 
+	 * <1 pour solide 0 sinon> <numero de sprite à charger> 
 	 * ... 
 	 * Monde:
-	 * <numero de la ligne dans "solidité sprite" décrivant le bloc> 
+	 * <numéro de la ligne dans "solidité sprite" décrivant le bloc> 
 	 * ... 
 	 * ...
 	 * Ennemis: 
-	 * <nom du fichier decrivant l'enemis> <position en x>,<position en Y> <nom de la strategie> <parrametre de la stratégie, voire chaque strategie individuellement> 
+	 * <nom du fichier decrivant l'ennemis> <position en x>,<position en Y> <nom de la strategie> <paramètre de la stratégie, voir chaque strategie individuelement> 
 	 * Joueur: 
 	 * <position en X du joueur>,<position en y de joueur> 
 	 * Fin: <position X de la fin>,<position Y de la fin>
 	 * 
 	 * Toutefois, il faut mettre un checkpoint sur la fin pour que le joueur
-	 * puisse la détecter
+	 * puisse la détecter.
 	 */
 	public static Niveau creerNiveau(String path) throws IOException {
 		SpriteStocker stock = null;
@@ -272,7 +268,7 @@ public class Createur {
 				throw new IllegalArgumentException(
 						"Niveau:\n fichier au mauvais format");
 			}
-			// recupération de la taille du monde
+			//récupération de la taille du monde
 			ligne = fichier.readLine();
 			StringTokenizer st;
 			if (ligne != null)
@@ -316,7 +312,7 @@ public class Createur {
 			}
 			entite = new Entite[x][y];
 
-			// recuperation du tileSet
+			// récupération du tileSet
 			ligne = fichier.readLine();
 			if (ligne == null) {
 				fichier.close();
@@ -331,7 +327,7 @@ public class Createur {
 			}
 			try {
 				x = Integer.parseInt(st.nextToken());// on stock le nombre
-														// d'image a charger
+														// d'image à charger
 			} catch (NumberFormatException e) {
 				System.out.println("Niveau:\n erreur de taille tileSet");
 				fichier.close();
@@ -345,20 +341,20 @@ public class Createur {
 						"Niveau:\n tileSet manquant ou eroner");
 			}
 
-			// creation de la liste des different blocs du decors
+			// création de la liste des différents blocs du décors
 			List<Point> l = new ArrayList<Point>();// arrayList car il faut un
-													// acces facile au ième
-													// element de la liste
+													// accès facile au ième
+													// élément de la liste
 			ligne = fichier.readLine();
 			if (!ligne.equals("solidité sprite")) {
 				fichier.close();
 				throw new IllegalArgumentException(
 						"Niveau:\n legende code solidité sprite manquant ");
 			}
-			while (!ligne.equals("Monde:")) {// on decris un nouveau bloc tant
-												// que on a pas atteint la fin
-												// de la liste marquer par le
-												// debut du monde
+			while (!ligne.equals("Monde:")) {// on décrit un nouveau bloc tant
+												// qu'on a pas atteint la fin
+												// de la liste, marquée par le
+												// début du monde
 				ligne = fichier.readLine();
 				if (ligne == null) {
 					fichier.close();
@@ -380,7 +376,7 @@ public class Createur {
 				}
 			}
 
-			// recuperation de la structure du niveau
+			// récupération de la structure du niveau
 			for (int j = 0; j < entite[0].length; j++) {
 				ligne = fichier.readLine();
 				if (ligne != null)
@@ -408,12 +404,11 @@ public class Createur {
 					}
 					entite[i][j] = new Entite(i * 25, j * 25, 25, 25, null,
 							l.get(code).x == 1, null, stock.get(l.get(code).y),
-							0);// le fait d'utiliser un string pourra peut etre
-								// changer
+							0);
 				}
 			}
 
-			// recuperation des donnée sur les ennemis
+			// récupération des données sur les ennemis
 			mob = new LinkedList<Entite>();
 			ligne = fichier.readLine();
 			if (ligne.equals("Ennemis:")) {
@@ -443,7 +438,7 @@ public class Createur {
 			} else
 				ligne = fichier.readLine();
 
-			// recupération des donné du joueur
+			// récupération des données du joueur
 			if (!ligne.equals("Joueur:")) {
 				System.out.println(ligne);
 				fichier.close();
@@ -473,7 +468,7 @@ public class Createur {
 				throw e;
 			}
 
-			// recuperation des infos de fin de niveau
+			// récupération des infos de fin de niveau
 			ligne = fichier.readLine();
 			if (ligne == null) {
 				fichier.close();
@@ -517,10 +512,9 @@ public class Createur {
 		fichier.close();
 		Niveau niveau = new Niveau(stock, entite, mob, joueur, x, y);
 
-		// toutes les entites on été créer sans reference au niveau (puisqu'il
-		// n'avais pas encors été créer) on leur donne donc leur reference
-		// maintenent
-		// de meme les entite animé on besoin d'un acces a niveau pour cceder au
+		// toutes les entites on été créées sans référence au niveau (puisqu'il
+		// n'avait pas encore été créé) on leur donne donc leur référence maintenant
+		// de même les entites animées on besoin d'un accès à niveau pour accéder au
 		// spritstocker pour charger leur animation
 		for (int i = 0; i < entite.length; i++)
 			for (int j = 0; j < entite[0].length; j++)
@@ -537,9 +531,9 @@ public class Createur {
 	}
 
 	/*
-	 * permet de gerer la creation des differente stratégie
+	 * permet de gérer la création des différentes stratégies
 	 * 
-	 * le premier token de st contient le nom de la stratégie a utilisé
+	 * le premier token de st contient le nom de la stratégie a utiliser
 	 */
 	private static Strategie creerStrategie(StringTokenizer st) {
 		Strategie strategie = null;
@@ -570,10 +564,10 @@ public class Createur {
 	}
 
 	/*
-	 * permet de créer un strategie de patrouille
+	 * permet de créer une stratégie de patrouille
 	 * 
-	 * les parrametre doivent etre formaté de la maniere suivante: 
-	 * <vitesse de deplacement horizontal> <vitesse vertical lors des sauts> <nombre de pas a effectuer avant demi-tours> <frequenc des saut>
+	 * les parametres doivent être formatés de la manière suivante: 
+	 * <vitesse de déplacement horizontale> <vitesse verticale lors des sauts> <nombre de pas à effectuer avant demi-tour> <fréquence des sauts>
 	 */
 	private static Strategie creerStrategiePatrouille(StringTokenizer st) {
 		int vitesse = 0;
@@ -581,7 +575,7 @@ public class Createur {
 		int taillePatrouille = 0;
 		int frequenceSaut = 0;
 
-		// recuperation de la vitesse
+		// récupération de la vitesse
 		if (st.hasMoreTokens())
 			try {
 				vitesse = Integer.parseInt(st.nextToken());
@@ -593,7 +587,7 @@ public class Createur {
 			throw new IllegalArgumentException(
 					"Patrouille:\nIl manque 4 argument numerique");
 
-		// recuperation de la Hauteur de saut
+		// récupération de la hauteur de saut
 		if (st.hasMoreTokens())
 			try {
 				hauteurSaut = -Integer.parseInt(st.nextToken());
@@ -606,7 +600,7 @@ public class Createur {
 			throw new IllegalArgumentException(
 					"Patrouille:\nIl manque 3 argument numerique");
 
-		// recuperation de la distance de patrouille
+		// récupération de la distance de patrouille
 		if (st.hasMoreTokens())
 			try {
 				taillePatrouille = Integer.parseInt(st.nextToken());
@@ -619,7 +613,7 @@ public class Createur {
 			throw new IllegalArgumentException(
 					"Patrouille:\nIl manque 2 argument numerique");
 
-		// recuperation de la frequence de saut
+		// récupération de la fréquence de saut
 		if (st.hasMoreTokens())
 			try {
 				frequenceSaut = Integer.parseInt(st.nextToken());
@@ -639,10 +633,10 @@ public class Createur {
 	}
 
 	/*
-	 * permet de créer un strategie de tireur
+	 * permet de créer une stratégie de tireur
 	 * 
-	 * les parrametre doivent etre formaté de la maniere suivante: 
-	 * <vitesse de deplacement horizontal> <vitesse vertical lors des sauts> <nombre de pas a effectuer avant demi-tours> <frequenc des saut> <type de tire> <frequence de tire> <vitesse en X de la boulette> <vitesse en Y de la boulette>
+	 * les paramètres doivent être formaté de la manière suivante: 
+	 * <vitesse de déplacement horizontale> <vitesse verticale lors des sauts> <nombre de pas à effectuer avant demi-tour> <fréquence des sauts> <type de tir> <fréquence de tir> <vitesse en X de la boulette> <vitesse en Y de la boulette>
 	 */
 	private static Strategie creerStrategieTireur(StringTokenizer st) {
 		int vitesse = 0;
@@ -655,7 +649,7 @@ public class Createur {
 		int mouvTirY = 0;
 
 		int nombreArgumentRequis = 8;
-		// recuperation de la vitesse
+		// récupération de la vitesse
 		if (st.hasMoreTokens())
 			try {
 				vitesse = Integer.parseInt(st.nextToken());
@@ -668,7 +662,7 @@ public class Createur {
 			throw new IllegalArgumentException("Tireur:\nIl manque "
 					+ nombreArgumentRequis + " argument numerique");
 
-		// recuperation de la Hauteur de saut
+		// récupération de la hauteur de saut
 		if (st.hasMoreTokens())
 			try {
 				hauteurSaut = -Integer.parseInt(st.nextToken());
@@ -681,7 +675,7 @@ public class Createur {
 			throw new IllegalArgumentException("Tireur:\nIl manque "
 					+ nombreArgumentRequis + " argument numerique");
 
-		// recuperation de la distance de patrouille
+		// récupération de la distance de patrouille
 		if (st.hasMoreTokens())
 			try {
 				taillePatrouille = Integer.parseInt(st.nextToken());
@@ -695,7 +689,7 @@ public class Createur {
 			throw new IllegalArgumentException("Tireur:\nIl manque "
 					+ nombreArgumentRequis + " argument numerique");
 
-		// recuperation de la frequence de saut
+		// récupération de la fréquence de saut
 		if (st.hasMoreTokens())
 			try {
 				frequenceSaut = Integer.parseInt(st.nextToken());
@@ -708,7 +702,7 @@ public class Createur {
 			throw new IllegalArgumentException("Tireur:\nIl manque "
 					+ nombreArgumentRequis + " argument numerique");
 
-		// recuperation du type de tire
+		// récupération du type de tir
 		if (st.hasMoreTokens())
 			try {
 				type = Integer.parseInt(st.nextToken());
@@ -724,7 +718,7 @@ public class Createur {
 			throw new IllegalArgumentException("Tireur:\nIl manque "
 					+ nombreArgumentRequis + " argument numerique");
 
-		// recuperation de la frequence de tire
+		// récupération de la fréquence de tir
 		if (st.hasMoreTokens())
 			try {
 				frequenceTir = Integer.parseInt(st.nextToken());
@@ -737,7 +731,7 @@ public class Createur {
 			throw new IllegalArgumentException("Tireur:\nIl manque "
 					+ nombreArgumentRequis + " argument numerique");
 
-		// recuperation du mouvementde tir
+		// récupération du mouvement de tir
 		if (st.hasMoreTokens())
 			try {
 				mouvTirX = Integer.parseInt(st.nextToken());

@@ -31,7 +31,6 @@ public class Bouclier {
 	public LinkedList<EntiteTrace> ligne;
 	// c'est le type du bouclier qui détermine le type de boulette qu'il peut
 	// renvoyer
-
 	private int type;
 	private double pente;
 	private double penteAxeSymetrie;
@@ -55,7 +54,7 @@ public class Bouclier {
 			pente = -1;
 	}
 
-	// xContact et yContact sont les coordonnés du point de contact entre le
+	// xContact et yContact sont les coordonnées du point de contact entre le
 	// bouclier et la boulette
 	public void calculerEquationAxeSymetrie(int xContact, int yContact) {
 		if (pente != 0) {
@@ -95,8 +94,7 @@ public class Bouclier {
 			int yImage = 2 * centreSymetrie.y - yProjete;
 
 			// le nouveau mouvement est donc le vecteur entre les coordonnées du
-			// point de contact et
-			// ceux de l'image du point projeté
+			// point de contact et ceux de l'image du point projeté
 			int xImageMouvement = xImage - xContact;
 			int yImageMouvement = yImage - yContact;
 
@@ -111,8 +109,7 @@ public class Bouclier {
 	}
 
 	/*
-	 * Méthode faisant disparaître la ligne du bouclier à la fin de sa durée de
-	 * vie
+	 * Méthode faisant disparaître la ligne du bouclier à la fin de sa durée de vie.
 	 */
 	public void disparitionNaturelle() {
 		ListIterator<EntiteTrace> itTrace = ligne.listIterator();

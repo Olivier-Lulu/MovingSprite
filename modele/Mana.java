@@ -13,7 +13,7 @@ public class Mana {
 	private static int mana = MANA_MAXIMUM;
 
 	/*
-	 * retourne le % de mana restant
+	 * retourne le pourcentage de mana restant
 	 */
 	public static int getRatioMana() {
 		return (mana * 100) / MANA_MAXIMUM;
@@ -30,7 +30,7 @@ public class Mana {
 	}
 
 	/*
-	 * reinitialise le mana a son niveau de depart
+	 * réinitialise le mana à son niveau de départ
 	 */
 	public static void manaReinit() {
 		mana = MANA_MAXIMUM;

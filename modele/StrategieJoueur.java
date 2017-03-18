@@ -12,7 +12,7 @@ public class StrategieJoueur extends Strategie {
 	}
 
 	/*
-	 * les methodes deplacement permettent de faire varier la vitesse du joueur
+	 * les méthodes déplacement permettent de faire varier la vitesse du joueur
 	 */
 	public void deplacementDroitDebut() {
 		if (deplacement.x < 1) {
@@ -38,7 +38,7 @@ public class StrategieJoueur extends Strategie {
 		}
 	}
 
-	// Le joueur peut sauter environ 5 block et demi
+	// Le joueur peut sauter environ 5 blocks et demi
 	public void saut() {
 		if (!enVols)
 			deplacement.y = -18;

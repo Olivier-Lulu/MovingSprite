@@ -22,7 +22,6 @@ public class SpriteStocker {
 		try {
 			table = ImageIO.read(getClass().getResource(path));
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		int j = 0;

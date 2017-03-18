@@ -23,7 +23,7 @@ import modele.StrategieJoueur;
 public class FenetreNiveau extends JPanel {
 
 	/*
-	 * Cette classe est un component qui permet l'affichage du niveau en cours.
+	 * Cette classe est un Component qui permet l'affichage du niveau en cours.
 	 */
 	private static final long serialVersionUID = 1L;
 
@@ -81,7 +81,7 @@ public class FenetreNiveau extends JPanel {
 
 		g.fillRect(0, 0, getWidth(), getHeight());
 		
-		// affichage du décors
+		// affichage du décor
 		for (int i = 0; i < niveau.entite.length; i++) {
 			for (int j = 0; j < niveau.entite[0].length; j++) {
 				Entite e = niveau.entite[i][j];
@@ -97,7 +97,7 @@ public class FenetreNiveau extends JPanel {
 			}
 		}
 
-		// affichage des entité du niveau
+		// affichage des entités du niveau
 		Iterator<Entite> it = niveau.mob.iterator();
 		while (it.hasNext()) {
 			Entite e = it.next();

@@ -25,6 +25,7 @@ public class StrategieTireur extends StrategiePatrouille {
 	@Override
 	public int eval(Entite e, Niveau n) {
 		// s'il va à gauche c'est pair
+		// donc impair s'il va à droite
 		int etat = super.eval(e, n);
 		if (pas % frequenceTire == 0) {
 			if (etat % 2 == 0) {

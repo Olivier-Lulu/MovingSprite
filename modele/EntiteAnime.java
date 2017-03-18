@@ -15,13 +15,6 @@ public class EntiteAnime extends Entite {
 	 */
 	Sprite[] spritetab;
 	
-	/*
-	 * Entiers x et y permettant d'aller chercher les Sprites dans le SpriteStocker
-	 */
-	int x;
-	int y;
-	
-	
 	HitBox[] hitBox;
 	
 	/*

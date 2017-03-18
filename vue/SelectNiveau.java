@@ -21,26 +21,26 @@ import controleur.SelectNiveauClick;
 public class SelectNiveau extends JPanel {
 
 	/*
-	 * Cette classe est un Conponent qui permet l'affichage du sélecteur de niveau.
+	 * Cette classe est un Component qui permet l'affichage du sélecteur de niveau.
 	 */
 	
 	private static final long serialVersionUID = 1L;
 
-	String fichier = "/data/Sprites/SelectNiveau.jpg";
+	private String fichier = "/data/Sprites/SelectNiveau.jpg";
 
-	BufferedImage image;
+	private BufferedImage image;
 
-	java.net.URL url = this.getClass().getResource(fichier);
+	private java.net.URL url = this.getClass().getResource(fichier);
 
 	private int largeurString;
 
 	private Niveau NiveauRunning = null;
 
 	/*
-	 * Permet de contenir la taille des des différents String dessinés dans le graphics
-	 * afin de pouvoir déteminer des zones clickable.
+	 * Permet de contenir la taille des différents String dessinés dans le graphics
+	 * afin de pouvoir déterminer des zones clickables.
 	 */
-	Rectangle[] zc;
+	Rectangle[] zoneClickable;
 
 	/*
 	 * Permet de contenir tous les noms des différents fichier terminant par .niveau
@@ -69,7 +69,7 @@ public class SelectNiveau extends JPanel {
 
 	public void paint(Graphics g) {
 		int y = getHeight() / 10;
-		zc = new Rectangle[NomNiveau.size()];
+		zoneClickable = new Rectangle[NomNiveau.size()];
 		g.drawImage(image, 0, 0, getWidth(), getHeight(), 0, 0, 1600, 1200,
 				null);
 		g.setColor(Color.white);
@@ -82,7 +82,7 @@ public class SelectNiveau extends JPanel {
 			String s2 = ("Niveau " + i);
 			g.drawString(s2, getWidth() / 10 + getLargeurString() + 5, y);
 			Rectangle2D r = g.getFontMetrics().getStringBounds(s2, g);
-			zc[i - 1] = new Rectangle((int) r.getMinX() + getWidth() / 10
+			zoneClickable[i - 1] = new Rectangle((int) r.getMinX() + getWidth() / 10
 					+ getLargeurString() + 5, (int) r.getMinY() + y,
 					(int) r.getWidth(), (int) r.getHeight());
 		}
@@ -96,8 +96,8 @@ public class SelectNiveau extends JPanel {
 		this.largeurString = largeurString;
 	}
 
-	public Rectangle2D[] getZc() {
-		return zc;
+	public Rectangle2D[] getZoneClickable() {
+		return zoneClickable;
 	}
 
 	public ArrayList<String> getNomNiveau() {

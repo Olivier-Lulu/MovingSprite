@@ -4,7 +4,7 @@ import java.awt.Point;
 
 public class StrategieCheckPoint extends Strategie {
 	/*
-	 * cette classe est utiliser comme strategie pour les objets servant que
+	 * cette classe est utilisée comme strategie pour les objets servant que
 	 * de checkPoint ou de fin de niveau
 	 */
 

@@ -11,19 +11,17 @@ import vue.Parametres;
 public class ParamClick implements MouseListener {
 
 	/*
-	 * Cette classe permet de récuperer les clicks lorsque les paramètres sont le JPanel actif.
+	 * Cette classe permet de récupérer les clicks lorsque les paramètres sont le JPanel actif.
 	 */
 	
 	Parametres p;
 
 	public ParamClick(Parametres p) {
-		// TODO Auto-generated constructor stub
 		this.p = p;
 	}
 
 	@Override
 	public void mouseClicked(MouseEvent arg0) {
-		// TODO Auto-generated method stub
 		if (arg0.getX() > p.getWidth() / 2.28
 				&& arg0.getX() < p.getWidth() / 1.87
 				&& arg0.getY() > p.getHeight() / 3.35

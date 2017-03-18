@@ -4,6 +4,9 @@ import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
 import modele.Niveau;
 
+/*
+ * Permet de revenir au sélecteur de niveau depuis le jeu
+ */
 public class ActionPressedP extends AbstractAction{
 
 	private static final long serialVersionUID = 1L;

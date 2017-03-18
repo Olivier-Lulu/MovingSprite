@@ -4,8 +4,8 @@ import java.awt.Point;
 
 public class Strategie{
 
-	public Point deplacement;// vecteur de deplacement a apliquer pour le
-								// prochain appele de eval
+	public Point deplacement;// vecteur de déplacement à appliquer pour le
+								// prochain appel de eval
 	public boolean enVols;
 	public boolean estSensibleGravite;
 
@@ -24,7 +24,7 @@ public class Strategie{
 	}
 
 	/*
-	 * permet de definir le comportement d'une entite en fonction de son
+	 * permet de définir le comportement d'une entité en fonction de son
 	 * environnement 
 	 */
 	public int eval(Entite e, Niveau n) {

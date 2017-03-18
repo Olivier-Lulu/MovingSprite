@@ -9,15 +9,18 @@ public class Entite {
 	private Sprite sprite;
 	protected HitBox hitBox;
 	private Niveau niveau;
+	//seulement utilisé pour les collisions avec le décor
 	private boolean solid;
 	private Strategie strat;
+	//score gagné par le joueur à la mort de l'entité
 	private int score;
+	//utilisés pour les animations
 	private int etat = 0;
 	private int dernierEtat = 0;
 
-	// defnit les coordoner du sprite dans le tilset
-	private int x;
-	private int y;
+	// définit les coordonnées du sprite dans le tilset
+	protected int x;
+	protected int y;
 
 	public Entite(Sprite sprite, Niveau niveau, boolean solid, Strategie strat,
 			int score, HitBox hitBox) {
@@ -51,8 +54,8 @@ public class Entite {
 	}
 
 	/*
-	 * Les entite creer via Createur n'ont pas de niveau, cette methode permet
-	 * de leur definir un niveau
+	 * Les entites créées via Createur n'ont pas de niveau, cette méthode permet
+	 * de leur définir un niveau.
 	 */
 	public void setNiveau(Niveau niveau) {
 		if (this.niveau == null && niveau != null)
@@ -60,7 +63,7 @@ public class Entite {
 	}
 
 	/*
-	 * detecte si l'entite est en colision avec une autre
+	 * Détecte si l'entité est en collision avec une autre.
 	 */
 	public boolean intersects(Entite e) {
 		return hitBox.intersects(e.hitBox);
@@ -94,8 +97,7 @@ public class Entite {
 	}
 
 	/*
-	 * permet de dessiner l'entité \param g le Graphics utilisé pour dessiner
-	 * l'entite 
+	 * permet de dessiner l'entité
 	 */
 	public void rendu(Graphics g, int deltaX, int deltaY, int screenWidth,
 			int screenHeight) {
@@ -107,7 +109,7 @@ public class Entite {
 	}
 
 	/*
-	 * permet de dessiner les hitBox de l'entite
+	 * permet de dessiner les hitBoxs de l'entité
 	 */
 	public void drawDebug(Graphics g, int deltaX, int deltaY, int screenWidth,
 			int screenHeight) {
@@ -127,7 +129,7 @@ public class Entite {
 	}
 
 	/*
-	 * permet a l'entite de metre a jours sa position 
+	 * permet à l'entité de mettre à jour sa position 
 	 */
 	public int eval() {
 		etat = strat.eval(this, niveau);
@@ -152,7 +154,7 @@ public class Entite {
 	}
 
 	/*
-	 * permet de supprimer l'entité du niveau auquel elle est rattacher
+	 * permet de supprimer l'entité du niveau auquel elle est rattachée
 	 */
 	public void deces() {
 		Score.augmenterScore(score);
@@ -160,7 +162,7 @@ public class Entite {
 	}
 
 	/*
-	 * permet d'avoir acces au sprite apres la definition du niveau
+	 * permet d'avoir accès au sprite après la définition du niveau
 	 */
 	public void ajouterSprite() {
 		if (niveau != null)
