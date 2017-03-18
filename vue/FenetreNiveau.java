@@ -22,6 +22,9 @@ import modele.StrategieJoueur;
 
 public class FenetreNiveau extends JPanel {
 
+	/*
+	 * Cette classe est un component qui permet l'affichage du niveau en cours.
+	 */
 	private static final long serialVersionUID = 1L;
 
 	private Niveau niveau;

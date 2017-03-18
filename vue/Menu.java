@@ -11,13 +11,16 @@ import controleur.MenuClick;
 
 public class Menu extends JPanel {
 
-	/**
-	 * 
+	/*
+	 * Cette classe est un Conponent qui permet l'affichage du menu principal.
 	 */
 	private static final long serialVersionUID = 1L;
 
 	public static String fichier = "/data/Sprites/FondFini.png";
-
+	
+	/*
+	 * booléens nécessaires pour les boucles du gamethread
+	 */
 	private boolean running;
 
 	private boolean param;

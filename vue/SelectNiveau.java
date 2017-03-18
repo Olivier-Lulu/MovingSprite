@@ -21,7 +21,7 @@ import controleur.SelectNiveauClick;
 public class SelectNiveau extends JPanel {
 
 	/*
-	 * Cette classe est un Conponent qui permet l'affichage des paramètres.
+	 * Cette classe est un Conponent qui permet l'affichage du sélecteur de niveau.
 	 */
 	
 	private static final long serialVersionUID = 1L;
@@ -36,8 +36,15 @@ public class SelectNiveau extends JPanel {
 
 	private Niveau NiveauRunning = null;
 
+	/*
+	 * Permet de contenir la taille des des différents String dessinés dans le graphics
+	 * afin de pouvoir déteminer des zones clickable.
+	 */
 	Rectangle[] zc;
 
+	/*
+	 * Permet de contenir tous les noms des différents fichier terminant par .niveau
+	 */
 	ArrayList<String> NomNiveau = new ArrayList<String>();
 
 	public SelectNiveau() {

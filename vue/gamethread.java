@@ -34,8 +34,6 @@ public class gamethread extends Thread {
 		papaPanel.add(m, "un");
 		papaPanel.add(p, "deux");
 		papaPanel.add(sn, "trois");
-		long dernier = System.currentTimeMillis();
-		int images = 0;
 		this.frame.setContentPane(papaPanel);
 		this.frame.validate();
 		card.show(papaPanel, "un");
@@ -45,12 +43,6 @@ public class gamethread extends Thread {
 		while (m.isRunning() && !this.isInterrupted()) {
 			long maintenant = System.currentTimeMillis();
 			m.repaint();
-			images++;
-			if (maintenant - dernier > 1000) {
-				dernier = maintenant;
-				System.out.println(images + " images par seconde");
-				images = 0;
-			}
 			/*
 			 * Cette boucle permet de repaint le JPanel parametres tant qu'il est actif.
 			 */
@@ -58,12 +50,6 @@ public class gamethread extends Thread {
 				maintenant = System.currentTimeMillis();
 				card.show(papaPanel, "deux");
 				p.repaint();
-				images++;
-				if (maintenant - dernier > 1000) {
-					dernier = maintenant;
-					System.out.println(images + " images par seconde");
-					images = 0;
-				}
 				try {
 					Thread.sleep(15);
 				} catch (Exception e) {
@@ -102,12 +88,6 @@ public class gamethread extends Thread {
 				fn.repaint();
 				if (fn.getNiveau().peutBouger())
 					fn.getNiveau().bouger();
-				images++;
-				if (maintenant - dernier > 1000) {
-					dernier = maintenant;
-					// System.out.println(images + " images par seconde");
-					images = 0;
-				}
 				try {
 					Thread.sleep(15);
 				} catch (Exception e) {
