@@ -7,10 +7,13 @@ import vue.Menu;
 
 public class MenuClick implements MouseListener {
 
+	/*
+	 * Cette classe permet de récuperer les clicks lorsque le menu est le JPanel actif.
+	 */
+	
 	private Menu m;
-
+	
 	public MenuClick(Menu m) {
-		// TODO Auto-generated constructor stub
 		this.m = m;
 	}
 

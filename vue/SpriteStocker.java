@@ -10,6 +10,10 @@ public class SpriteStocker {
 
 	private HashMap<Integer, Sprite> stock;
 
+	/*
+	 * BufferedImage qui contient le tableau de Sprite comprenant tous les Sprites utilisés
+	 * dans le jeu.
+	 */
 	public static BufferedImage table = null;
 
 	public SpriteStocker(String path, int i) {
@@ -42,6 +46,9 @@ public class SpriteStocker {
 		return stock.size();
 	}
 
+	/*
+	 * Fonction permettant de récupérer une portion de 25 pixels par 25 dans le tableau de Sprite.
+	 */
 	public BufferedImage getSprite(int x, int y) {
 		return table.getSubimage(x * 25 - 25, y * 25 - 25, 25, 25);
 	}

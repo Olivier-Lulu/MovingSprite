@@ -5,10 +5,28 @@ import vue.Sprite;
 
 public class EntiteAnime extends Entite {
 
+	/*
+	 * Cette classe permet de créer une Entite dotée de différents Sprites 
+	 * permettant d'animer celle-ci.
+	 */
+	
+	/*
+	 * Tableau comportant les différents Sprites nécessaire à l'animation.
+	 */
 	Sprite[] spritetab;
+	
+	/*
+	 * Entiers x et y permettant d'aller chercher les Sprites dans le SpriteStocker
+	 */
 	int x;
 	int y;
+	
+	
 	HitBox[] hitBox;
+	
+	/*
+	 *Entiers timer nécessaires pour les différentes étapes de l'animation.  
+	 */
 	int timerJoueur = 0;
 	private int timerTireur = 0;
 
@@ -29,6 +47,7 @@ public class EntiteAnime extends Entite {
 		}
 	}
 
+	@Override
 	public void rendu(Graphics g, int deltaX, int deltaY, int screenWidth,
 			int screenHeight) {
 		if (this.spritetab.length > 2) {

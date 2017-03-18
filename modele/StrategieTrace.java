@@ -3,7 +3,7 @@ package modele;
 import java.util.List;
 import modele.Entite;
 
-public class StrategieTrace extends Strategie implements Eval {
+public class StrategieTrace extends Strategie{
 
 	private int ttl = 150;
 	public static final int tailleBlockTrace = 5;

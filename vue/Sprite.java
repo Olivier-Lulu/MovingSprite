@@ -6,14 +6,12 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 public class Sprite {
-	/** L'image dessinée pour ce Sprite */
+	
+	/* L'image dessinée pour ce Sprite */
 	protected BufferedImage image;
 
-	/**
+	/*
 	 * Crée un nouveau Sprite par rapport à une image donnée.
-	 * 
-	 * @param image
-	 *            L'image représentée par ce Sprite
 	 */
 	public Sprite(BufferedImage image) {
 		this.image = image;

@@ -7,15 +7,21 @@ import javax.sound.sampled.DataLine;
 
 public class SoundThread extends Thread {
 
+	/*
+	 * Cette classe est un Thread qui permet de rajouter du son en parallèle du gamethread.
+	 */
+	
 	private AudioInputStream as;
 	private Clip c;
+	private String fichier;
 
-	public SoundThread() {
+	public SoundThread(String fichier) {
 		// TODO Auto-generated constructor stub
 		super();
+		this.fichier = fichier;
 	}
 
-	private String fichier = "/data/Sprites/Musique2.wav";
+	
 
 	public void run() {
 		playSound();

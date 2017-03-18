@@ -9,7 +9,7 @@ import vue.SpriteStocker;
 
 public class Niveau {
 
-	// coordonnées de pop du joueur
+	// coordonnées de repositionnement du joueur
 	public int xPop;
 	public int yPop;
 	private Rectangle finDuNiveau;

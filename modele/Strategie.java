@@ -2,7 +2,7 @@ package modele;
 
 import java.awt.Point;
 
-public class Strategie implements Eval {
+public class Strategie{
 
 	public Point deplacement;// vecteur de deplacement a apliquer pour le
 								// prochain appele de eval
@@ -23,7 +23,10 @@ public class Strategie implements Eval {
 		this.estSensibleGravite = estSensibleGravite;
 	}
 
-	@Override
+	/*
+	 * permet de definir le comportement d'une entite en fonction de son
+	 * environnement 
+	 */
 	public int eval(Entite e, Niveau n) {
 		return Physique.move(e, n);
 	}

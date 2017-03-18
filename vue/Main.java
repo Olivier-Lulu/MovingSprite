@@ -4,7 +4,6 @@ import java.awt.Color;
 
 import javax.swing.JFrame;
 
-import modele.Parametres;
 
 public class Main {
 
@@ -23,7 +22,5 @@ public class Main {
 		gamethread gt = new gamethread(m, frame, p, sn);
 		gt.start();
 		frame.revalidate();
-		SoundThread st = new SoundThread();
-		st.start();
 	}
 }

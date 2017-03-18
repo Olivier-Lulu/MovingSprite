@@ -22,8 +22,8 @@ import modele.StrategieJoueur;
 
 public class FenetreNiveau extends JPanel {
 
-	/**
-	 * 
+	/*
+	 * Cette classe est un component qui permet l'affichage du niveau en cours.
 	 */
 	private static final long serialVersionUID = 1L;
 
@@ -79,6 +79,8 @@ public class FenetreNiveau extends JPanel {
 
 	public void paint(Graphics g) {
 
+		g.fillRect(0, 0, getWidth(), getHeight());
+		
 		// affichage du décors
 		for (int i = 0; i < niveau.entite.length; i++) {
 			for (int j = 0; j < niveau.entite[0].length; j++) {
@@ -114,10 +116,6 @@ public class FenetreNiveau extends JPanel {
 				(300 - niveau.joueur.getWidth()) - niveau.joueur.getPosX(), 300
 						- niveau.joueur.getHeight() - niveau.joueur.getPosY(),
 				getWidth(), getHeight());
-		// niveau.joueur.drawDebug(g,(300 - niveau.joueur.getWidth())-
-		// niveau.joueur.getPosX(),300 - niveau.joueur.getHeight()-
-		// niveau.joueur.getPosY(),getWidth(),getHeight());
-		// affichage du tracé du joueur
 		Iterator<Bouclier> itBouclier = niveau.boucliers.iterator();
 		while (itBouclier.hasNext()) {
 			itBouclier.next().rendu(g,
