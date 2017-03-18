@@ -142,7 +142,7 @@ public class FenetreNiveau extends JPanel {
 
 	public void tracerLigne(int positionXCLickSouris, int positionYCLickSouris,
 			int positionXLacheSouris, int positionYLacheSouris) {
-		niveau.tracerLigne(positionXCLickSouris, positionYCLickSouris,
+		niveau.creerBouclier(positionXCLickSouris, positionYCLickSouris,
 				positionXLacheSouris, positionYLacheSouris, getWidth(),
 				getHeight());
 	}

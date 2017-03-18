@@ -89,7 +89,7 @@ public class Niveau {
 	/*
 	 * créer le tracer protegeant des boulettes
 	 */
-	public void tracerLigne(int positionXCLickSouris, int positionYCLickSouris,
+	public void creerBouclier(int positionXCLickSouris, int positionYCLickSouris,
 			int positionXLacheSouris, int positionYLacheSouris, int width,
 			int height) {
 
