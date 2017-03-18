@@ -30,6 +30,8 @@ public class gamethread extends Thread {
 	}
 
 	public void run() {
+		SoundThread stMenu = new SoundThread("/data/Sprites/Musique3.wav");
+		stMenu.start();
 		papaPanel.setLayout(card);
 		papaPanel.add(m, "un");
 		papaPanel.add(p, "deux");
@@ -41,13 +43,11 @@ public class gamethread extends Thread {
 		 * Cette boucle permet de repaint le JPanel menu tant qu'il est actif.
 		 */
 		while (m.isRunning() && !this.isInterrupted()) {
-			long maintenant = System.currentTimeMillis();
 			m.repaint();
 			/*
 			 * Cette boucle permet de repaint le JPanel parametres tant qu'il est actif.
 			 */
 			while (m.isParam() && !this.isInterrupted()) {
-				maintenant = System.currentTimeMillis();
 				card.show(papaPanel, "deux");
 				p.repaint();
 				try {
@@ -72,11 +72,15 @@ public class gamethread extends Thread {
 		 * La boucle est infinie car lors d'une fin de niveau on retourne obligatoirement 
 		 * au sélecteur de niveau
 		 */
+		SoundThread stgame = null;
 		while (true) {
 			sn.repaint();
 			if (sn.getNiveauRunning() != null) {
 				fn = new FenetreNiveau(sn.getNiveauRunning());
 				papaPanel.add(fn, "quatre");
+				stMenu.interrupt();
+				stgame = new SoundThread("/data/Sprites/Musique2.wav");
+				stgame.start();
 			}
 			/*
 			 * Cette boucle permet de repaint le niveau attribué à la 
@@ -84,7 +88,6 @@ public class gamethread extends Thread {
 			 */
 			while (fn != null && fn.getNiveau() != null) {
 				card.show(papaPanel, "quatre");
-				long maintenant = System.currentTimeMillis();
 				fn.repaint();
 				if (fn.getNiveau().peutBouger())
 					fn.getNiveau().bouger();
@@ -100,6 +103,9 @@ public class gamethread extends Thread {
 					Score.scoreReinit();
 					sn.setNiveauRunning(null);
 					card.show(papaPanel, "trois");
+					stgame.interrupt();
+					stMenu = new SoundThread("/data/Sprites/Musique3.wav");
+					stMenu.start();
 				}
 			}
 			try {

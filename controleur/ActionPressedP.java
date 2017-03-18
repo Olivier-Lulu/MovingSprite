@@ -6,6 +6,8 @@ import modele.Niveau;
 
 public class ActionPressedP extends AbstractAction{
 
+	private static final long serialVersionUID = 1L;
+	
 	private Niveau n;
 	
 	public ActionPressedP(Niveau n) {

@@ -13,13 +13,15 @@ public class SoundThread extends Thread {
 	
 	private AudioInputStream as;
 	private Clip c;
+	private String fichier;
 
-	public SoundThread() {
+	public SoundThread(String fichier) {
 		// TODO Auto-generated constructor stub
 		super();
+		this.fichier = fichier;
 	}
 
-	private String fichier = "/data/Sprites/Musique2.wav";
+	
 
 	public void run() {
 		playSound();

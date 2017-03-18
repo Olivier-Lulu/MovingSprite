@@ -79,6 +79,8 @@ public class FenetreNiveau extends JPanel {
 
 	public void paint(Graphics g) {
 
+		g.fillRect(0, 0, getWidth(), getHeight());
+		
 		// affichage du décors
 		for (int i = 0; i < niveau.entite.length; i++) {
 			for (int j = 0; j < niveau.entite[0].length; j++) {

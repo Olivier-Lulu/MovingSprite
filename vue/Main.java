@@ -22,7 +22,5 @@ public class Main {
 		gamethread gt = new gamethread(m, frame, p, sn);
 		gt.start();
 		frame.revalidate();
-		SoundThread st = new SoundThread();
-		st.start();
 	}
 }
